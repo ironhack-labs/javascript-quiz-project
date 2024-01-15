@@ -7,18 +7,18 @@ class Question {
   }
 
   shuffleChoices() {
-//     let currentArray = this.choices; //spread operator would be better!
-//     let shuffledArray = [currentArray[0]];
+let newArray = [...this.choices];
+let currentIndex = newArray.length, temporaryValue, randomIndex;
 
-//     for (let i = 0; i < currentArray.length; i++) {
-//         let randomIndex = Math.floor(Math.random() * currentArray.length);
-
-//       if (!shuffledArray.includes(currentArray[randomIndex])) {
-//         shuffledArray.push(
-//           currentArray[randomIndex]
-//         );
-//       }
-//     }
+while ( 0!== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = newArray[currentIndex];
+    newArray[currentIndex] = newArray[randomIndex]
+    newArray[randomIndex] = temporaryValue;
+}
+this.choices = newArray;
+return this.choices;
     
 //     return shuffledArray;
 // //   }
