@@ -1,3 +1,10 @@
+// We created a helper function to pick a random item from an array because we'll use it again later
+// The below calculation should give us a randomized number between 0 and originalArray.length
+
+function pickRandom(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 class Question {
   constructor(text, choices, answer, difficulty) {
     this.text = text; // should be a string
@@ -7,17 +14,33 @@ class Question {
   }
 
   shuffleChoices() {
-    let currentArray = this.choices; //spread operator would be better!
-    let shuffledArray = [currentArray[0]];
+    let originalArray = this.choices; //[...array] --> spread operator would be better!
+    let shuffledArray = [];
 
-    for (let i = 0; i < currentArray.length; i++) {
-      if (!shuffledArray.includes(currentArray[i])) {
-        shuffledArray.push(
-          currentArray[Math.floor(Math.random() * currentArray.length)]
-        );
+    // 1. Loop through the array.
+    for (let i = 0; i < originalArray.length; i++) {
+      // Create a variable to store a randomly picked item from the originalArray.
+      let randomItem = pickRandom(originalArray);
+      // This while loop means "as long as" the randomItem we just picked is already in the shuffledArray, we need to shuffle again.
+      while (shuffledArray.includes(randomItem)) {
+        randomItem = pickRandom(originalArray);
       }
+      //// Until it finds a new item, then we exit the while loop and push the non-repeat item to the shuffledArray
+      shuffledArray.push(randomItem);
     }
-    shuffledArray = this.choices;
-    return this.choices;
+    //Finally we store the newly shuffledArray into the original back into the original property --> this.choices
+    this.choices = shuffledArray;
   }
 }
+
+// A single condition with if (!shuffledArray.includes(randomItem)) condition wouldn't work here because the newly shuffledArray might have less items
+//because some items could be skipped according to our logic: the for loop ONLY loops through the originalArray limited times.
+//const abcArr = ["a", "b", "c", "d", "e", "f"];
+// const shuffledArray = ['c', 'b', 'a', 'e', , ];
+
+//Another way to write the nexted while loop:
+// let randomItem;
+// do what's inside the loop while the condition is true --> pick a random item from originalArray while the randomItem is ALREADY in the originalArray
+// do {
+//   randomItem = pickRandom(originalArray);
+// } while (shuffledArray.includes(randomItem));
