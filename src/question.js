@@ -1,8 +1,25 @@
 // We created a helper function to pick a random item from an array because we'll use it again later
 // The below calculation should give us a randomized number between 0 and originalArray.length
-
 function pickRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
+}
+// Another helper function that shuffles an array:
+function shuffleArray(array) {
+  let shuffledArray = [];
+
+  //Loop through the array.
+  for (let i = 0; i < array.length; i++) {
+    // Create a variable to store a randomly picked item from the originalArray.
+    let randomItem = pickRandom(array);
+    // This while loop means "as long as" the randomItem we just picked is already in the shuffledArray, we need to shuffle again.
+    while (shuffledArray.includes(randomItem)) {
+      randomItem = pickRandom(array);
+    }
+    //// Until it finds a new item, then we exit the while loop and push the non-repeat item to the shuffledArray
+    shuffledArray.push(randomItem);
+  }
+  //Finally we return the newly shuffledArray into the original back into the original property --> this.choices
+  return shuffleArray;
 }
 
 class Question {
@@ -14,22 +31,7 @@ class Question {
   }
 
   shuffleChoices() {
-    let originalArray = this.choices; //[...array] --> spread operator would be better!
-    let shuffledArray = [];
-
-    // 1. Loop through the array.
-    for (let i = 0; i < originalArray.length; i++) {
-      // Create a variable to store a randomly picked item from the originalArray.
-      let randomItem = pickRandom(originalArray);
-      // This while loop means "as long as" the randomItem we just picked is already in the shuffledArray, we need to shuffle again.
-      while (shuffledArray.includes(randomItem)) {
-        randomItem = pickRandom(originalArray);
-      }
-      //// Until it finds a new item, then we exit the while loop and push the non-repeat item to the shuffledArray
-      shuffledArray.push(randomItem);
-    }
-    //Finally we store the newly shuffledArray into the original back into the original property --> this.choices
-    this.choices = shuffledArray;
+    this.choices = shuffleArray(this.choices);
   }
 }
 
