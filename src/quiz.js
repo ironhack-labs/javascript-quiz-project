@@ -15,23 +15,22 @@ class Quiz {
     this.currentQuestionIndex++;
   }
 
-  // shuffleQuestions() {
-  //   let currentQuestion = this.choices; //change this!!!!!!!!!!!!
-  //   let shuffledArray = [currentArray[0]];
-
-  //   for (let i = 0; i < currentArray.length; i++) {
-  //     if (!shuffledArray.includes(currentArray[i])) {
-  //       shuffledArray.push(
-  //         currentArray[Math.floor(Math.random() * currentArray.length)]
-  //       );
-  //     }
-  //   }
-  //   shuffledArray = this.choices;
-  //   return this.choices;
-  // }
+  shuffleQuestions() {
+    //   let currentQuestion = this.choices; //change this!!!!!!!!!!!!
+    //   let shuffledArray = [currentArray[0]];
+    //   for (let i = 0; i < currentArray.length; i++) {
+    //     if (!shuffledArray.includes(currentArray[i])) {
+    //       shuffledArray.push(
+    //         currentArray[Math.floor(Math.random() * currentArray.length)]
+    //       );
+    //     }
+    //   }
+    //   shuffledArray = this.choices;
+    //   return this.choices;
+  }
 
   checkAnswer(answer) {
-    if (answer === true) {
+    if (answer === this.getQuestion().answer) {
       this.correctAnswers++;
     }
   }
@@ -43,5 +42,15 @@ class Quiz {
       return true;
     }
     return undefined;
+  }
+
+  /// DAY 2
+
+  filterQuestionsByDifficulty() {
+    this.questions.filter; //??
+  }
+
+  averageDifficulty() {
+    return this.questions.reduce() / this.questions.length;
   }
 }
