@@ -12,6 +12,7 @@ class Quiz {
     return this.questions[this.currentQuestionIndex];
   }
 
+  // {question: "asdad", answer: "asdasd"}
   moveToNextQuestion() {
     this.currentQuestionIndex++;
   }
@@ -36,6 +37,6 @@ class Quiz {
 //Another way to write this: 
 //     if (this.currentQuestionIndex < this.questions.length) {
 //       return false;
-//     } else if ((this.currentQuestionIndex === this.questions.length)) {
+//     } 
 //       return true;
 //     }
