@@ -41,7 +41,61 @@ class Quiz {
     }
     return hasEnded;
   }
-}
+
+    filteredQuestionsByDifficulty(difficulty) {
+      let difficultyArr = [];
+      if(difficulty === 1 || difficulty === 2 || difficulty === 3) {
+      difficultyArr = this.questions.filter((question) => 
+        question.difficulty === difficulty);
+      } else {
+        difficultyArr = this.questions;
+      }
+
+      return difficultyArr;
+    }
+
+    averageDifficulty() {
+      if (this.questions.length === 0) {
+        return 0;
+      }
+      const totalDifficulty = this.questions.reduce((sum, question) => sum + question.difficulty, 0);
+      const average = totalDifficulty / this.questions.length;
+  
+      return average;
+    }
+  }
+
+const questions = [
+  {
+    text: "Question 1",
+    choices: ["a", "b", "c"],
+    answer: "a",
+    difficulty: 1,
+  },
+  {
+    text: "Question 2",
+    choices: ["d", "e", "f"],
+    answer: "d",
+    difficulty: 2,
+  },
+  {
+    text: "Question 3",
+    choices: ["g", "h", "i"],
+    answer: "g",
+    difficulty: 2,
+  },
+  {
+    text: "Question 4",
+    choices: ["j", "k", "l"],
+    answer: "j",
+    difficulty: 3,
+  },
+];
+
+// Instantiate a new Quiz object with the test questions
+const quiz = new Quiz(questions, 60, 60);
+
+console.log(quiz.filteredQuestionsByDifficulty(1));
 
 /* hasEnded() {
     return this.currentQuestionIndex === this.questions.length;

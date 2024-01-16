@@ -24,4 +24,4 @@ const testChoices = ["choice1", "choice2", "choice3"];
 // Instantiate a new Question object with the test choices array
 const question = new Question("test", testChoices, "test");
 
-console.log(question.shuffleChoices());
+// console.log(question.shuffleChoices());

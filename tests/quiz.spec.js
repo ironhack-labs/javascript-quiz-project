@@ -238,24 +238,16 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("filterQuestionsByDifficulty() method", () => {   
+  describe("filterQuestionsByDifficulty() method", () => {   
     it("should use the 'filter()' array method on the 'questions' array", () => {
-      // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
-      // Set up a spy on the 'filter()' array method to track calls to it
-      const filterSpy = spyOn(quiz.questions, "filter");
-
-      // Call the 'filterQuestionsByDifficulty()' method
+      const filterSpy = spyOn(questions, "filter");
       quiz.filterQuestionsByDifficulty(1);
 
-      // Check if the 'filter()' array method was called on the 'questions' array
       expect(filterSpy).toHaveBeenCalled();
-      // Check that the 'filter()' array method was called only once
       expect(filterSpy).toHaveBeenCalledTimes(1);
-      // Check that the 'filter()' array method was called correctly, with a function as its argument
       expect(filterSpy).toHaveBeenCalledWith(jasmine.any(Function));
     });    
-
 
     // ****************************************************************************************************
     // DAY 2: 'filterQuestionsByDifficulty()' method
@@ -265,11 +257,8 @@ describe("Quiz", () => {
 
 
     it("should be defined", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the filterQuestionsByDifficulty() method is defined
+        const quiz = new Quiz([], 60, 60);
+        expect(quiz.filteredQuestionsByDifficulty()).toBeDefined();
 
     });
 
@@ -279,18 +268,21 @@ describe("Quiz", () => {
       // 1. Instantiate a new Quiz object
 
       // 2. Check if the .filterQuestionsByDifficulty is a function
+      const quiz = new Quiz([], 60, 60);
+      expect(typeof quiz.filteredQuestionsByDifficulty).toBe("function");
     });
 
     it("should receive 1 argument (difficulty)", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz([], 60, 60);
       // 2. Check if the filterQuestionsByDifficulty() method takes 1 argument
-
+      expect(quiz.filteredQuestionsByDifficulty.length).toEqual(1);
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
+      
       // 1. Read the above test description to understand what this test should do
 
       // Array with questions to be used in the test and passed to the Quiz constructor
@@ -320,14 +312,12 @@ describe("Quiz", () => {
           difficulty: 3,
         },
       ];
+      
+      const quiz = new Quiz(questions, 60, 60);
 
-      // YOUR CODE HERE:
-      //
-      // 2. Instantiate a new Quiz object with the test questions
-
-      // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
-
-      // 4. Check if the questions array has been filtered correctly
+      expect(quiz.filteredQuestionsByDifficulty(1)).toEqual([questions[0]]);
+      expect(quiz.filteredQuestionsByDifficulty(2)).toEqual([questions[1], questions[2]]);
+      expect(quiz.filteredQuestionsByDifficulty(3)).toEqual([questions[3]]);
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
@@ -359,10 +349,11 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-
+          const quiz = new Quiz(questions, 60, 60);
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-
+          expect(quiz.filteredQuestionsByDifficulty('easy')).toEqual(questions);
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
+          expect(quiz.questions).toEqual(questions);
 
     });
   });
