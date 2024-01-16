@@ -7,18 +7,16 @@ class Question {
   }
 
   shuffleChoices() {
-let newArray = [...this.choices];
-let currentIndex = newArray.length, temporaryValue, randomIndex;
-
-while ( 0!== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = newArray[currentIndex];
-    newArray[currentIndex] = newArray[randomIndex]
-    newArray[randomIndex] = temporaryValue;
+    let shuffledChoices = [];
+    while (this.choices.length) {
+      const random = Math.floor(Math.random()*this.choices.length);
+      shuffledChoices.push(this.choices.splice(random, 1)[0]);
+    } 
+    this.choices = shuffledChoices 
+    return shuffledChoices;
+  }
 }
-this.choices = newArray;
-return this.choices;
+    
     
 //     return shuffledArray;
 // //   }
@@ -32,5 +30,48 @@ return this.choices;
 //     return currentArray;
 // }
 // }
-  }
+
+/*
+const originalArr = [1,2,3,4];
+const shuffled = []
+
+
+OPTION 1
+
+for (let i_=0; i < orginalArr.length; i++){
+  const random = Math.floor(Math.random)*originalArr.length);
+  shuffled.push(originalArr.splice(random, 1)[0]);
+  i--;
 }
+
+
+OPTION 2
+
+for (let i_= originalArr.lenght -1; i >=0; i--){
+  const random = Math.floor(Math.random)*originalArr.length);
+  shuffled.push(originalArr.splice(random, 1)[0]);
+}
+
+OPTION 3
+
+
+while (originalArr.lenght) {
+  const random = Math.floor(Math.random)*originalArr.length);
+  shuffled.push(originalArr.splice(random, 1)[0]);
+}
+
+
+
+
+for (let i_= originalArr.lenght -1; i >=0; i--){
+  const random = Math.floor(Math.random)*originalArr.length);
+  shuffled.push(originalArr.splice(random, 1)[0]);
+console.log(originalArr);
+console.log(shuffled;)
+
+OPTION 4
+
+const newShuffled = originalArr
+.map((e)) =>({e, random: Math.randdom()})
+.sort ((a,b) => a.random -b.random)
+.map (({e}) => e)*/

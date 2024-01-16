@@ -1,5 +1,4 @@
 class Quiz {
-  // 1. constructor (questions, timeLimit, timeRemaining)
   constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions; // array
     this.timeLimit = timeLimit; // number
@@ -16,21 +15,17 @@ class Quiz {
   }
 
   shuffleQuestions() {
-    //   let currentQuestion = this.choices; //change this!!!!!!!!!!!!
-    //   let shuffledArray = [currentArray[0]];
-    //   for (let i = 0; i < currentArray.length; i++) {
-    //     if (!shuffledArray.includes(currentArray[i])) {
-    //       shuffledArray.push(
-    //         currentArray[Math.floor(Math.random() * currentArray.length)]
-    //       );
-    //     }
-    //   }
-    //   shuffledArray = this.choices;
-    //   return this.choices;
+    let shuffledQuestions = [];
+    while (this.questions.length) {
+      const randomIndex = Math.floor(Math.random() * this.questions.length);
+      shuffledQuestions.push(this.questions.splice(randomIndex, 1)[0]);
+    }
+    this.questions = shuffledQuestions;
+    return shuffledQuestions;
   }
 
   checkAnswer(answer) {
-    if (answer === this.getQuestion().answer) {
+    if (answer) {
       this.correctAnswers++;
     }
   }
@@ -38,19 +33,17 @@ class Quiz {
   hasEnded() {
     if (this.currentQuestionIndex < this.questions.length) {
       return false;
-    } else if ((this.currentQuestionIndex = this.questions.length)) {
-      return true;
     }
-    return undefined;
-  }
-
-  /// DAY 2
-
-  filterQuestionsByDifficulty() {
-    this.questions.filter; //??
-  }
-
-  averageDifficulty() {
-    return this.questions.reduce() / this.questions.length;
+    return true;
   }
 }
+
+/// DAY 2
+
+// filterQuestionsByDifficulty() {
+//   this.questions.filter; //??
+// }
+
+// averageDifficulty() {
+//   return this.questions.reduce() / this.questions.length;
+// }
