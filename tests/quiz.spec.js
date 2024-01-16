@@ -134,7 +134,11 @@ describe("Quiz", () => {
       // Call the shuffleQuestions() method to shuffle the questions array in the quiz
       quiz.shuffleQuestions();
       // Check if the questions array is not equal to the original array (it has been changed/shuffled)
-      expect(quiz.questions).not.toEqual(["question1", "question2", "question3"]);
+      expect(quiz.questions).not.toEqual([
+        "question1",
+        "question2",
+        "question3",
+      ]);
       expect(quiz.questions.length).toEqual(3);
     });
   });
@@ -329,7 +333,6 @@ describe("Quiz", () => {
       quiz.filterQuestionsByDifficulty(2);
 
       // 4. Check if the questions array has been filtered correctly#
-      console.log(quiz.questions);
       const inputDifficulty = 2;
       expect(quiz.questions[0].difficulty).toEqual(inputDifficulty);
     });
@@ -421,7 +424,8 @@ describe("Quiz", () => {
       // 1. Instantiate a new Quiz object
       // 2. Check if the .averageDifficulty is a function
       const quiz = new Quiz([], 60, 60);
-      expect(typeof quiz.filterQuestionsByDifficulty).toBe("function");
+
+      expect(typeof quiz.averageDifficulty).toBe("function");
     });
 
     it("should receive no arguments", () => {
@@ -430,7 +434,8 @@ describe("Quiz", () => {
       // 1. Instantiate a new Quiz object
       // 2. Check that the averageDifficulty() method takes no arguments
       const quiz = new Quiz([], 60, 60);
-      expect(quiz.filterQuestionsByDifficulty.length).toEqual(0);
+
+      expect(quiz.averageDifficulty.length).toEqual(0);
     });
 
     it("should return the average difficulty of the questions in the quiz", () => {
@@ -468,18 +473,20 @@ describe("Quiz", () => {
         },
       ];
 
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object with the test questions
+      // Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(questions, 60, 60);
 
-      // 2. Check that the averageDifficulty() method returns the correct average when called
+      // Call the averageDifficulty() method
+      const result = quiz.averageDifficulty();
+
+      // Calculate the expected average difficulty
       const totDiff = questions.reduce((acc, current) => {
         return acc + current.difficulty;
       }, 0);
       const avg = totDiff / questions.length;
-      console.log(avg);
-      expect(quiz.averageDifficulty).toEqual(avg);
+
+      // Check if the returned average difficulty is equal to the expected average
+      expect(result).toEqual(avg);
     });
   });
 });

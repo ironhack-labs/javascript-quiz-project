@@ -52,11 +52,12 @@ class Quiz {
       });
     }
   }
+
   averageDifficulty() {
     const totDiff = this.questions.reduce((acc, current) => {
       return acc + current.difficulty;
     }, 0);
-    console.log(totDiff);
+    // console.log(totDiff);
     return totDiff / this.questions.length;
   }
 }
