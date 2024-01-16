@@ -42,9 +42,10 @@ class Quiz {
     return hasEnded;
   }
 
-    filteredQuestionsByDifficulty(difficulty) {
+  filterQuestionsByDifficulty(difficulty) {
       let difficultyArr = [];
-      if(difficulty === 1 || difficulty === 2 || difficulty === 3) {
+      if(difficulty >= 1 || difficulty <= 3) {
+        console.log("entrei")
       difficultyArr = this.questions.filter((question) => 
         question.difficulty === difficulty);
       } else {
@@ -95,7 +96,7 @@ const questions = [
 // Instantiate a new Quiz object with the test questions
 const quiz = new Quiz(questions, 60, 60);
 
-console.log(quiz.filteredQuestionsByDifficulty(1));
+console.log(quiz.filterQuestionsByDifficulty(1));
 
 /* hasEnded() {
     return this.currentQuestionIndex === this.questions.length;
