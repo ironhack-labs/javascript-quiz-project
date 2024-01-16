@@ -36,14 +36,21 @@ class Quiz {
     }
     return true;
   }
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
+      return;
+    }
+    let filteredQuestions = this.questions.filter((question) => {
+      return filteredQuestions.difficulty === difficulty;
+    });
+  }
+
+  averageDifficulty() {
+    let sum = this.questions.reduce((acc, question) => {
+      return acc + question.difficulty;
+    }, 0);
+return sum/this.questions.length;
+  }
+
 }
-
-/// DAY 2
-
-// filterQuestionsByDifficulty() {
-//   this.questions.filter; //??
-// }
-
-// averageDifficulty() {
-//   return this.questions.reduce() / this.questions.length;
-// }
