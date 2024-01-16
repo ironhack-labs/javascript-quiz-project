@@ -6,7 +6,7 @@ class Question {
     this.difficulty = difficulty;
   }
   shuffleChoices() {
-    let shuffledArray = [];
+    const shuffledArray = [];
     let randomIndex = Math.floor(Math.random * this.choices.length);
     if (!shuffledArray.includes(this.choices[randomIndex])) {
       shuffledArray.push(this.choices[randomIndex]);

@@ -44,4 +44,19 @@ class Quiz {
       return true;
     }
   }
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (typeof difficulty === "number" && difficulty > 0 && difficulty <= 3) {
+      this.questions = this.questions.filter((q) => {
+        return q.difficulty === difficulty;
+      });
+    }
+  }
+  averageDifficulty() {
+    const totDiff = this.questions.reduce((acc, current) => {
+      return acc + current.difficulty;
+    }, 0);
+    console.log(totDiff);
+    return totDiff / this.questions.length;
+  }
 }
