@@ -134,7 +134,8 @@ describe("Quiz", () => {
       // Call the shuffleQuestions() method to shuffle the questions array in the quiz
       quiz.shuffleQuestions();
       // Check if the questions array is not equal to the original array (it has been changed/shuffled)
-      expect(quiz.questions).not.toEqual(testQuestions);
+      expect(quiz.questions).not.toEqual(["question1", "question2", "question3"]);
+      expect(quiz.questions.length).toEqual(3);
     });
   });
 
