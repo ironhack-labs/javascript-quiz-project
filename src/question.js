@@ -6,12 +6,10 @@ class Question {
     this.difficulty = difficulty;
   }
   shuffleChoices() {
-    const shuffledArray = [];
-    let randomIndex = Math.floor(Math.random * this.choices.length);
-    if (!shuffledArray.includes(this.choices[randomIndex])) {
-      shuffledArray.push(this.choices[randomIndex]);
+    for (let i = this.choices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.choices[i], this.choices[j]] = [this.choices[j], this.choices[i]];
     }
-    this.choices = shuffledArray;
     return this.choices;
   }
 }
