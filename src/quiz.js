@@ -9,6 +9,7 @@ class Quiz {
 
   //This method returns the currently shown question
   getQuestion() {
+    console.log('Questions: ', this.questions)
     return this.questions[this.currentQuestionIndex];
   }
 
@@ -50,3 +51,4 @@ class Quiz {
     return Math.round(average);
   }
 }
+

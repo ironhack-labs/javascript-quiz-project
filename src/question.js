@@ -19,7 +19,7 @@ function shuffleArray(array) {
     shuffledArray.push(randomItem);
   }
   //Finally we return the newly shuffledArray into the original back into the original property --> this.choices
-  return shuffleArray;
+  return shuffledArray;
 }
 
 class Question {
