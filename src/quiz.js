@@ -35,7 +35,7 @@ class Quiz {
 
   filterQuestionsByDifficulty(difficulty) {
     let newArr = [];
-    if (difficulty >= 1 || difficulty <= 3) {
+    if (difficulty >= 1 && difficulty <= 3) {
       newArr = this.questions.filter(
         (question) => question.difficulty === difficulty
       );
@@ -44,25 +44,6 @@ class Quiz {
     }
     return newArr;
   }
-  //SAMS SOLUTION
-  // filterQuestionsByDifficulty(difficulty) {
-  //  let newArray= [];
-  // if (difficulty >= 1 || difficulty <=3) {
-  // newArray= this.questions.filter((question) =>{
-  //  return question.difficulty === difficulty
-  //   })} else {
-  //   newArr = this.questions;
-  //    }
-  //   return newArray;
-  // }
-
-  //   if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
-  //     return;
-  //   }
-  //   let filteredQuestions = this.questions.filter((question) => {
-  //     return filteredQuestions.difficulty === difficulty;
-  //   });
-  // }
 
   averageDifficulty() {
     const totalDifficulty = this.questions.reduce(

@@ -1,20 +1,16 @@
 describe("Quiz", () => {
   describe("class", () => {
     it("should be defined", () => {
-      // Check if the Quiz class is defined
       expect(Quiz).toBeDefined();
     });
 
     it("should receive 3 arguments", () => {
-      // Check if the Quiz class takes 3 arguments
       expect(Quiz.length).toEqual(3);
     });
 
     it("should receive 'questions' array as its 1st argument and store it in a 'questions' property", () => {
-      // Array with questions to be used in the test and passed to the Quiz constructor
       const testQuestions = ["question1", "question2", "question3"];
 
-      // Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(testQuestions, 60, 60);
       // Check if the questions property is equal to the test questions array passed to the constructor
       expect(quiz.questions).toEqual(testQuestions);
@@ -270,7 +266,6 @@ describe("Quiz", () => {
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
-      // 1. Read the above test description to understand what this test should do
 
       // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
@@ -307,7 +302,6 @@ describe("Quiz", () => {
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
-      // 1. Read the above test description to understand what this test should do
 
       // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
@@ -331,14 +325,10 @@ describe("Quiz", () => {
         },
       ];
 
-      // YOUR CODE HERE:
-      //
-      // 2. Instantiate a new Quiz object with the test questions
+
       const quiz = new Quiz(questions, 123, 60);
       expect(quiz.filterQuestionsByDifficulty("test").toEqual(questions));
-      expect(quiz.questions).toEqual(questions));
-      // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-      // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
+      expect(quiz.questions).toEqual(questions);
     });
   });
 
@@ -353,19 +343,12 @@ describe("Quiz", () => {
 
   describe("averageDifficulty() method", () => {
     it("should use the 'reduce()' array method on the 'questions' array", () => {
-      // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
-      // Set up a spy on the 'reduce()' array method to track calls to it
       const reduceSpy = spyOn(quiz.questions, "reduce");
-
-      // Call the 'averageDifficulty()' method
       quiz.averageDifficulty();
 
-      // Check if the 'reduce()' array method was called on the 'questions' array
       expect(reduceSpy).toHaveBeenCalled();
-      // Check that the 'reduce()' array method was called only once
       expect(reduceSpy).toHaveBeenCalledTimes(1);
-      // Check that the 'reduce()' array method was called correctly, with a function as its 1st argument and optional 2nd argument
       expect(reduceSpy.calls.allArgs()[0][0]).toEqual(jasmine.any(Function));
     });
 
@@ -391,7 +374,6 @@ describe("Quiz", () => {
     });
 
     it("should return the average difficulty of the questions in the quiz", () => {
-      // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
           text: "Question 1",
@@ -427,6 +409,5 @@ describe("Quiz", () => {
 
       const quiz = new Quiz(questions, "test", 60);
       expect(quiz.averageDifficulty()).toEqual(1.8);
-      // 2. Check that the averageDifficulty() method returns the correct average when called
     });
-  });
+  })
