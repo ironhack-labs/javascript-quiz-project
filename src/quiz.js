@@ -41,7 +41,7 @@ class Quiz {
   }
   filterQuestionsByDifficulty(difficulty) {
     if (difficulty >= 1 && difficulty <= 3) {
-      this.questions.filter((level) => return level.difficulty === difficulty)
+      this.questions.filter((level) =>  level.difficulty === difficulty)
     }
   }
   averageDifficulty() {
