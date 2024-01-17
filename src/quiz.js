@@ -104,5 +104,3 @@ const questions = [
 ];
 
 const quiz = new Quiz(questions, 3, 4);
-
-console.log(quiz.shuffleQuestions());
