@@ -7,10 +7,13 @@ class Question {
   }
 
   shuffleChoices() {
-    const shuffled = [];
-    while (this.choices.length) {
-      const random = Math.floor(Math.random() * this.choices.length);
-      shuffled.push(this.choices.splice(random, 1)[0]);
+    const shuffled = [...this.choices]; // Create a copy to avoid modifying the original array
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[randomIndex]] = [
+        shuffled[randomIndex],
+        shuffled[i],
+      ];
     }
     this.choices = shuffled;
   }

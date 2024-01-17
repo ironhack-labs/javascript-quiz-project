@@ -98,11 +98,20 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    questionContainer.innerHTML = showQuestion(question);
 
-    
+
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
+    const questionsAnswered = 0;
+    const totalQuestions = 0;
+
+    const percentage = (questionsAnswered/totalQuestions) * 100;
+
+    progressBar.style.width = `${percentage}%`;
+
+
     progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
 
 
