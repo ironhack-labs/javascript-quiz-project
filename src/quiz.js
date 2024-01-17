@@ -56,13 +56,7 @@ class Quiz {
     }
 
     averageDifficulty() {
-      if (this.questions.length === 0) {
-        return 0;
-      }
-      const totalDifficulty = this.questions.reduce((sum, question) => sum + question.difficulty, 0);
-      const average = totalDifficulty / this.questions.length;
-  
-      return average;
+      return this.questions.reduce((acc, curr) => acc + curr.difficulty, 0) / this.questions.length;
     }
   }
 
