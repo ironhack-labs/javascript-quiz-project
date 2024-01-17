@@ -164,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //  You can use check which choice was selected by checking if the `.checked` property is true.
     quiz.checkAnswer(selectedAnswer);
     quiz.moveToNextQuestion();
+    showQuestion();
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
