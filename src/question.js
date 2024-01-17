@@ -7,16 +7,14 @@ class Question {
   }
 
   shuffleChoices() {
-    let shuffledChoices = [];
+    const shuffled = [];
     while (this.choices.length) {
-      const random = Math.floor(Math.random()*this.choices.length);
-      shuffledChoices.push(this.choices.splice(random, 1)[0]);
-    } 
-    this.choices = shuffledChoices 
-    return shuffledChoices;
+      const random = Math.floor(Math.random() * this.choices.length);
+      shuffled.push(this.choices.splice(random, 1)[0]);
+    }
+    this.choices = shuffled;
   }
 }
-    
     
 //     return shuffledArray;
 // //   }

@@ -15,13 +15,12 @@ class Quiz {
   }
 
   shuffleQuestions() {
-    let shuffledQuestions = [];
+    const shuffled = [];
     while (this.questions.length) {
-      const randomIndex = Math.floor(Math.random() * this.questions.length);
-      shuffledQuestions.push(this.questions.splice(randomIndex, 1)[0]);
+      const random = Math.floor(Math.random() * this.questions.length);
+      shuffled.push(this.questions.splice(random, 1)[0]);
     }
-    this.questions = shuffledQuestions;
-    return shuffledQuestions;
+    this.questions = shuffled;
   }
 
   checkAnswer(answer) {
@@ -31,26 +30,46 @@ class Quiz {
   }
 
   hasEnded() {
-    if (this.currentQuestionIndex < this.questions.length) {
-      return false;
-    }
-    return true;
+    return this.currentQuestionIndex === this.questions.length;
   }
 
   filterQuestionsByDifficulty(difficulty) {
-    if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
-      return;
+    let newArr = [];
+    if (difficulty >= 1 || difficulty <= 3) {
+      newArr = this.questions.filter(
+        (question) => question.difficulty === difficulty
+      );
+    } else {
+      newArr = this.questions;
     }
-    let filteredQuestions = this.questions.filter((question) => {
-      return filteredQuestions.difficulty === difficulty;
-    });
+    return newArr;
   }
+  //SAMS SOLUTION
+  // filterQuestionsByDifficulty(difficulty) {
+  //  let newArray= [];
+  // if (difficulty >= 1 || difficulty <=3) {
+  // newArray= this.questions.filter((question) =>{
+  //  return question.difficulty === difficulty
+  //   })} else {
+  //   newArr = this.questions;
+  //    }
+  //   return newArray;
+  // }
+
+  //   if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
+  //     return;
+  //   }
+  //   let filteredQuestions = this.questions.filter((question) => {
+  //     return filteredQuestions.difficulty === difficulty;
+  //   });
+  // }
 
   averageDifficulty() {
-    let sum = this.questions.reduce((acc, question) => {
-      return acc + question.difficulty;
-    }, 0);
-return sum/this.questions.length;
+    const totalDifficulty = this.questions.reduce(
+      (acc, curr) => acc + curr.difficulty,
+      0
+    );
+    const avg = totalDifficulty / this.questions.length;
+    return avg;
   }
-
 }
