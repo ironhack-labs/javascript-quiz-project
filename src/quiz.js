@@ -30,13 +30,23 @@ class Quiz {
   }
 
   hasEnded() {
-    return this.currentQuestionIndex >= this.questions.length
+    return this.currentQuestionIndex >= this.questions.length;
+  }
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty < 1 || difficulty > 3 || typeof difficulty !== "number") {
+      return;
+    }
+    this.questions = this.questions.filter((question) => {
+      return question.difficulty === difficulty;
+    });
+  }
+  averageDifficulty() {
+    const averageDifficulty = this.questions.reduce(
+      (sum, question) => sum + question.difficulty,
+      0
+    );
+    const average = averageDifficulty / this.questions.length;
+    return Math.round(average);
   }
 }
-
-//Another way to write this: 
-//     if (this.currentQuestionIndex < this.questions.length) {
-//       return false;
-//     } 
-//       return true;
-//     }
