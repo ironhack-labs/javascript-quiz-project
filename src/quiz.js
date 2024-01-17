@@ -39,4 +39,14 @@ class Quiz {
       return true;
     }
   }
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty >= 1 && difficulty <= 3) {
+      this.questions.filter((level) => {
+        level.difficulty === difficulty
+      })
+    }
+  }
+  averageDifficulty() {
+    return this.questions.reduce((acc, curr) => acc + curr.difficulty, 0)
+  }
 }

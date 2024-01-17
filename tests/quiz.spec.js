@@ -36,7 +36,7 @@ describe("Quiz", () => {
       const quiz = new Quiz([], 60, testTime);
       // Check if the timeRemaining property is equal to the test time argument passed to the constructor
       expect(quiz.timeRemaining).toEqual(testTime);
-    });    
+    });
 
     it("should have a 'correctAnswers' property initially set to 0", () => {
       // Instantiate a new Quiz object
@@ -113,21 +113,21 @@ describe("Quiz", () => {
 
   describe("shuffleQuestions() method", () => {
     it("should be defined", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the shuffleQuestions() method is defined
       expect(quiz.shuffleQuestions).toBeDefined();
     });
 
     it("should be a function", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the .shuffleQuestions is a function
       expect(typeof quiz.shuffleQuestions).toBe("function");
     });
 
     it("should shuffle the items in the 'questions' array", () => {
-        // Array with questions to be used in the test and passed to the Quiz constructor
+      // Array with questions to be used in the test and passed to the Quiz constructor
       const testQuestions = ["question1", "question2", "question3"];
       // Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(testQuestions, 60, 60);
@@ -238,7 +238,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("filterQuestionsByDifficulty() method", () => {   
+  xdescribe("filterQuestionsByDifficulty() method", () => {
     it("should use the 'filter()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
@@ -254,7 +254,7 @@ describe("Quiz", () => {
       expect(filterSpy).toHaveBeenCalledTimes(1);
       // Check that the 'filter()' array method was called correctly, with a function as its argument
       expect(filterSpy).toHaveBeenCalledWith(jasmine.any(Function));
-    });    
+    });
 
 
     // ****************************************************************************************************
@@ -401,14 +401,13 @@ describe("Quiz", () => {
     //      
     // Below are 4 tests that you need to write for the 'averageDifficulty()' method.
     // ****************************************************************************************************
-      
+
 
     it("should be defined", () => {
-      // YOUR CODE HERE:
-      //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz([], "test", 60);
       // 2. Check if the averageDifficulty() method is defined
+      expect(quiz.averageDifficulty).toBeDefined();
 
     });
 
@@ -416,8 +415,9 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz([], "test", 60);
       // 2. Check if the .averageDifficulty is a function
+      expect(typeof quiz.averageDifficulty).toBe("function");
 
     });
 
@@ -425,8 +425,9 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz([], "test", 60);
       // 2. Check that the averageDifficulty() method takes no arguments
+      expect(quiz.averageDifficulty.length).toBe(0);
 
     });
 
@@ -468,8 +469,9 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object with the test questions
-
+      const quiz = new Quiz(questions, "test", 60);
       // 2. Check that the averageDifficulty() method returns the correct average when called
+      expect(quiz.averageDifficulty()).toBe((1 + 2 + 2 + 1 + 3) / 5);
 
     });
   });
