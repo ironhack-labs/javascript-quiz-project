@@ -71,7 +71,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  // Update the time remaining every second
+  setInterval(updateTimer, 1000);
+
+  function updateTimer() {
+    // Decrement the time remaining by 1 second
+    quiz.timeRemaining--;
+
+    // Convert the updated time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+    const updatedMinutes = Math.floor(quiz.timeRemaining / 60)
+      .toString()
+      .padStart(2, "0");
+    const updatedSeconds = (quiz.timeRemaining % 60)
+      .toString()
+      .padStart(2, "0");
+
+    // Display the updated time remaining in the time remaining container
+    timeRemainingContainer.innerText = `${updatedMinutes}:${updatedSeconds}`;
+
+    // If the time remaining reaches 0, show the results
+    if (quiz.timeRemaining === 0) {
+      showResults();
+    }
+  }
 
   /************  EVENT LISTENERS  ************/
 

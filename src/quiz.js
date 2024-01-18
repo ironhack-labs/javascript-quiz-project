@@ -29,25 +29,6 @@ class Quiz {
     }
     return this.questions;
   }
-  /*  let shuffledArray = [];
-    for (let i = 0; i < this.questions.length; i++) {
-      let randomIndex = Math.floor(Math.random() * this.questions.length);
-      if (!shuffledArray.includes(this.questions[randomIndex])) {
-        shuffledArray.push(this.questions[randomIndex]);
-      }
-    }
-    this.questions = shuffledArray;
-    return this.questions; */
-
-  /*  const newQuestions = this.questions.slice();
-    for (let i = this.questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = this.questions[i];
-      newQuestions[i] = this.questions[j];
-      newQuestions[j] = temp;
-    }
-    this.questions = newQuestions;
-    return this.questions; */
 
   // 5. checkAnswer(answer)
   checkAnswer(answer) {
@@ -82,25 +63,25 @@ class Quiz {
   }
 }
 
-const questions = [
-  {
-    text: "Question 1",
-    choices: ["a", "b", "c"],
-    answer: "a",
-    difficulty: 1,
-  },
-  {
-    text: "Question 2",
-    choices: ["d", "e", "f"],
-    answer: "d",
-    difficulty: 2,
-  },
-  {
-    text: "Question 3",
-    choices: ["g", "h", "i"],
-    answer: "g",
-    difficulty: 3,
-  },
-];
+// const questions = [
+//   {
+//     text: "Question 1",
+//     choices: ["a", "b", "c"],
+//     answer: "a",
+//     difficulty: 1,
+//   },
+//   {
+//     text: "Question 2",
+//     choices: ["d", "e", "f"],
+//     answer: "d",
+//     difficulty: 2,
+//   },
+//   {
+//     text: "Question 3",
+//     choices: ["g", "h", "i"],
+//     answer: "g",
+//     difficulty: 3,
+//   },
+// ];
 
-const quiz = new Quiz(questions, 3, 4);
+// const quiz = new Quiz(questions, 3, 4);
