@@ -266,7 +266,6 @@ describe("Quiz", () => {
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
-
       // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
@@ -297,12 +296,13 @@ describe("Quiz", () => {
 
       const quiz = new Quiz(questions, 60, "test");
       quiz.filterQuestionsByDifficulty(2);
-      const inputDifficulty = 2;
-      expect(quiz.questions[0].difficulty).toEqual(inputDifficulty);
+      const filteredQuestions = quiz.questions.filter(
+        (question) => question.difficulty === 2
+      );
+      expect(quiz.questions).toEqual(filteredQuestions);
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
-
       // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
@@ -325,10 +325,10 @@ describe("Quiz", () => {
         },
       ];
 
-
       const quiz = new Quiz(questions, 123, 60);
-      expect(quiz.filterQuestionsByDifficulty("test").toEqual(questions));
-      expect(quiz.questions).toEqual(questions);
+      const originalQuestions = [...quiz.questions];
+      quiz.filterQuestionsByDifficulty("test");
+      expect(quiz.questions).toEqual(originalQuestions);
     });
   });
 
@@ -410,4 +410,5 @@ describe("Quiz", () => {
       const quiz = new Quiz(questions, "test", 60);
       expect(quiz.averageDifficulty()).toEqual(1.8);
     });
-  })
+  });
+});

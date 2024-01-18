@@ -1,8 +1,8 @@
 class Quiz {
   constructor(questions, timeLimit, timeRemaining) {
-    this.questions = questions; // array
-    this.timeLimit = timeLimit; // number
-    this.timeRemaining = timeRemaining; // number
+    this.questions = questions;
+    this.timeLimit = timeLimit;
+    this.timeRemaining = timeRemaining;
     this.correctAnswers = 0;
     this.currentQuestionIndex = 0;
   }
