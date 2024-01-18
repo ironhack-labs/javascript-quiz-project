@@ -76,43 +76,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  function showQuestion() {
-    // If the quiz has ended, show the results
-    if (quiz.hasEnded()) {
-      showResults();
-      return;
-    }
+  f
 
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
     choiceContainer.innerHTML = "";
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
-    const question = quiz.getQuestion();
+   // const question = quiz.getQuestion();
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
-    question.shuffleChoices();
+   // question.shuffleChoices();
     
     
 
     // YOUR CODE HERE:
-    //
-    // 1. Show the question
-    // Update the inner text of the question container element and show the question text
-    questionContainer.innerHTML = showQuestion(question);
 
+    const questionsAnswered = 0;
+
+    function updateProgressBar() {
+      const totalQuestions = questions.length;
+      const percentage = (questionsAnswered/totalQuestions) * 100;
+          progressBar.style.width = `${percentage}%`;
+      }
+
+    function showQuestion() {
+      if (quiz.hasEnded()) {
+        showResults();
+        return;
+      } 
+      const question = quiz.getQuestion();
+      question.shuffleChoices();
+      questionContainer.innerHTML = question.text;
+      choiceContainer.innerHTML = "";
+
+question.choices.forEach((choice) => {
+  const choiceElement = document.createElement("div");
+    choiceElement.className = "choice";
+    choiceElement.innerText = choice;
+    choiceElement.addEventListener("click", () => handleChoiceClick(choice)); // Adjust this based on your logic
+    choiceContainer.appendChild(choiceElement);
+  });
+  
+  updateProgressBar();
+
+    }
+
+    showQuestion()
+    
+
+
+    
 
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-    
-    const questionsAnswered = 0;
-    const totalQuestions = 0;
 
-    const percentage = (questionsAnswered/totalQuestions) * 100;
-
-    progressBar.style.width = `${percentage}%`;
-
-
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
 
 
 
@@ -143,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   function nextButtonHandler () {
     let selectedAnswer; // A variable to store the selected answer value
-
+    showQuestion()
 
 
     // YOUR CODE HERE:
@@ -180,4 +197,4 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
   }
   
-});
+);
