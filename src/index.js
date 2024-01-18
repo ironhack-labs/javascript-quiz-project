@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
+
   // Shuffle the quiz questions
   quiz.shuffleQuestions();
 
@@ -82,6 +83,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // showQuestion() - Displays the current question and its choices
   // nextButtonHandler() - Handles the click on the next button
   // showResults() - Displays the end view and the quiz results
+
+  // Start the countdown timer
+  timer = setInterval(function () {
+    // Update the time remaining and the timer text every second
+    quiz.timeRemaining--;
+
+    // Convert the time remaining to minutes and seconds
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    // Display the time remaining in the time remaining container
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    // Stop the timer when the time is up
+    if (quiz.timeRemaining <= 0) {
+      clearInterval(timer);
+      showResults();
+    }
+  }, 1000);
+
+  function showResults() {
+    // Clear the timer interval
+    clearInterval(timer);
+
+    // ... (existing code)
+
+    // 1. Hide the quiz view (div#quizView)
+    quizView.style.display = "none";
+
+    // 2. Show the end view (div#endView)
+    endView.style.display = "flex";
+
+    // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+  }
 
   function showQuestion() {
     // If the quiz has ended, show the results
