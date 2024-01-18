@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
-
+  // choiceContainer
 
 
   /************  FUNCTIONS  ************/
@@ -98,19 +98,18 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+    questionContainer.innerText = question.text;
 
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
-
+    // This value is hardcoded as a placeholder
+    const widthOfOneQuestion = 100 / quiz.questions.length
+    progressBar.style.width = `${widthOfOneQuestion * (quiz.currentQuestionIndex + 1)}%`;
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
 
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
 
 
 
@@ -118,7 +117,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Loop through the current question `choices`.
     // For each choice create a new radio input with a label, and append it to the choice container.
     // Each choice should be displayed as a radio input element with a label:
-    /* 
+
+    question.choices.forEach((choice) => {
+      const liElement = document.createElement('li')
+      liElement.innerHTML = `
+      <input type="radio" name="${choice}" value="${choice}">
+      <label>${choice}</label>
+    <br>
+  `;
+      choiceContainer.appendChild(liElement);
+    })
+
+
+    /*
         <input type="radio" name="choice" value="CHOICE TEXT HERE">
         <label>CHOICE TEXT HERE</label>
       <br>
@@ -133,25 +144,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function nextButtonHandler() {
-    let selectedAnswer; // A variable to store the selected answer value
+    // let selectedAnswer = document.querySelector("#choices")
+    // console.log(`ButtonHandler,${selectedAnswer}`);
 
+    let selectedAnswer = false;
 
 
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
 
-
     // 2. Loop through all the choice elements and check which one is selected
     // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
     //  When a radio input gets selected the `.checked` property will be set to true.
     //  You can use check which choice was selected by checking if the `.checked` property is true.
+    [...choiceContainer.children].forEach((element) => {
+      let checkedAnswer = element.children[0].checked
+      let textOfLabel = element.children[1].innerHTML
+      let correctAnswer = quiz.getQuestion().answer
+
+      // console.log(element);
+      // console.log(quiz.getQuestion().answer);
+      // console.log(checkedAnswer);
+      if (checkedAnswer) {
+        if (textOfLabel === correctAnswer) {
+          selectedAnswer = true
+        }
+      }
+      console.log(quiz.checkAnswer(textOfLabel));
+
+    })
+    // console.log(checkAnswer(selectedAnswer));
+ 
 
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     // Show the next question by calling the function `showQuestion()`.
+
+
   }
 
 
@@ -163,7 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
-
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
 

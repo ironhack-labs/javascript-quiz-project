@@ -10,7 +10,7 @@ class Quiz {
     return this.questions[this.currentQuestionIndex];
   }
   moveToNextQuestion() {
-    return this.currentQuestionIndex++;
+    this.currentQuestionIndex++;
   }
   shuffleQuestions() {
     const newQuestionsArray = [...this.questions];
@@ -28,9 +28,12 @@ class Quiz {
     return this.questions;
   }
   checkAnswer(answer) {
-    if (typeof answer === 'string') {
+    const currentQuestion = this.getQuestion();
+    if (currentQuestion && currentQuestion.answer === answer) {
       this.correctAnswers++;
+      return true
     }
+    return false
   }
   hasEnded() {
     if (this.currentQuestionIndex < this.questions.length) {
@@ -41,10 +44,11 @@ class Quiz {
   }
   filterQuestionsByDifficulty(difficulty) {
     if (difficulty >= 1 && difficulty <= 3) {
-      this.questions.filter((level) => return level.difficulty === difficulty)
+      this.questions.filter((level) => level.difficulty === difficulty)
     }
   }
   averageDifficulty() {
-    return this.questions.reduce((acc, curr) => acc + curr.difficulty, 0)
+    return this.questions.reduce((acc, curr) => acc + curr.difficulty, 0) / this.questions.length
   }
+
 }
