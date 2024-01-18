@@ -77,7 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function showQuestion() {
-    // If the quiz has ended, show the results
+    // quiz.questions.forEach((question) => {
+    //   questionContainer.innerHTML = question.text
+    // })
+    // console.log(questionContainer.innerHTML)
+    // let questionText = document.createElement('p');
+    // questionText.innerHTML = quiz.questions[quiz.currentQuestionIndex].text;
+    // questionContainer.classList.add(questionText);
+    // console.log(questionContainer.innerHTML);
+
+
+
     if (quiz.hasEnded()) {
       showResults();
       return;
@@ -99,18 +109,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
 
-    
+    questionContainer.innerText = question.text;
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-    
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    let progress = (quiz.currentQuestionIndex + 1)/ questions.length * 100  ;
+    progressBar.style.width = `${progress}%`;
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
-    
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    let countText = quiz.currentQuestionIndex + 1;
+    questionCount.innerText = `Question ${countText} of 10`; //  This value is hardcoded as a placeholder
 
 
     
@@ -128,6 +138,23 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
+      
+        question.choices.forEach((choice, index) => {
+          const input = document.createElement('input')
+          input.innerHTML = choice;
+          input.type = "radio";
+          input.value = choice;
+          input.name = "choice";
+          console.log(input);
+          choiceContainer.appendChild(input);
+
+          const label = document.createElement("label");
+          label.innerText = choice;
+          choiceContainer.appendChild(label);
+          const br = document.createElement("br");
+          choiceContainer.appendChild(br);
+        });
+     
   }
 
 
