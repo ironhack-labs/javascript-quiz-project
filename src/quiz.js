@@ -9,7 +9,7 @@ class Quiz {
 
   //This method returns the currently shown question
   getQuestion() {
-    console.log('Questions: ', this.questions)
+    console.log('Questions: ', this.questions, this.currentQuestionIndex)
     return this.questions[this.currentQuestionIndex];
   }
 
@@ -27,7 +27,9 @@ class Quiz {
     if (answer === this.getQuestion().answer) {
       //then we inscrease the count of this.correctAnswers.
       this.correctAnswers++;
+      return true;
     }
+    return false;
   }
 
   hasEnded() {
