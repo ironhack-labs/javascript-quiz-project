@@ -266,6 +266,8 @@ describe("Quiz", () => {
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
+      // 1. Read the above test description to understand what this test should do
+
       // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
@@ -293,16 +295,24 @@ describe("Quiz", () => {
           difficulty: 3,
         },
       ];
+      const quiz = new Quiz(questions, 123, 60);
+      expect(quiz.filterQuestionsByDifficulty(1)).toEqual([questions[0]]);
 
-      const quiz = new Quiz(questions, 60, "test");
-      quiz.filterQuestionsByDifficulty(2);
-      const filteredQuestions = quiz.questions.filter(
-        (question) => question.difficulty === 2
-      );
-      expect(quiz.questions).toEqual(filteredQuestions);
+      // quiz.filterQuestionsByDifficulty(2);
+      // const inputDifficulty = 2;
+      // expect(quiz.questions[0].difficulty).toEqual(2);
+      // YOUR CODE HERE:
+      //
+      // 2. Instantiate a new Quiz object with the test questions
+
+      // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
+
+      // 4. Check if the questions array has been filtered correctly
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
+      // 1. Read the above test description to understand what this test should do
+
       // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
@@ -324,11 +334,9 @@ describe("Quiz", () => {
           difficulty: 3,
         },
       ];
-
       const quiz = new Quiz(questions, 123, 60);
-      const originalQuestions = [...quiz.questions];
-      quiz.filterQuestionsByDifficulty("test");
-      expect(quiz.questions).toEqual(originalQuestions);
+      expect(quiz.filterQuestionsByDifficulty("easy")).toEqual(questions);
+      expect(quiz.questions).toEqual(questions);
     });
   });
 
