@@ -77,16 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function showQuestion() {
-    // quiz.questions.forEach((question) => {
-    //   questionContainer.innerHTML = question.text
-    // })
-    // console.log(questionContainer.innerHTML)
-    // let questionText = document.createElement('p');
-    // questionText.innerHTML = quiz.questions[quiz.currentQuestionIndex].text;
-    // questionContainer.classList.add(questionText);
-    // console.log(questionContainer.innerHTML);
-
-
 
     if (quiz.hasEnded()) {
       showResults();
@@ -195,7 +185,16 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    let finalScore =  quiz.correctAnswers;
+    resultContainer.innerText = `You scored ${finalScore} out of ${questions.length} correct answers!`;
   }
+
+  document.querySelector("#restartButton").addEventListener("click", () => {
+    quiz.currentQuestionIndex = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
+    endView.style.display = "none";
+    quizView.style.display = "flex";
+  });
   
 });
