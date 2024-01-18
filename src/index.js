@@ -103,8 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     // This value is hardcoded as a placeholder
-    const widthOfOneQuestion = 100 / quiz.questions.length
-    progressBar.style.width = `${widthOfOneQuestion * (quiz.currentQuestionIndex + 1)}%`;
+    progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questions.length) * 100}%`
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
@@ -121,14 +120,11 @@ document.addEventListener("DOMContentLoaded", () => {
     question.choices.forEach((choice) => {
       const liElement = document.createElement('li')
       liElement.innerHTML = `
-      <input type="radio" name="${choice}" value="${choice}">
+      <input type="radio" name="choice" value="${choice}">
       <label>${choice}</label>
-    <br>
-  `;
+    <br>`
       choiceContainer.appendChild(liElement);
     })
-
-
     /*
         <input type="radio" name="choice" value="CHOICE TEXT HERE">
         <label>CHOICE TEXT HERE</label>
@@ -147,41 +143,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // let selectedAnswer = document.querySelector("#choices")
     // console.log(`ButtonHandler,${selectedAnswer}`);
 
-    let selectedAnswer = false;
-
-
-    // YOUR CODE HERE:
-    //
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
-    // 2. Loop through all the choice elements and check which one is selected
-    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-    //  When a radio input gets selected the `.checked` property will be set to true.
-    //  You can use check which choice was selected by checking if the `.checked` property is true.
-    [...choiceContainer.children].forEach((element) => {
-      let checkedAnswer = element.children[0].checked
-      let textOfLabel = element.children[1].innerHTML
-      let correctAnswer = quiz.getQuestion().answer
-
-      // console.log(element);
-      // console.log(quiz.getQuestion().answer);
-      // console.log(checkedAnswer);
-      if (checkedAnswer) {
-        if (textOfLabel === correctAnswer) {
-          selectedAnswer = true
-        }
+    let selectedAnswer;
+    const choices = document.querySelectorAll("input[name=choice]");
+    choices.forEach((choice) => {
+      if (choice.checked) {
+        selectedAnswer = choice.value;
       }
-      console.log(quiz.checkAnswer(textOfLabel));
+    });
 
-    })
-    // console.log(checkAnswer(selectedAnswer));
- 
-
-
-    // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-    // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-    // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-    // Show the next question by calling the function `showQuestion()`.
+    if (selectedAnswer) {
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    }
 
 
   }
@@ -199,7 +173,17 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
+
+  const restartButton = document.querySelector("#restartButton");
+  restartButton.addEventListener("click", () => {
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
+    quizView.style.display = "flex";
+    endView.style.display = "none";
+  });
 
 });
