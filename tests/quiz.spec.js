@@ -134,7 +134,11 @@ describe("Quiz", () => {
       // Call the shuffleQuestions() method to shuffle the questions array in the quiz
       quiz.shuffleQuestions();
       // Check if the questions array is not equal to the original array (it has been changed/shuffled)
-      expect(quiz.questions).not.toEqual(["question1", "question2", "question3"]);
+      expect(quiz.questions).not.toEqual([
+        "question1",
+        "question2",
+        "question3",
+      ]);
       expect(quiz.questions.length).toEqual(3);
     });
   });
@@ -329,7 +333,7 @@ describe("Quiz", () => {
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
       quiz.filterQuestionsByDifficulty(2);
       // 4. Check if the questions array has been filtered correctly
-      expect(quiz.questions.length).toBe(2);
+      expect(quiz.filterQuestionsByDifficulty(2)).toEqual(1);
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {

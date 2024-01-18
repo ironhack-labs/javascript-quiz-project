@@ -40,7 +40,6 @@ class Quiz {
       );
       return;
     }
-
     this.questions = this.questions.filter(
       (question) => question.difficulty === difficulty
     );
