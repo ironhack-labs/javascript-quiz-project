@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const resetButton = document.querySelector("#resetButton");
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -113,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
+      resetQuiz();
       showResults();
       return;
     }
@@ -121,13 +123,14 @@ document.addEventListener("DOMContentLoaded", () => {
     questionContainer.innerText = "";
     choiceContainer.innerHTML = "";
 
+    //reset the selected answer
+    //resetQuiz();
+
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
 
-    // YOUR CODE HERE:
-    //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
     questionContainer.innerHTML = question.text;
@@ -173,8 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function nextButtonHandler() {
     let selectedAnswer; // A variable to store the selected answer value
 
-    // YOUR CODE HERE:
-    //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
     const displayedAnswers = document.querySelectorAll(
       "#choices input[type='radio']"
@@ -208,5 +209,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+  }
+
+  resetButton.addEventListener("click", resetButtonHandler);
+
+  function resetButtonHandler() {
+    quiz.resetTime();
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    // Display the time remaining in the time remaining container
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    quiz.currentQuestionIndex = 0;
+    showQuestion();
+  }
+
+  function resetQuiz() {
+    quiz.resetTime();
   }
 });

@@ -1,6 +1,4 @@
 class Quiz {
-  // YOUR CODE HERE:
-  //
   // 1. constructor (questions, timeLimit, timeRemaining)
   constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions;
@@ -42,6 +40,7 @@ class Quiz {
     if (this.currentQuestionIndex < this.questions.length) {
       return false;
     } else {
+      this.resetTime();
       return true;
     }
   }
@@ -60,6 +59,10 @@ class Quiz {
     }, 0);
     // console.log(totDiff);
     return totDiff / this.questions.length;
+  }
+
+  resetTime() {
+    this.timeRemaining = this.timeLimit;
   }
 }
 
