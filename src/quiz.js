@@ -30,9 +30,11 @@ class Quiz {
 
   // 5. checkAnswer(answer)
   checkAnswer(answer) {
-    if (typeof answer === "string") {
+    const question = this.getQuestion();
+    const isCorrectAnswer = question.answer === answer;
+
+    if (isCorrectAnswer) {
       this.correctAnswers++;
-    }
   }
 
   // 6. hasEnded()
