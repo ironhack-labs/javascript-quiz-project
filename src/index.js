@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Update the time remaining every second
   setInterval(updateTimer, 1000);
 
+  let timerInterval;
+
   function updateTimer() {
     // Decrement the time remaining by 1 second
     quiz.timeRemaining--;
@@ -89,11 +91,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Display the updated time remaining in the time remaining container
     timeRemainingContainer.innerText = `${updatedMinutes}:${updatedSeconds}`;
 
-    // If the time remaining reaches 0, show the results
+    // If the time remaining reaches 0, show the results and clear the interval
     if (quiz.timeRemaining === 0) {
-      showResults();
+      showResults(timerInterval);
     }
   }
+
+  // Start the timer interval
+  timerInterval = setInterval(updateTimer, 1000);
 
   /************  EVENT LISTENERS  ************/
 
@@ -193,9 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Show the next question by calling the function `showQuestion()`.
   }
 
-  function showResults() {
-    // YOUR CODE HERE:
-    //
+  function showResults(timer) {
+    clearInterval(timer);
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
