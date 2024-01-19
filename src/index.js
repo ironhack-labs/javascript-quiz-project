@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Shuffle the quiz questions
   quiz.shuffleQuestions();
 
-  /************  SHOW INITIAL CONTENT  ************/
-
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
   const minutes = Math.floor(quiz.timeRemaining / 60)
     .toString()
@@ -66,12 +64,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeRemainingContainer = document.getElementById("timeRemaining");
   timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
+  // TIMER
+  let timer = setInterval(() => {
+    // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    // Display the time remaining in the time remaining container
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    // Update the time remaining
+    quiz.timeRemaining--;
+
+    // If the time has run out, show the results
+    if (quiz.timeRemaining <= 0) {
+      clearInterval(timer);
+      showResults();
+    }
+  }, 1000);
   // Show first question
   showQuestion();
-
-  /************  TIMER  ************/
-
-  let timer;
 
   /************  EVENT LISTENERS  ************/
 
@@ -177,4 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultContainer = document.getElementById("result");
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
   }
+
+  document.getElementById("restartButton").addEventListener("click", () => {
+    quiz.timeRemaining = quiz.timeLimit;
+    endView.style.display = "none";
+    quizView.style.display = "flex";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
+  });
 });
