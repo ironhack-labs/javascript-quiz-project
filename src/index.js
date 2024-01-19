@@ -162,7 +162,7 @@ d
     clearInterval(timer);
     quizView.style.display = "none";
     endView.style.display = "flex";
-    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
   }
 
   const restartButton = document.querySelector("#restartButton");
