@@ -7,16 +7,14 @@ class Question {
   }
 
   shuffleChoices() {
-    const newChoices = this.choices.slice();
-    for (let i = this.choices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+    for (let i = 0; i < this.choices.length; i++) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
       const temp = this.choices[i];
-      newChoices[i] = this.choices[j];
-      newChoices[j] = temp;
+      this.choices[i] = this.choices[randomIndex];
+      this.choices[randomIndex] = temp;
     }
-    this.choices = newChoices;
-    return this.choices;
-  }
+}
+
 }
 
 const testChoices = ["choice1", "choice2", "choice3"];

@@ -16,15 +16,12 @@ class Quiz {
   }
 
   shuffleQuestions() {
-    const newQuestions = this.questions.slice();
-    for (let i = this.questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+    for (let i = 0; i < this.questions.length; i++) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
       const temp = this.questions[i];
-      newQuestions[i] = this.questions[j];
-      newQuestions[j] = temp;
+      this.questions[i] = this.questions[randomIndex];
+      this.questions[randomIndex] = temp;
     }
-    this.questions = newQuestions;
-    return this.questions;
   }
 
   checkAnswer(answer) {
