@@ -181,6 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showResults() {
     // 1. Hide the quiz view (div#quizView)
+        quiz.timeRemaining = quiz.timeLimit;
+
     const quizView = document.getElementById("quizView");
     quizView.style.display = "none";
 
@@ -194,12 +196,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.getElementById("restartButton").addEventListener("click", () => {
-    quiz.timeRemaining = quiz.timeLimit;
+    // quiz.timeRemaining = quiz.timeLimit;
+    // const timeRemainingContainer = document.getElementById("timeRemaining");
+    // const minutes = Math.floor(quiz.timeRemaining / 60)
+    //   .toString()
+    //   .padStart(2, "0");
+    // const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    // timeRemainingContainer.innerText = `${minutes}:${seconds}`;
     endView.style.display = "none";
     quizView.style.display = "flex";
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
     showQuestion();
+    // window.location.reload()
   });
 });
