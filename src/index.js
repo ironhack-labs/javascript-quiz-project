@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Quiz view elements
   const progressBar = document.querySelector("#progressBar");
+  const resultProgressBar = document.querySelector("#result-progress");
   const questionCount = document.querySelector("#questionCount");
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
@@ -70,16 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
   showQuestion();
 
   /************  TIMER  ************/
-
-  let timer;
-
-  function updateTimer() {
-    const minutes = Math.floor(quiz.timeRemaining / 60);
-    const seconds = quiz.timeRemaining % 60;
-    timeRemainingContainer.innerText = `${minutes}:${
-      seconds < 10 ? "0" : ""
-    }${seconds}`;
-  }
+  let timer = setInterval(() => {
+    console.log(quiz.timeRemaining);
+    quiz.timeRemaining--;
+    document.querySelector("#timeRemaining").innerText = quiz.timeRemaining;
+    if (quiz.timeRemaining <= quizDuration) {
+      clearInterval(timer);
+      showResults();
+    }
+  }, 1000);
 
   timer = setInterval(() => {
     quiz.timeRemaining--;
@@ -92,18 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 1000);
 
-  /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
 
-  /************  FUNCTIONS  ************/
-
-  // showQuestion() - Displays the current question and its choices
-  // nextButtonHandler() - Handles the click on the next button
-  // showResults() - Displays the end view and the quiz results
-
   function showQuestion() {
-
     if (quiz.hasEnded()) {
       showResults();
       return;
@@ -116,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     question.shuffleChoices();
 
     questionContainer.innerText = question.text;
-d
+
     let progress = ((quiz.currentQuestionIndex + 1) / questions.length) * 100;
     progressBar.style.width = `${progress}%`;
 
@@ -129,7 +121,7 @@ d
       input.type = "radio";
       input.value = choice;
       input.name = "choice";
-      console.log(input);
+
       choiceContainer.appendChild(input);
 
       const label = document.createElement("label");
@@ -162,6 +154,7 @@ d
     clearInterval(timer);
     quizView.style.display = "none";
     endView.style.display = "flex";
+
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
   }
 
