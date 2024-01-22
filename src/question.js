@@ -11,14 +11,27 @@ class Question {
 
     // 2. shuffleChoices()
     shuffleChoices() {
-        this.choices.sort(() => Math.random() - 0.5);
+        let isTheSame = true
+        while (isTheSame) {
+            let mixedChoices = [];
+            let copyOfChoices = [];
 
-        // let tempChoices = this.choices;
-        // let mixedChoices = [];
-        // this.choices.forEach(function() {
-        //     const randomNumber = Math.floor(Math.random() * tempChoices.length);
-        //     mixedChoices.push(tempChoices[randomNumber]);
-        //     tempChoices.splice(randomNumber, 1)
-        // });
+            // Making a copy of this.choices (I do a value copy instead of a reference copy)
+            this.choices.forEach(function(element) {
+                copyOfChoices.push(element);
+            });
+
+            this.choices.forEach(function() {
+                const randomNumber = Math.floor(Math.random() * copyOfChoices.length);
+                mixedChoices.push(copyOfChoices[randomNumber]);
+                copyOfChoices.splice(randomNumber, 1);
+            });
+
+            // Check if the array is not the same as the one at the beginning, otherwise it will give an error on Jasmine
+            if (this.choices.toString() !== mixedChoices.toString()) {
+                this.choices = mixedChoices;
+                isTheSame = false
+            }
+        }
     }
 }
