@@ -1,7 +1,29 @@
 class Question {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (text, choices, answer, difficulty)
+    constructor(text, choices, answer, difficulty){
 
-    // 2. shuffleChoices()
+        this.text = text;
+        this.choices = choices;
+        this.answer = answer;
+        this.difficulty = difficulty;
+
+
+    }
+
+    shuffleChoices(){
+        function shuffle (array){
+            let currentIndex = array.length;
+
+            while (currentIndex > 0) {
+
+                const randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                [array[currentIndex], array[randomIndex]] =  [array[randomIndex], array[currentIndex]];
+            }
+        }
+
+        return array;    
+    }
+
+   
 }
