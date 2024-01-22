@@ -19,7 +19,7 @@ class Quiz {
     }
     // 4. shuffleQuestions()
     shuffleQuestions(){
-        for (let i = this.questions.length - 1; i > 0; i--) { 
+        for (let i = this.questions.length -1; i > 0; i--) { 
             const j = Math.floor(Math.random() * (i + 1)); 
             [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]]; 
           } 
@@ -37,4 +37,6 @@ class Quiz {
             return false
         }
     }
+
+    filter
 }
