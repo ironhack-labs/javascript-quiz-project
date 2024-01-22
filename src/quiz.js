@@ -8,15 +8,9 @@ class Quiz{
 
     }
 
-    getQuestion(questions){
-        this.questions = questions;
+    getQuestion(){
 
-        for(let i=0; i<questions.length; i++){
-            currentQuestionIndex = questions[i];
-        }
-
-        return questions[currentQuestionIndex];
-
+        return this.questions[this.currentQuestionIndex];
      }
     
     moveToNextQuestion(){
@@ -26,20 +20,18 @@ class Quiz{
      }
 
     shuffleQuestions(){
-        function shuffle (array){
-            let currentIndex = array.length;
-    
-             while (currentIndex > 0) {
-    
-                const randomIndex = Math.floor(Math.random() * currentIndex);
-                 currentIndex--;
-    
-                [array[currentIndex], array[randomIndex]] =  [array[randomIndex], array[currentIndex]];
-             }
-         }
-    
-            return array;    
-        }
+        
+        let currentIndex = this.questions.length;
+
+            while (currentIndex > 0) {
+
+            const randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+            [this.questions[currentIndex], this.questions[randomIndex]] =  [this.questions[randomIndex], this.questions[currentIndex]];
+        }  
+        return this.questions;    
+    }
 
      
 

@@ -1,4 +1,5 @@
 class Question {
+
     constructor(text, choices, answer, difficulty){
 
         this.text = text;
@@ -10,19 +11,19 @@ class Question {
     }
 
     shuffleChoices(){
-        function shuffle (array){
-            let currentIndex = array.length;
+        
+        let currentIndex = this.choices.length;
 
-            while (currentIndex > 0) {
+        while (currentIndex > 0) {
 
-                const randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
+            const randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
 
-                [array[currentIndex], array[randomIndex]] =  [array[randomIndex], array[currentIndex]];
-            }
+            [this.choices[currentIndex], this.choices[randomIndex]] = [this.choices[randomIndex], this.choices[currentIndex]];
         }
-
-        return array;    
+        return this.choices;    
+     
+ 
     }
 
    
