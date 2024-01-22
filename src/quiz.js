@@ -1,15 +1,29 @@
 class Quiz {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
+  // YOUR CODE HERE:
+  //
+  constructor(questions, timeLimit, timeRemaining) {
+    this.questions = questions;
+    this.timeLimit = timeLimit;
+    this.timeRemaining = timeRemaining;
+  }
 
-    // 2. getQuestion()
-    
-    // 3. moveToNextQuestion()
+  getQuestion() {
+    //code here
+  }
 
-    // 4. shuffleQuestions()
+  moveToNextQuestion() {
+    //code here
+  }
 
-    // 5. checkAnswer(answer)
+  shuffleQuestions() {
+    //code here
+  }
 
-    // 6. hasEnded()
+  checkAnswer(answer) {
+    //code here
+  }
+
+  hasEnded() {
+    //code here
+  }
 }
