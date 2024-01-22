@@ -45,4 +45,11 @@ class Quiz {
         } return true
 
     }
+
+    filterQuestionsByDifficulty(difficulty){
+        if(typeof difficulty ==='number' && difficulty >=1 && difficulty<=3){
+            
+        }
+
+    }
 }
