@@ -47,8 +47,8 @@ class Quiz {
 }
 
 
-const myQuiz1 = new Quiz(["Question 1:...", "Question 2:...", "Question 3:..." ,"Question 4:..." ], 60, 60)
+// const myQuiz1 = new Quiz(["Question 1:...", "Question 2:...", "Question 3:..." ,"Question 4:..." ], 60, 60)
 
-myQuiz1.getQuestion()
-myQuiz1.checkAnswer("my Answer")
-myQuiz1.hasEnded()
+// myQuiz1.getQuestion()
+// myQuiz1.checkAnswer("my Answer")
+// myQuiz1.hasEnded()
