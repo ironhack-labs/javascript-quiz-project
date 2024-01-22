@@ -8,6 +8,6 @@ class Question {
   }
 
   shuffleChoices() {
-    //code goes here.
+    return this.choices.sort((a, b) => 0.5 - Math.random()); //['choice 2', 'choice 1', 'choice 3']
   }
 }
