@@ -45,4 +45,11 @@ hasEnded(){
     return false;
    }*/
 }
+
+filterQuestionsByDifficulty(difficulty){
+    return quesitons.filter(question =>{
+        console.log(question);
+        return question.difficulty === difficulty;
+    })
+}
 }

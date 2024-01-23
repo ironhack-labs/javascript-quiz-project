@@ -239,7 +239,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("filterQuestionsByDifficulty() method", () => {   
+  describe("filterQuestionsByDifficulty() method", () => {   
     it("should use the 'filter()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
@@ -267,10 +267,12 @@ describe("Quiz", () => {
 
     it("should be defined", () => {
       // YOUR CODE HERE:
-      //
+      
       // 1. Instantiate a new Quiz object
+  const newQuiz1 = new Quiz([], "test", 60)
 
       // 2. Check if the filterQuestionsByDifficulty() method is defined
+      expect(newQuiz1.filterQuestionsByDifficulty).toBeDefined();
 
     });
 
