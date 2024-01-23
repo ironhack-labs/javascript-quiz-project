@@ -32,13 +32,37 @@ class Quiz {
         if (answer === correctAnswer) {
             this.correctAnswers++;
         }
-    }
+    };
+
+    // 6. hasEnded
     hasEnded() {
         if (this.currentQuestionIndex < this.questions.length) {
             return false;
         } else if (this.currentQuestionIndex === this.questions.length) {
             return true;
         }
-    }
+    };
 
-}
+    // 7. Day2 - filterByDifficulty
+
+    filterQuestionsByDifficulty(difficulty){
+        const filteredQuestions = this.questions.filter((question) => {
+            
+             return question.difficulty === difficulty 
+        });
+        
+        return filteredQuestions;
+      };
+
+
+    // 8. Day2 - averageDifficulty
+    
+    averageDifficulty(){
+        const aveDiff = questions.difficulty.reduce(function (acc, question) {
+            return acc+question.difficulty;
+        }, 0) / questions.lentgh;
+        return aveDiff;
+    };
+
+};
+
