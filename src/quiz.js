@@ -20,7 +20,6 @@ class Quiz {
         this.questions[i],
       ];
     }
-
     }
     checkAnswer(answer) {
         if (this.answer === this.choice) {
@@ -35,4 +34,21 @@ class Quiz {
         return true;
       }
     }
+    filterQuestionsByDifficulty(difficulty) {
+      if ( typeof difficulty === "number" & difficulty >= 1 && difficulty <= 3) {
+
+        return this.questions.filter(function(question) {
+          return question.difficulty === difficulty;
+        });
+        
+      }    
+    }
+
+    averageDifficulty(){
+      let answer = this.questions.reduce(function(accumulator, question) {
+        return accumulator + question.difficulty
+      },0);
+      return answer / this.questions.length;
+    }
+
   }
