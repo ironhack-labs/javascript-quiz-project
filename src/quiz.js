@@ -48,4 +48,27 @@ class Quiz{
         }
 
     }
+
+    filterQuestionsByDifficulty(difficulty){
+        const filteredQuestions = this.questions.filter(function(question){
+            if(typeof difficulty === "string"){
+                return true;
+            } else {
+                return question.difficulty==difficulty;
+            }
+        })
+
+        return filteredQuestions;
+    }
+
+
+    averageDifficulty(){
+
+        const sumOfDifficulties = this.questions.reduce(function (acc, currentValue){
+            return acc + currentValue.difficulty;
+
+        }, 0);
+
+        return sumOfDifficulties / this.questions.length;
+    }
 }
