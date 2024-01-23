@@ -370,7 +370,7 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-
+      const newQuiz5 = new Quiz([], "test", 60)
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
 
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
@@ -388,7 +388,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("averageDifficulty() method", () => {
+  describe("averageDifficulty() method", () => {
     it("should use the 'reduce()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
@@ -418,27 +418,27 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz();
       // 2. Check if the averageDifficulty() method is defined
-
+      expect(quiz.averageDifficulty).toBeDefined();
     });
 
     it("should be a function", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz();
       // 2. Check if the .averageDifficulty is a function
-
+      expect(typeof quiz.averageDifficulty).toBe("function");
     });
 
     it("should receive no arguments", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz();
       // 2. Check that the averageDifficulty() method takes no arguments
-
+      expect(quiz.averageDifficulty.length).toBe(0);
     });
 
     it("should return the average difficulty of the questions in the quiz", () => {
@@ -479,9 +479,10 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object with the test questions
-
+      const quiz = new Quiz(questions);
       // 2. Check that the averageDifficulty() method returns the correct average when called
-
+      const expectedAverage = (1 + 2 + 2 + 1 + 3) / 5;
+      expect(quiz.averageDifficulty()).toBe(expectedAverage);
     });
   });
 });

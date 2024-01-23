@@ -52,4 +52,12 @@ filterQuestionsByDifficulty(difficulty){
         return question.difficulty === difficulty;
     })
 }
+
+
+averageDifficulty (){
+    const expectedAverage = questions.reduce((total, current) => {
+        return total + current.difficulty;
+    }, 0)
+    return expectedAverage / questions.length;
+}
 }
