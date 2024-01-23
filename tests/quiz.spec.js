@@ -266,24 +266,26 @@ describe("Quiz", () => {
 
 
     it("should be defined", () => {
-      expect(quiz.setDifficulty).toBeDefined
+      expect(quiz.filterQuestionsByDifficulty).toBeDefined
 
     });
 
     it("should be a function", () => {
-      expect(quiz.setDifficulty).toBe("function")
+      expect(quiz.filterQuestionsByDifficulty).toBe("function")
     });
 
     it("should receive 1 argument (difficulty)", () => {
-      expect(quiz.setDifficulty).toEqual(1)
+      expect(quiz.filterQuestionsByDifficulty).toEqual(1)
 
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
       const mapSpy = spyOn(questions, "map")
-      setDifficulty(questions)
+      filterQuestionsByDifficulty(questions)
       expect(mapSpy).toHaveBeenCalled()
       expect(mapSpy).toHaveBeenCalledWith(jasmine.any(Function))
+
+
       const questions = [
         {
           text: "Question 1",
@@ -321,10 +323,12 @@ describe("Quiz", () => {
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
-      // 1. Read the above test description to understand what this test should do
+      const mapSpy = spyOn(questions, "filter")
+      filterQuestionsByDifficulty(questions)
+      expect(mapSpy).toHaveBeenCalled()
+      expect(mapSpy).toHaveBeenCalledWith(jasmine.any(Function))
 
 
-      // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
           text: "Question 1",
@@ -367,7 +371,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("averageDifficulty() method", () => {
+  describe("averageDifficulty() method", () => {
     it("should use the 'reduce()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
