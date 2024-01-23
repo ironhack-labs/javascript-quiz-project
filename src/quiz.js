@@ -39,4 +39,73 @@ class Quiz {
     }
     return false;
   }
+
+  filterQuestionsByDifficulty(difficultyArg) {
+    //code goes here
+    if (
+      difficultyArg < 1 ||
+      difficultyArg > 3 ||
+      typeof difficultyArg !== 'number'
+    ) {
+      return undefined;
+    }
+    return this.questions.filter((x) => x.difficulty === difficultyArg);
+  }
+
+  //AVERAGE DIFFIULTY
+
+  averageDifficulty() {
+    //step 1 AVG
+    // const sumOfDifficulty = this.questions.reduce(
+    //   (accumulator, current) => accumulator + current.difficulty,
+    //   0
+    // );
+
+    //step 2 Divided by length
+    // const avDifficulty = sumOfDifficulty / this.questions.length ;
+
+    //step 3 return avDifficultu
+    //return avDifficulty
+
+    return (
+      this.questions.reduce(
+        (accumulator, current) => accumulator + current.difficulty,
+        0
+      ) / this.questions.length
+    );
+  }
 }
+// === END OF OBJECT
+
+// TESTING -------
+
+const questions = [
+  {
+    text: 'Question 1',
+    choices: ['a', 'b', 'c'],
+    answer: 'a',
+    difficulty: 1,
+  },
+  {
+    text: 'Question 2',
+    choices: ['d', 'e', 'f'],
+    answer: 'd',
+    difficulty: 2,
+  },
+  {
+    text: 'Question 3',
+    choices: ['g', 'h', 'i'],
+    answer: 'g',
+    difficulty: 2,
+  },
+  {
+    text: 'Question 4',
+    choices: ['j', 'k', 'l'],
+    answer: 'j',
+    difficulty: 3,
+  },
+];
+
+const quiz = new Quiz(questions, 60, 60);
+
+console.log(quiz.averageDifficulty());
