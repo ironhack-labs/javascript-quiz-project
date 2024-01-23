@@ -1,15 +1,95 @@
 class Quiz {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
+  constructor(questions, timeLimit, timeRemaining) {
+    this.questions = questions;
+    this.timeLimit = timeLimit;
+    this.timeRemaining = timeRemaining;
+    this.correctAnswers = 0;
+    this.currentQuestionIndex = 0;
+  }
 
-    // 2. getQuestion()
-    
-    // 3. moveToNextQuestion()
+  getQuestion() {
+    return this.questions[this.currentQuestionIndex];
+  }
 
-    // 4. shuffleQuestions()
+  moveToNextQuestion() {
+    this.currentQuestionIndex += 1;
+  }
 
-    // 5. checkAnswer(answer)
+  shuffleQuestions() {
+    const newQuestions = this.questions.slice();
+    for (let i = this.questions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = this.questions[i];
+      newQuestions[i] = this.questions[j];
+      newQuestions[j] = temp;
+    }
+    this.questions = newQuestions;
+    return this.questions;
+  }
 
-    // 6. hasEnded()
+  checkAnswer(answer) {
+    let currentQuestion = this.questions[this.currentQuestionIndex];
+    if (currentQuestion.answer === answer) {
+      this.correctAnswers++;
+    }
+  }
+
+  hasEnded() {
+    let hasEnded = false;
+    if (this.currentQuestionIndex === this.questions.length) {
+      hasEnded = true;
+    }
+    return hasEnded;
+  }
+
+  filterQuestionsByDifficulty(difficulty) {
+      let difficultyArr = [];
+      if(difficulty >= 1 || difficulty <= 3) {
+      difficultyArr = this.questions.filter((question) => 
+        question.difficulty === difficulty);
+      } else {
+        difficultyArr = this.questions;
+      }
+
+      return difficultyArr;
+    }
+
+    averageDifficulty() {
+      return this.questions.reduce((acc, curr) => acc + curr.difficulty, 0) / this.questions.length;
+    }
+  }
+
+const questions = [
+  {
+    text: "Question 1",
+    choices: ["a", "b", "c"],
+    answer: "a",
+    difficulty: 1,
+  },
+  {
+    text: "Question 2",
+    choices: ["d", "e", "f"],
+    answer: "d",
+    difficulty: 2,
+  },
+  {
+    text: "Question 3",
+    choices: ["g", "h", "i"],
+    answer: "g",
+    difficulty: 2,
+  },
+  {
+    text: "Question 4",
+    choices: ["j", "k", "l"],
+    answer: "j",
+    difficulty: 3,
+  },
+];
+
+// Instantiate a new Quiz object with the test questions
+const quiz = new Quiz(questions, 60, 60);
+
+/* hasEnded() {
+    return this.currentQuestionIndex === this.questions.length;
 }
+} */
