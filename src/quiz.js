@@ -35,7 +35,7 @@ class Quiz {
         this.questions[this.currentIndex],
       ];
     }
-    console.log(this.questions);
+    // console.log(this.questions);
     return this.questions;
   }
   // 5. checkAnswer(answer)
@@ -50,5 +50,22 @@ class Quiz {
       return true;
     }
   }
+  filterQuestionsByDifficulty(difficulty) {
+    if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
+      return this.questions;
+    }
+
+    let result = this.questions.filter((elem) => {
+      return elem.difficulty === difficulty;
+    });
+
+    this.questions = result;
+    return result;
+  }
+  averageDifficulty() {
+    let aveResult = this.questions.reduce((acc, cValue) => {
+      return acc + cValue.difficulty;
+    }, 0);
+    return aveResult / this.questions.length;
+  }
 }
-//pou made a comment here

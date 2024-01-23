@@ -26,7 +26,7 @@ class Question {
         this.choices[this.currentIndex],
       ];
     }
-    console.log(this.choices);
+    //   console.log(this.choices);
     return this.choices;
   }
 }
