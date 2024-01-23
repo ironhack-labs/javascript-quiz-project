@@ -326,22 +326,11 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-      let quiz = new Quiz (questions,100,100)
+      let quiz = new Quiz (questions,"test",60)
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
       quiz.filterQuestionsByDifficulty(2)
       // 4. Check if the questions array has been filtered correctly
-        expect(quiz.questions).toEqual({
-        text: "Question 2",
-        choices: ["d", "e", "f"],
-        answer: "d",
-        difficulty: 2,
-      },
-      {
-        text: "Question 3",
-        choices: ["g", "h", "i"],
-        answer: "g",
-        difficulty: 2,
-      });
+        expect(quiz.questions).toEqual([questions[1],questions[2]]);
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
@@ -373,28 +362,11 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-      let quiz = new Quiz (questions,100,100)
+      let quiz = new Quiz (questions,"test",60)
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
       quiz.filterQuestionsByDifficulty("test")
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
-      expect(quiz.questions).toEqual([{
-        text: "Question 1",
-        choices: ["a", "b", "c"],
-        answer: "a",
-        difficulty: 1,
-      },
-      {
-        text: "Question 2",
-        choices: ["d", "e", "f"],
-        answer: "d",
-        difficulty: 2,
-      },
-      {
-        text: "Question 3",
-        choices: ["g", "h", "i"],
-        answer: "g",
-        difficulty: 3,
-      },])
+      expect(quiz.questions).toEqual(questions)
     });
   });
 
@@ -501,7 +473,8 @@ describe("Quiz", () => {
       // 1. Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(questions,"test",60)
       // 2. Check that the averageDifficulty() method returns the correct average when called
-      expect(quiz.averageDifficulty).toEqual(1.8)
+      const result = quiz.averageDifficulty(questions)
+      expect(result).toEqual(1.8)
     });
   });
 });
