@@ -274,23 +274,25 @@ describe("Quiz", () => {
       // 2. Check if the filterQuestionsByDifficulty() method is defined
       expect(newQuiz1.filterQuestionsByDifficulty).toBeDefined();
 
+
     });
 
     it("should be a function", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const newQuiz2 = new Quiz([], "test", 60)
       // 2. Check if the .filterQuestionsByDifficulty is a function
+      expect(typeof newQuiz2.filterQuestionsByDifficulty).toBe("function");
     });
 
     it("should receive 1 argument (difficulty)", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const newQuiz3 = new Quiz([], "test", 60)
       // 2. Check if the filterQuestionsByDifficulty() method takes 1 argument
-
+      expect(newQuiz3.filterQuestionsByDifficulty.length).toEqual(1)
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
@@ -327,10 +329,16 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-
+      const newQuiz4 = new Quiz([], "test", 60)
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
+      expect(filterQuestionsByDifficulty).toHaveBeenCalled();
 
       // 4. Check if the questions array has been filtered correctly
+      expect(filterQuestionsByDifficulty(1)).toEqual(1)
+  
+      
+
+
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {

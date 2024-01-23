@@ -47,7 +47,7 @@ hasEnded(){
 }
 
 filterQuestionsByDifficulty(difficulty){
-    return quesitons.filter(question =>{
+    return questions.filter(question =>{
         console.log(question);
         return question.difficulty === difficulty;
     })
