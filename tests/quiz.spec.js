@@ -36,7 +36,7 @@ describe("Quiz", () => {
       const quiz = new Quiz([], 60, testTime);
       // Check if the timeRemaining property is equal to the test time argument passed to the constructor
       expect(quiz.timeRemaining).toEqual(testTime);
-    });    
+    });
 
     it("should have a 'correctAnswers' property initially set to 0", () => {
       // Instantiate a new Quiz object
@@ -113,21 +113,21 @@ describe("Quiz", () => {
 
   describe("shuffleQuestions() method", () => {
     it("should be defined", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the shuffleQuestions() method is defined
       expect(quiz.shuffleQuestions).toBeDefined();
     });
 
     it("should be a function", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the .shuffleQuestions is a function
       expect(typeof quiz.shuffleQuestions).toBe("function");
     });
 
     it("should shuffle the items in the 'questions' array", () => {
-        // Array with questions to be used in the test and passed to the Quiz constructor
+      // Array with questions to be used in the test and passed to the Quiz constructor
       const testQuestions = ["question1", "question2", "question3"];
       // Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(testQuestions, 60, 60);
@@ -239,7 +239,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("filterQuestionsByDifficulty() method", () => {   
+  describe("filterQuestionsByDifficulty() method", () => {
     it("should use the 'filter()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
@@ -255,7 +255,7 @@ describe("Quiz", () => {
       expect(filterSpy).toHaveBeenCalledTimes(1);
       // Check that the 'filter()' array method was called correctly, with a function as its argument
       expect(filterSpy).toHaveBeenCalledWith(jasmine.any(Function));
-    });    
+    });
 
 
     // ****************************************************************************************************
@@ -266,35 +266,24 @@ describe("Quiz", () => {
 
 
     it("should be defined", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the filterQuestionsByDifficulty() method is defined
+      expect(quiz.setDifficulty).toBeDefined
 
     });
 
     it("should be a function", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the .filterQuestionsByDifficulty is a function
+      expect(quiz.setDifficulty).toBe("function")
     });
 
     it("should receive 1 argument (difficulty)", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the filterQuestionsByDifficulty() method takes 1 argument
+      expect(quiz.setDifficulty).toEqual(1)
 
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
-      // 1. Read the above test description to understand what this test should do
-
-      // Array with questions to be used in the test and passed to the Quiz constructor
+      const mapSpy = spyOn(questions, "map")
+      setDifficulty(questions)
+      expect(mapSpy).toHaveBeenCalled()
+      expect(mapSpy).toHaveBeenCalledWith(jasmine.any(Function))
       const questions = [
         {
           text: "Question 1",
@@ -402,7 +391,7 @@ describe("Quiz", () => {
     //      
     // Below are 4 tests that you need to write for the 'averageDifficulty()' method.
     // ****************************************************************************************************
-      
+
 
     it("should be defined", () => {
       // YOUR CODE HERE:
