@@ -10,7 +10,7 @@ class Question {
       for (let i = this.choices.length - 1; i > 0; i--) {
         const randomize = Math.floor(Math.random() * (i + 1));
         [this.choices[i], this.choices[randomize]] = [this.choices[randomize], this.choices[i]];
-      }
-    }
+      };
+    };
   }
   
