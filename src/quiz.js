@@ -20,15 +20,10 @@ class Quiz {
   shuffleQuestions() {
     for (let i = this.questions.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      console.log("j: ", j);
-
       const _element = this.questions[j];
-
       this.questions[j] = this.questions[i];
       this.questions[i] = _element;
     }
-
-    console.log(this.questions);
   }
 
   checkAnswer(answer) {
@@ -40,8 +35,21 @@ class Quiz {
   hasEnded() {
     return this.currentQuestionIndex === this.questions.length;
   }
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty < 1 || 3 < difficulty) return this.questions;
+
+    return this.questions.filter((question) => {
+      return question.difficulty === difficulty;
+    });
+  }
+
+  averageDifficulty() {
+    let answer = this.questions.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.difficulty,
+      0
+    );
+
+    return answer / this.questions.length;
+  }
 }
-
-const quiz = new Quiz(["apple", "orange", "cucumber", "123", "456"], "", "");
-
-quiz.shuffleQuestions();
