@@ -32,4 +32,23 @@ class Quiz {
       return true;
     }
   }
+
+  filterQuestionsByDifficulty(difficulty) {
+    const filteredQuestions = this.questions.filter((element) => {
+      if (difficulty === element.difficulty) {
+        return element;
+      }
+      else if (difficulty >= 4 || difficulty <= 0) {
+        return element;
+      }
+    })
+    return filteredQuestions;
+  }
+
+  averageDifficulty() {
+    const average = this.questions.reduce((acc, curr) => {
+      return acc + curr.difficulty;
+    }, 0)
+    return average / this.questions.length;
+  }
 }
