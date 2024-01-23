@@ -35,14 +35,16 @@ class Quiz {
       }
     }
     filterQuestionsByDifficulty(difficulty) {
-      if ( typeof difficulty === "number" & difficulty >= 1 && difficulty <= 3) {
-
-        return this.questions.filter(function(question) {
+      if (typeof difficulty === "number" && difficulty >= 1 && difficulty <= 3) {
+        return this.questions.filter(function (question) {
           return question.difficulty === difficulty;
         });
-        
-      }    
+      } else {
+       
+        return this.questions;
+      }
     }
+    
 
     averageDifficulty(){
       let answer = this.questions.reduce(function(accumulator, question) {
@@ -52,3 +54,5 @@ class Quiz {
     }
 
   }
+
+  

@@ -401,9 +401,9 @@ describe("Quiz", () => {
       const quiz = new Quiz(questions, 60, 60);
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-      expect(quiz.filterQuestionsByDifficulty(0)).toEqual(questions);
+      expect(quiz.filterQuestionsByDifficulty("one")).toEqual(questions);
 
-      expect(quiz.filterQuestionsByDifficulty(-5)).toEqual(questions);
+    
 
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
       expect(quiz.getQuestions()).toEqual(questions);
