@@ -43,18 +43,20 @@ class Quiz {
     }
 
     filterQuestionsByDifficulty(difficulty) {
-    //    this.difficulty = difficulty;
-        const filteredQuestion = this.questions.filter(function(element) {
+
+        if (difficulty < 1 || difficulty > 3) { 
+            return this.questions}
+
+        const filteredQuestion = this.questions.filter(element => {
             return element.difficulty === difficulty;
         })
            return filteredQuestion;
     }
-    averageDifficulty(){
-        const average = this.questions.reduce(function(acc, curr) {
-            console.log( curr)
-            return (acc + curr.difficulty) / curr.length 
+    averageDifficulty() {
+        const total = this.questions.reduce(function(acc, curr) {
+            return acc + curr.difficulty;
         }, 0)
-          //  return average;
+            return total / this.questions.length;
     }
 }
 
@@ -83,4 +85,4 @@ const questions = [
         },
       ];
 const test = new Quiz(questions, 60, 60)
-// console.log(questions.averageDifficulty())
+console.log(test.filterQuestionsByDifficulty(4))
