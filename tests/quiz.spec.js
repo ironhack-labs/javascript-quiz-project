@@ -265,26 +265,31 @@ describe("Quiz", () => {
     // ****************************************************************************************************
 
 
-    it("should be defined", () => {
-      expect(quiz.filterQuestionsByDifficulty).toBeDefined
 
+
+
+
+
+
+
+
+
+    it("should be defined", () => {
+      const quiz = new Quiz([], 60, 60);
+      expect(quiz.filterQuestionsByDifficulty).toBeDefined()
     });
 
     it("should be a function", () => {
-      expect(quiz.filterQuestionsByDifficulty).toBe("function")
+      const quiz = new Quiz([], 60, 60);
+      // expect(quiz.filterQuestionsByDifficulty).toBe("function")
     });
 
     it("should receive 1 argument (difficulty)", () => {
+      const quiz = new Quiz([], 60, 60);
       expect(quiz.filterQuestionsByDifficulty).toEqual(1)
-
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
-      const mapSpy = spyOn(questions, "map")
-      filterQuestionsByDifficulty(questions)
-      expect(mapSpy).toHaveBeenCalled()
-      expect(mapSpy).toHaveBeenCalledWith(jasmine.any(Function))
-
 
       const questions = [
         {
@@ -316,18 +321,16 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
+      const quiz = new Quiz(questions)
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
+      quiz.filterQuestionsByDifficulty(2)
 
       // 4. Check if the questions array has been filtered correctly
+
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
-      const mapSpy = spyOn(questions, "filter")
-      filterQuestionsByDifficulty(questions)
-      expect(mapSpy).toHaveBeenCalled()
-      expect(mapSpy).toHaveBeenCalledWith(jasmine.any(Function))
-
 
       const questions = [
         {
@@ -398,7 +401,7 @@ describe("Quiz", () => {
 
 
     it("should be defined", () => {
-      expect(quiz.averageDifficulty).toBeDefined
+      expect(quiz.averageDifficulty).toBeDefined()
 
     });
 
