@@ -17,9 +17,10 @@ class Question {
     }
 }
 
-
+/*
 const q1 = new Question ('hola', ['a','b','c','d'], 'que tal', 1)
  console.log(q1.shuffleChoices())
 
 
 //console.log(q1.shuffleChoices(q1.choices)) 
+*/
