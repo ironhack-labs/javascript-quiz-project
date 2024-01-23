@@ -398,34 +398,26 @@ describe("Quiz", () => {
 
 
     it("should be defined", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the averageDifficulty() method is defined
+      expect(quiz.averageDifficulty).toBeDefined
 
     });
 
     it("should be a function", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the .averageDifficulty is a function
-
+      expect(quiz.averageDifficulty).toBe("function")
     });
 
     it("should receive no arguments", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check that the averageDifficulty() method takes no arguments
-
+      expect(quiz.averageDifficulty).toEqual()
     });
 
     it("should return the average difficulty of the questions in the quiz", () => {
-      // Array with questions to be used in the test and passed to the Quiz constructor
+      const mapSpy = spyOn(questions, "reduce")
+      averageDifficulty(questions)
+      expect(mapSpy).toHaveBeenCalled()
+      expect(mapSpy).toHaveBeenCalledWith(jasmine.any(Function))
+      expect(mapSpy).toEqual(questions.difficulty / questions.length)
+
+
       const questions = [
         {
           text: "Question 1",
