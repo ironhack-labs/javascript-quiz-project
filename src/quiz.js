@@ -34,4 +34,20 @@ class Quiz {
             return true
         }
     }
+
+    // day 2
+
+
+    filterQuestionsByDifficulty(difficulty) {
+        const filteredQuestions = this.questions.filter(eachQuestion => {
+            if (eachQuestion.difficulty === difficulty) {
+                return filteredQuestions
+            }
+        })
+
+    }
+
+    averageDifficulty() {
+
+    }
 }
