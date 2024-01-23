@@ -40,11 +40,12 @@ class Quiz {
     }
 
     filterQuestionsByDifficulty(difficulty) {
-        const QuestionsFilter = this.questions.filter(eachQuestion => {
-            if (eachQuestion.difficulty > difficulty) {
+        const difficultyFilter = this.questions.filter(eachQuestion => {
+            if (eachQuestion.difficulty === difficulty) {
                 return true
             }
         })
+        const newArray = this.f
     }
 
 }
