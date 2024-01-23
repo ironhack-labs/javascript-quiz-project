@@ -28,4 +28,9 @@ class Quiz {
             return true;
         }
     }
+    filterQuestionsByDifficulty(difficulty) {
+        return this.questions.filter((question) => {
+            return question.difficulty === difficulty;
+        });
+    }
 }

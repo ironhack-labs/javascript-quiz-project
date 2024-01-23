@@ -8,4 +8,4 @@ class Question {
     shuffleChoices(){
         return this.choices.sort(()=>Math.random() - 0.5)
 }
-} 
+}
