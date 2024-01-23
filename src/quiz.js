@@ -31,4 +31,18 @@ class Quiz {
     hasEnded() {
         return this.currentQuestionIndex < this.questions.length ? false : true;
     }
+
+    filterQuestionsByDifficulty(difficulty) {
+
+        if (difficulty === 1 || difficulty === 2 || difficulty === 3) {
+            return this.questions.filter(question => question.difficulty === difficulty);
+        } else {
+            return this.questions;
+        }
+        
+    }
+
+    averageDifficulty() {
+        return this.questions.reduce((acc, curr) => acc+curr.difficulty ,0) / this.questions.length;
+    }
 }
