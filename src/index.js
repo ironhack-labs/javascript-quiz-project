@@ -98,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    const questionOne = document.createElement("h2");
+    questionOne.innerHTML = "Question";
 
     
     // 2. Update the green progress bar
