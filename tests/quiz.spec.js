@@ -375,9 +375,10 @@ describe("Quiz", () => {
       // 2. Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(questions, 60, 60);
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-      quiz.filterQuestionsByDifficulty('two')
+      quiz.filterQuestionsByDifficulty('two');
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
-      expect(quiz.filterQuestionsByDifficulty('two').length).toEqual([{
+      expect(quiz.filterQuestionsByDifficulty('two')).toEqual([
+      {
         text: "Question 1",
         choices: ["a", "b", "c"],
         answer: "a",

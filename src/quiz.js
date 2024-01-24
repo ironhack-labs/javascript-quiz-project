@@ -46,9 +46,10 @@ class Quiz {
     // 7. Day2 - filterByDifficulty
 
     filterQuestionsByDifficulty(difficulty){
+
         const filteredQuestions = this.questions.filter((question) => {
             
-             return question.difficulty === difficulty 
+             return question.difficulty === difficulty; 
         });
         
         return filteredQuestions;
@@ -58,9 +59,9 @@ class Quiz {
     // 8. Day2 - averageDifficulty
     
     averageDifficulty(){
-        const aveDiff = questions.difficulty.reduce(function (acc, question) {
+        const aveDiff = this.questions.reduce(function (acc, question) {
             return acc+question.difficulty;
-        }, 0) / questions.lentgh;
+        }, 0) / this.questions.length;
         return aveDiff;
     };
 
