@@ -365,10 +365,10 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-      const quiz = new Quiz();
+      const quiz = new Quiz(questions);
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-      quiz.filterQuestionsByDifficulty("popino");
+      quiz.filterQuestionsByDifficulty("popino es guapísimo");
 
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
       expect(quiz.questions.length).toEqual(3);
