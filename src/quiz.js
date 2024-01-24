@@ -1,32 +1,60 @@
 class Quiz {
-    constructor (questions, timeLimit, timeRemaining){
+    constructor(questions, timeLimit, timeRemaining) {
         this.questions = questions
         this.timeLimit = timeLimit
         this.timeRemaining = timeRemaining
         this.correctAnswers = 0
         this.currentQuestionIndex = 0
     }
-    getQuestion(){
+    getQuestion() {
         return this.questions[this.currentQuestionIndex]
     }
-    moveToNextQuestion(){
+    moveToNextQuestion() {
         this.currentQuestionIndex += 1
     }
-    shuffleQuestions(){
+    shuffleQuestions() {
         this.questions.sort(() => Math.random() - 0.5)
-      return this.questions
+        return this.questions
     }
-    checkAnswer(answer){
-        if (answer){
-            this.correctAnswers +=1
+    checkAnswer(answer) {
+        if (answer) {
+            this.correctAnswers += 1
         }
     }
-    hasEnded(){
-        if (this.currentQuestionIndex < this.questions.length){
+    hasEnded() {
+        if (this.currentQuestionIndex < this.questions.length) {
             return false
         }
-        else if(this.currentQuestionIndex === this.questions.length){
+        else if (this.currentQuestionIndex === this.questions.length) {
             return true
         }
     }
+
+    filterQuestionsByDifficulty(difficulty) {
+
+        if (!isNaN(difficulty) && difficulty > 0 && difficulty < 4) {
+
+            const filteredQuestions = this.questions.filter(elm => {
+
+                return elm.difficulty === difficulty
+            })
+
+            this.questions = filteredQuestions
+        }
+    }
+
+
+    averageDifficulty() {
+
+        const sumDifficulties = this.questions.reduce((acc, elm) => acc + elm.difficulty, 0)
+
+        const totalQuestions = this.questions.length
+
+        const average = sumDifficulties / totalQuestions
+
+        return average
+    }
+
+
 }
+
