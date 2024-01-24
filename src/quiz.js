@@ -38,10 +38,11 @@ class Quiz {
     }
 
     filterQuestionsByDifficulty(difficulty) {  // number 
-      if (difficulty => 1 && difficulty <= 3) {
+      if (difficulty >= 1 && difficulty <= 3) {
       const filteredDifficulty = this.questions.filter(function(element){
       return element.difficulty === difficulty;   
       });
+      this.questions = filteredDifficulty;
       return filteredDifficulty; 
   }  else {
     return this.questions; // Return the original questions array if the difficulty is not between 1 and 3
