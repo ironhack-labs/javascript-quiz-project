@@ -36,7 +36,7 @@ describe("Quiz", () => {
       const quiz = new Quiz([], 60, testTime);
       // Check if the timeRemaining property is equal to the test time argument passed to the constructor
       expect(quiz.timeRemaining).toEqual(testTime);
-    });    
+    });
 
     it("should have a 'correctAnswers' property initially set to 0", () => {
       // Instantiate a new Quiz object
@@ -113,21 +113,21 @@ describe("Quiz", () => {
 
   describe("shuffleQuestions() method", () => {
     it("should be defined", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the shuffleQuestions() method is defined
       expect(quiz.shuffleQuestions).toBeDefined();
     });
 
     it("should be a function", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the .shuffleQuestions is a function
       expect(typeof quiz.shuffleQuestions).toBe("function");
     });
 
     it("should shuffle the items in the 'questions' array", () => {
-        // Array with questions to be used in the test and passed to the Quiz constructor
+      // Array with questions to be used in the test and passed to the Quiz constructor
       const testQuestions = ["question1", "question2", "question3"];
       // Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(testQuestions, 60, 60);
@@ -255,7 +255,7 @@ describe("Quiz", () => {
       expect(filterSpy).toHaveBeenCalledTimes(1);
       // Check that the 'filter()' array method was called correctly, with a function as its argument
       expect(filterSpy).toHaveBeenCalledWith(jasmine.any(Function));
-    });    
+    });
 
 
     // ****************************************************************************************************
@@ -267,7 +267,7 @@ describe("Quiz", () => {
 
     it("should be defined", () => {
       // YOUR CODE HERE:
-      //
+
       // 1. Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60)
       // 2. Check if the filterQuestionsByDifficulty() method is defined
@@ -405,7 +405,7 @@ describe("Quiz", () => {
     //      
     // Below are 4 tests that you need to write for the 'averageDifficulty()' method.
     // ****************************************************************************************************
-      
+
 
     it("should be defined", () => {
       // YOUR CODE HERE:
