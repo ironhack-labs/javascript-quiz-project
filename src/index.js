@@ -92,23 +92,33 @@ document.addEventListener("DOMContentLoaded", () => {
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
-    
+     
 
     // YOUR CODE HERE:
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    questionContainer.innerText = question.text;
+
 
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
+    
+    const progressPercentage = (quiz.getCurrentIndex() / quiz.getQuestionCount()) * 100;
+    progressBar.style.width = `${progressPercentage}%`; 
+    
+
     progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+   
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
+
+    questionCount.innerText = `Question ${quiz.getCurrentIndex() + 1} of ${quiz.getQuestionCount()}`; 
     
     questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
 
@@ -127,6 +137,27 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+      for (let i = 0; i < question.choices.length; i++) {
+        const choice = question.choices[i];
+    
+        // Create radio input element
+        const radioInput = document.createElement("input");
+        radioInput.type = "radio";
+        radioInput.name = "choice";
+        radioInput.value = choice;
+    
+        // Create label element
+        const label = document.createElement("label");
+        label.innerText = choice;
+    
+        // Append radio input and label to the choice container
+        choiceContainer.appendChild(radioInput);
+        choiceContainer.appendChild(label);
+        choiceContainer.appendChild(document.createElement("br"));
+    }
+
+
+
 
   }
 
