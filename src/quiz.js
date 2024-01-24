@@ -13,17 +13,15 @@ class Quiz {
       this.currentQuestionIndex++;
     }
     shuffleQuestions() {
-        for (let i = 0; i < this.questions.length; i++) {
-      let randomQuestion = Math.floor(Math.random() * this.questions.length);
-      [this.questions[i], this.questions[this.questions]] = [
-        this.questions[randomQuestion],
-        this.questions[i],
-      ];
-    }
-    }
+      for (let i = 0; i < this.questions.length; i++) {
+          let randomQuestionIndex = Math.floor(Math.random() * this.questions.length);
+          [this.questions[i], this.questions[randomQuestionIndex]] = [this.questions[randomQuestionIndex], this.questions[i]];
+      }
+  }
+  
     checkAnswer(answer) {
-        if (this.answer === this.choice) {
-            this.correctAnswers++
+        if (this.getQuestion().answer === answer) {
+            this.correctAnswers++;
 
         }
     }
@@ -44,8 +42,6 @@ class Quiz {
         return this.questions;
       }
     }
-    
-
     averageDifficulty(){
       let answer = this.questions.reduce(function(accumulator, question) {
         return accumulator + question.difficulty
