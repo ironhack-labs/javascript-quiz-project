@@ -99,19 +99,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
 
-    
+    questionContainer.innerHTML = question.text;
+
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
+
+
+         let totalOfQuestions = 0;
+
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
-
+    progressBar.style.width = `${progress}%`; // This value is hardcoded as a placeholder
+    
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
     questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
 
+    questions.forEach((element, index) => {
+      return questionCount.innerText = `Question ${index} of ${questions.length}`;
+    }) // TODO : check the index
 
     
     // 4. Create and display new radio input element with a label for each choice.
