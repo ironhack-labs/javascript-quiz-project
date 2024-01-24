@@ -34,8 +34,9 @@ class Quiz{
     }
 
      
-
+    
     checkAnswer(answer){
+
         this.correctAnswers++;
     }
 
