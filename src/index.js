@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Shuffle the quiz questions
   quiz.shuffleQuestions();
 
-
+console.log(quiz)
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
@@ -92,43 +92,56 @@ document.addEventListener("DOMContentLoaded", () => {
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
+    console.log(question)
     
 
     // YOUR CODE HERE:
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-    questionContainer
+    questionContainer.innerHTML = question.text;
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
+    progressBar.style.width = quiz.currentQuestionIndex / quiz.questions.length; // This value is hardcoded as a placeholder
+/* console.log(quiz.currentQuestionIndex+1/ quiz.questions.length) */
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
-
+  questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
+/*  console.log(`Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`)
+ */
 
     
     // 4. Create and display new radio input element with a label for each choice.
     // Loop through the current question `choices`.
       // For each choice create a new radio input with a label, and append it to the choice container.
       // Each choice should be displayed as a radio input element with a label:
-      /* 
-          <input type="radio" name="choice" value="CHOICE TEXT HERE">
-          <label>CHOICE TEXT HERE</label>
-        <br>
-      */
+
+      question.choices.forEach((choice)=>{
+        const radioInput = document.createElement("input");
+      radioInput.type = "radio";
+      radioInput.name = "choice"; // You can set a unique name for each question if needed
+      radioInput.value = choice;
+      // Create a new label element
+      const label = document.createElement("label");
+      label.innerText = choice;
+      // Append the radio input and label to the choices container
+      choiceContainer.appendChild(radioInput);
+      choiceContainer.appendChild(label);
+      // Add a line break for better spacing
+      choiceContainer.appendChild(document.createElement("br"))}); 
+          
+      
       // Hint 1: You can use the `document.createElement()` method to create a new element.
       // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
-  }
+  
 
 
   
@@ -140,20 +153,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
+    let choices = document.querySelectorAll("choices");
 
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
+      selectedAnswer = choices.forEach(choice => {
+        if (choice.checked === true){
+          return choice;
+        }
+      });
 
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
-  }  
-
+      let seeResult = checkAnswer(selectedAnswer)
+      if (seeResult === true) 
+      moveToNextQuestion();
+      showQuestion();
+     }  
 
 
 
@@ -171,4 +193,4 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
   }
   
-});
+}},)
