@@ -29,9 +29,24 @@ class Quiz {
         }
     }
     filterQuestionsByDifficulty(difficulty) {
-        return this.questions.filter((question) => {
-            return question.difficulty === difficulty;
-        });
-    }
+        if ( difficulty < 1 || difficulty > 3 || typeof difficulty !== "number" ){
+            return;
+        } 
 
+        const filteredQuestions = this.questions.filter((question) => {
+            return question.difficulty === difficulty;
+        })
+
+        this.questions = filteredQuestions;
+        return this.questions
+        
+    }
+averageDifficulty() {
+        const sumDifficulty = this.questions.reduce((sum, question) => sum + question.difficulty, 0);
+
+        const averageDifficulty = sumDifficulty / this.questions.length;
+    
+        return averageDifficulty;
+        
+    }
 }
