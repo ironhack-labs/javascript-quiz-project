@@ -10,12 +10,11 @@ class Quiz {
     }
 
     getQuestion() {
-
         return this.questions[this.currentQuestionIndex];
     }
     
     // 3. moveToNextQuestion()
-    moveToNextQuestion(){
+    moveToNextQuestion() {
         this.currentQuestionIndex++;
     }
 
@@ -27,8 +26,8 @@ class Quiz {
 
     // 5. checkAnswer(answer)
     checkAnswer(answer){
-        this.answer = answer;
-        if (this.answer){
+        // this.answer = answer;
+        if (this.getQuestion().answer === answer) {
             this.correctAnswers++;
         }
     }
@@ -59,30 +58,3 @@ class Quiz {
             return total / this.questions.length;
     }
 }
-
-
-
-
-
-const questions = [
-        {
-          text: "Question 1",
-          choices: ["a", "b", "c"],
-          answer: "a",
-          difficulty: 1,
-        },
-        {
-          text: "Question 2",
-          choices: ["d", "e", "f"],
-          answer: "d",
-          difficulty: 2,
-        },
-        {
-          text: "Question 3",
-          choices: ["g", "h", "i"],
-          answer: "g",
-          difficulty: 3,
-        },
-      ];
-const test = new Quiz(questions, 60, 60)
-console.log(test.filterQuestionsByDifficulty(4))
