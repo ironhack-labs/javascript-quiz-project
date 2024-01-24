@@ -17,7 +17,7 @@ class Quiz {
 
     shuffleQuestions() {
         for (let i = 0; i < this.questions.length; i++){
-            let j = Math.floor(Math.random() * this.questions.length - 1);
+            let j = Math.floor(Math.random() * this.questions.length);
             let tempVar = this.questions[i];
             this.questions[i] = this.questions[j];
             this.questions[j] = tempVar;

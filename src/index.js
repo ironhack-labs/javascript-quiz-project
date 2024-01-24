@@ -80,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
       showResults();
+      //clear the time interval to stop the timer
+      clearInterval(timer);
       return;
     }
 
@@ -98,27 +100,49 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-    const questionOne = document.createElement("h2");
-    questionOne.innerHTML = "Question";
+   
+    questionContainer.innerText= question.text;
 
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    const progressPercentage = (quiz.currentQuestionIndex / quiz.questions.length) * 100;
+    
+    let progressBar = document.querySelector("div#progressBar");
+    progressBar.style.width = `${progressPercentage}%`; // This value is hardcoded as a placeholder
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
-    
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    const questionCountText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`;
+    questionCount.innerText = questionCountText; //  This value is hardcoded as a placeholder
 
 
     
     // 4. Create and display new radio input element with a label for each choice.
+
     // Loop through the current question `choices`.
-      // For each choice create a new radio input with a label, and append it to the choice container.
+    question.choices.forEach((choice) => {
+            // For each choice create a new radio input with a label, and append it to the choice container.
+      //const inputRadio = `<input type="radio" name="choice" value=${choice}> <label>${choice}</label> <br>`;
+      const inputRadio = document.createElement("input");
+      inputRadio.type = "radio";
+      inputRadio.name = "choice";
+      inputRadio.value = `${choice}`;
+
+      const labelRadio = document.createElement("label");
+      labelRadio.innerHTML = `${choice}`;
+
+      const brRadio = document.createElement("br");
+
+      choiceContainer.appendChild(inputRadio);
+      choiceContainer.appendChild(labelRadio);
+      choiceContainer.appendChild(brRadio);
+
+
+    });
       // Each choice should be displayed as a radio input element with a label:
       /* 
           <input type="radio" name="choice" value="CHOICE TEXT HERE">

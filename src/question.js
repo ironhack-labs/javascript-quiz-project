@@ -8,7 +8,7 @@ class Question {
 
     shuffleChoices() {
         for (let i = 0; i < this.choices.length; i++) {
-            let j = Math.floor(Math.random() * this.choices.length - 1);
+            let j = Math.floor(Math.random() * this.choices.length);
             let tempVar = this.choices[i];
             this.choices[i] = this.choices[j];
             this.choices[j] = tempVar;
