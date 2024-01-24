@@ -33,6 +33,5 @@ class Quiz {
             return question.difficulty === difficulty;
         });
     }
-    averageDificulty()
 
 }
