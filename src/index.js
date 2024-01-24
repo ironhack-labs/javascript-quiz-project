@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  let count = 1;
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
+  console.log(quiz)
   // Shuffle the quiz questions
   quiz.shuffleQuestions();
 
@@ -64,7 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  EVENT LISTENERS  ************/
 
-  nextButton.addEventListener("click", nextButtonHandler);
+  nextButton.addEventListener("click", ()=>{
+   console.log("click");
+   quiz.currentQuestionIndex ++;
+   console.log(count);
+   showQuestion()
+
+  });
 
 
 
@@ -89,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
+    console.log(question);
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
@@ -99,18 +108,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
 
+   questionContainer.textContent = question.text;
+  
+  
+  
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
+ 
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    progressBar.style.width = `${(quiz.currentQuestionIndex + 1) / (questions.length) *100}%`; // This value is hardcoded as a placeholder
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
+    questions.forEach((question,)=>{
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex} of ${questions.length}`;
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    })
 
 
     
@@ -123,6 +139,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <label>CHOICE TEXT HERE</label>
         <br>
       */
+
+     question.choices.forEach(choice =>{
+      console.log(question);
+      choiceContainer.insertAdjacentHTML("beforeend",`<input type="radio" name="choice" value=${choice}>
+      <label>${choice}</label>
+    <br>`)    
+     })
       // Hint 1: You can use the `document.createElement()` method to create a new element.
       // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
@@ -133,8 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
-
+    
+   let selectedAnswer;
+   
 
 
     // YOUR CODE HERE:
