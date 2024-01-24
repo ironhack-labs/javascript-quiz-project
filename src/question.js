@@ -15,7 +15,7 @@ class Question {
       this.choices[j] = temp;
     }
 
-    console.log(this.choices);
+    // console.log(this.choices);
   }
 }
 
