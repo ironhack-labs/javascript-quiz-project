@@ -25,10 +25,8 @@ class Quiz {
   }
 
   checkAnswer(answer) {
-    //code here
-    if (answer) {
+    if (answer === this.getQuestion().answer) {
       this.correctAnswers++;
-      //not complete yet, need to add more stuff to check if correct answer matches the question
     }
   }
 
@@ -52,6 +50,11 @@ class Quiz {
     return this.questions.filter((x) => x.difficulty === difficultyArg);
   }
 
+  reset() {
+    this.currentQuestionIndex = 0;
+    this.correctAnswers = 0;
+    this.shuffleQuestions();
+  }
   //AVERAGE DIFFIULTY
 
   averageDifficulty() {
@@ -108,4 +111,4 @@ const questions = [
 
 const quiz = new Quiz(questions, 60, 60);
 
-console.log(quiz.averageDifficulty());
+console.log(quiz.questions[0].answer);
