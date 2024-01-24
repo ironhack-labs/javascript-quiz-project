@@ -6,17 +6,26 @@ class Question {
         this.difficulty = difficulty;
     }
 
-    shuffleChoices(){
-        for(let i=0; i<this.choices.length; i++){
-            let j = Math.floor(Math.random()*this.choices.length-1);
-            let tempVar = this.choices[i];
-            this.choices[i] = this.choices[j];
-            this.choices[j] = tempVar;
-        }
-        return this.choices
+    shuffleChoices() {
+        if (!this.choices || !this.choices.length) {
+        return undefined;
+       }
+    
+         const shuffledChoices = [];
+         let last = this.choices.length;
+    
+         while (last > 0) {
+           last--;
+           const randomIndex = Math.floor(Math.random() * last);
+           const randomChoice = this.choices[randomIndex];
+           shuffledChoices.push(randomChoice);
+           this.choices.splice(randomIndex, 1);
+         }
+    
+         this.choices = shuffledChoices; 
     }
 }
 
-/*
+
 let example = new Question('hello', ['ertrgw', 'aeufw', 'afbwnf'], 'aeufw', 3)
-console.log(example.shuffleChoices())*/
+console.log(example.shuffleChoices())
