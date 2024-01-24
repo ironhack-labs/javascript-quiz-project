@@ -36,16 +36,13 @@ class Quiz {
 
     filterQuestionsByDifficulty(difficulty) {
 
-        if (difficulty > 3 || difficulty == NaN || difficulty < 0) {
-            return this.questions
-        }
+        if (!isNaN(difficulty) && difficulty > 0 && difficulty < 4) {
 
-        const filteredArray = this.questions.filter(eachQuestion => {
-            if (difficulty === eachQuestion.difficulty) {
-                return true
-            }
-        })
-        this.questions = filteredArray
+            const filteredArray = this.questions.filter(elm => {
+                return elm.difficulty === difficulty
+            })
+            this.questions = filteredArray
+        }
     }
 
     averageDifficulty() {
