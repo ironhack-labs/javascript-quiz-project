@@ -122,23 +122,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // Loop through the current question `choices`.
   // For each choice create a new radio input with a label, and append it to the choice container.
   // Each choice should be displayed as a radio input element with a label:
-  const radioInput = function setChoices() {
-
-    for (let i=choices[0]; i<choice[4]; i++) {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'radio');
-    input.setAttribute('name', 'choice');
-    input.setAttribute('value', choice);
-    input.setAttribute('id', `choice${index + 1}`); // Add unique IDs for labels
-
-    const label = document.createElement('label');
-    label.setAttribute('for', `choice${index + 1}`); // Connect label to corresponding input
-    label.appendChild(input);
-    label.appendChild(document.createTextNode(choice));
-    choiceContainer.appendChild(label);
+ 
+  // const choicesInput = function setChoices(choices) {
+    for (const key in choices) {
+      if (choices.hasOwnProperty(key)) {
+        const choice = choices[key];
+  
+        const input = document.createElement('input');
+        input.setAttribute('type', 'radio');
+        input.setAttribute('name', 'choice');
+        input.setAttribute('value', choice);
+        input.setAttribute('id', `choice-${key}`);
+  
+        const label = document.createElement('label');
+        label.setAttribute('for', `choice-${key}`);
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(choice));
+  
+        choiceContainer.appendChild(label);
+      };
     };
-    
-  };
+  
   /* 
       <input type="radio" name="choice" value="CHOICE TEXT HERE">
       <label>CHOICE TEXT HERE</label>
@@ -148,10 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
   // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
   // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-
-
-
-// }; // don't delete this one 
 
 
   
