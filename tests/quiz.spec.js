@@ -330,11 +330,20 @@ describe("Quiz", () => {
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
 
+
       // 4. Check if the questions array has been filtered correctly
+      
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
-      // 1. Read the above test description to understand what this test should do
+    
+      const originalQuestions = [...questions]; 
+
+
+    filterQuestionsByDifficulty("not a number");
+
+   
+    expect(questions).toEqual(originalQuestions);
 
 
       // Array with questions to be used in the test and passed to the Quiz constructor
@@ -362,10 +371,17 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
+      const newQuiz5 = new Quiz([],60,60);
+    
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
+      const originalQuestions2 = [...questions]; 
+      newQuiz5.filterQuestionsByDifficulty("a string")
+
 
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
+      
+      expect(questions).toEqual(originalQuestions);
 
     });
   });

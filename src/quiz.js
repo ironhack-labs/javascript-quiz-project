@@ -47,9 +47,24 @@ hasEnded(){
 }
 
 filterQuestionsByDifficulty(difficulty){
-    return quesitons.filter(question =>{
-        console.log(question);
-        return question.difficulty === difficulty;
-    })
-}
-}
+    if(difficulty > 0 && difficulty <= 3){
+        return this.questions.filter(question =>{
+            console.log(question);
+            return question.difficulty === difficulty;
+        })
+    }else{
+        return questions;
+    }
+      
+        
+    }
+    averageDifficulty(){
+        const difficulties =  this.questions.reduce((total, current) =>{
+            return  total + current.difficulty;
+        },0)
+        return difficulties / this.questions.length;
+    }
+    }
+    
+
+
