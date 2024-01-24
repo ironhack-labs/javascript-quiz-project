@@ -49,7 +49,12 @@ class Quiz {
 
         const filteredQuestions = this.questions.filter((question) => {
             
-             return question.difficulty === difficulty; 
+             //r
+             if (!isNaN(difficulty) && difficulty >= 1 && difficulty <= 3){
+                return question.difficulty === difficulty; 
+             } else {
+                return this.questions;
+             }
         });
         
         return filteredQuestions;
