@@ -17,8 +17,10 @@ class Quiz {
       return this.questions
     }
     checkAnswer(answer){
-        if (answer){
-            this.correctAnswers +=1
+        const currentAnswer = this.questions[this.currentQuestionIndex].answer
+        
+        if (answer === currentAnswer) {
+            this.correctAnswers++
         }
     }
     hasEnded(){
@@ -29,4 +31,32 @@ class Quiz {
             return true
         }
     }
+        
+        
+        
+    filterQuestionsByDifficulty(difficulty) {
+
+         if (!isNaN(difficulty) && difficulty > 0 && difficulty < 4) {
+    
+             const filteredQuestions = this.questions.filter(elm => {
+    
+                 return elm.difficulty === difficulty
+             })
+    
+             this.questions = filteredQuestions
+            }
+         }   
+
+
+    averageDifficulty() {
+
+        const sumDifficulties = this.questions.reduce((acc, elm) => acc + elm.difficulty, 0)
+
+        const totalQuestions = this.questions.length
+
+        const average = sumDifficulties / totalQuestions
+
+        return average
+    }
+
 }
