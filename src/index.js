@@ -105,20 +105,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
 
-         let totalOfQuestions = 0;
-
-    
+    const progress = ((quiz.currentQuestionIndex + 1) * 100) / questions.length;
     progressBar.style.width = `${progress}%`; // This value is hardcoded as a placeholder
     
-
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
-
-    questions.forEach((element, index) => {
-      return questionCount.innerText = `Question ${index} of ${questions.length}`;
-    }) // TODO : check the index
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${questions.length}`;
 
     
     // 4. Create and display new radio input element with a label for each choice.
@@ -134,7 +127,21 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+    question.choices.forEach((choice) => {
+        const newRadio = document.createElement("input");
+        const label = document.createElement("label");
 
+        label.textContent = choice;
+        label.appendChild(document.createElement("br"))
+
+        newRadio.type = "radio";
+        newRadio.name = "choice";
+        newRadio.value = choice;
+        
+        choiceContainer.appendChild(newRadio);
+        choiceContainer.appendChild(label);
+
+    })
   }
 
 
