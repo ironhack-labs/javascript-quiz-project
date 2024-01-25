@@ -43,23 +43,29 @@ document.addEventListener("DOMContentLoaded", () => {
   quiz.shuffleQuestions();
 
 
-  /************  SHOW INITIAL CONTENT  ************/
-
-  // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
-  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-
-  // Display the time remaining in the time remaining container
-  const timeRemainingContainer = document.getElementById("timeRemaining");
-  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
-
   // Show first question
   showQuestion();
 
-
   /************  TIMER  ************/
 
-  let timer;
+  let timer = setInterval(() => {
+    if (quiz.timeRemaining > 0) {
+      quiz.timeRemaining--
+    }
+    else {
+      quizView.style.display = "none";
+      endView.style.display = "flex";
+      resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+    }
+    // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    // Display the time remaining in the time remaining container
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    //console.log(quiz.timeRemaining)
+  }, 1000)
 
 
   /************  EVENT LISTENERS  ************/
@@ -93,26 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
     question.shuffleChoices();
 
 
-    /* 
-     <div class="content">
-     <div id="question"></div>
-     <ul id="choices"></ul>
-   </div>
-   <div id="timeRemaining">Remaining Time: <span>00:00</span></div>
-   <button id="nextButton" class="button-primary">Answer</button>
- </div>
- 
- const progressBar = document.querySelector("#progressBar");
-   const questionCount = document.querySelector("#questionCount");
-   const questionContainer = document.querySelector("#question");
-   const choiceContainer = document.querySelector("#choices");
-   const nextButton = document.querySelector("#nextButton");
-  */
-
-
     // YOUR CODE HERE:
 
-    //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
 
@@ -124,8 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
-    progressBar.style.width = (quiz.currentQuestionIndex / quiz.questions.length) * 100
-
+    progressBar.style.width = (quiz.currentQuestionIndex / quiz.questions.length) * 100+"%";
+    
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
@@ -168,30 +156,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+  // YOUR CODE HERE:
+  //
+  // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
+
   function nextButtonHandler() {
-    let selectedAnswer; // A variable to store the selected answer value
+    const inputs = document.querySelectorAll('input');
 
-
-
-    // YOUR CODE HERE:
-    //
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
-
+    let selectedAnswer = null; // A variable to store the selected answer value
     // 2. Loop through all the choice elements and check which one is selected
     // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
     //  When a radio input gets selected the `.checked` property will be set to true.
     //  You can use check which choice was selected by checking if the `.checked` property is true.
 
-
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].checked === true) {
+        selectedAnswer = i;
+      }
+    }
+    const selectedAnswerText = quiz.getQuestion().choices[selectedAnswer];
+    console.log(quiz.currentQuestionIndex, quiz.questions.length);
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     // Show the next question by calling the function `showQuestion()`.
+
+    quiz.checkAnswer(selectedAnswerText);
+    quiz.moveToNextQuestion();
+    showQuestion();
   }
-
-
-
 
   function showResults() {
 
@@ -204,7 +197,46 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; 
+    // This value is hardcoded as a placeholder
+
+    timer = clearInterval(timer)
+  }
+
+
+  // IMPLEMENT A RESTART QUIZ
+
+  const restartButton = document.querySelector("#restartButton");
+  restartButton.onclick = () => {
+    quiz.timeRemaining = 120;
+
+    let timer = setInterval(() => {
+      if (quiz.timeRemaining > 0) {
+        quiz.timeRemaining--
+      }
+      else {
+        quizView.style.display = "none";
+        endView.style.display = "flex";
+        resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+      }
+      // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  
+      // Display the time remaining in the time remaining container
+      const timeRemainingContainer = document.getElementById("timeRemaining");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      console.log(quiz.timeRemaining)
+    }, 1000)
+
+    quizView.style.display = "block";
+    endView.style.display = "none";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+
+    showQuestion();
   }
 
 });
+
