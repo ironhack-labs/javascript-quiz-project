@@ -55,11 +55,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
+  countDown();
 
 
   /************  TIMER  ************/
 
-  let timer;
+
+  function countDown() {
+      setInterval(() => {
+
+      let min = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      let sec = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+      quiz.timeRemaining--;
+
+      timeRemainingContainer.innerText = `${min}:${sec}`;
+      if (quiz.timeRemaining === 0) {
+        showResults()
+        clearInterval(countDown)
+      }
+    }, 1000)
+  }
 
 
   /************  EVENT LISTENERS  ************/
@@ -186,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
+    clearInterval(countDown)
     quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
@@ -202,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
     showQuestion();
-
+    quiz.timeRemaining = quizDuration;
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
   })
 });
