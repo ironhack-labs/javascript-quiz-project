@@ -71,7 +71,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = quiz.timeRemaining;
+
+  function makeTime(timer) {
+    const minutes = Math.floor(timer / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (timer % 60).toString().padStart(2, "0");
+
+    return `${minutes}:${seconds}`
+  }
+
+  function countdown () {
+    timer--;
+
+    if (timer === 0) {
+      showResults();
+      clearInterval(timerStart) 
+      startAgain()
+    }
+    
+  
+    timeRemainingContainer.innerText = makeTime(timer)
+  }
+
+  function startAgain () {
+    timer = quiz.timeRemaining;
+    timerStart = setInterval(countdown, 1000)
+  }
+
+  let timerStart = setInterval(countdown, 1000)
+
+
 
   /************  EVENT LISTENERS  ************/
 
@@ -199,5 +230,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     quiz.shuffleQuestions();
     showQuestion();
+
+    timer = quiz.timeRemaining
+    timeRemainingContainer.innerText = makeTime(timer)
+
+
   }
 });
