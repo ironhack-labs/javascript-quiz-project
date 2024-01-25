@@ -27,7 +27,13 @@ class Quiz {
     }
     // 5. checkAnswer(answer)
     checkAnswer(answer){
+        
+        if (answer === this.questions[this.currentQuestionIndex].answer) {
             return this.correctAnswers ++;
+        } else {
+            return this.correctAnswers
+        }
+            
     }
     // 6. hasEnded()
     hasEnded(){
