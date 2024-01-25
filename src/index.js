@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `${((quiz.currentQuestionIndex + 1) * 100) / questions.length}%`;
+    progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questions.length)*100}%`;
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         radioInput.type="radio";
      
         radioInput.name="choice"; 
-        radioInput.value=index;
+        radioInput.value=choice;
       
         const label = document.createElement("label");
         label.innerText = choice
@@ -150,9 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedAnswer; // A variable to store the selected answer value
   
     // 1. Get all the choice elements. Use the correct selector.
-    let choices = document.querySelectorAll("input[type='radio'][name='choice']");
+    let choices = document.querySelectorAll("input[name=choice]");
   
     // 2. Loop through all the choice elements and check which one is selected
+      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
+      //  When a radio input gets selected the `.checked` property will be set to true.
+      //  You can use check which choice was selected by checking if the `.checked` property is true.
     choices.forEach((choice) => {
       if (choice.checked) {
         selectedAnswer = choice.value;
@@ -160,19 +163,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-    if (selectedAnswer !== undefined) {
-      // Check if the selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-      let isCorrect = quiz.checkAnswer(selectedAnswer);
-  
-      // Move to the next question only if the answer is correct
-      if (isCorrect) {
-        // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-        quiz.moveToNextQuestion();
-  
-        // Show the next question by calling the function `showQuestion()`.
-        showQuestion();
-      }
+      // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
+      // Move to the next question by calling the quiz method `moveToNextQuestion()`.
+      // Show the next question by calling the function `showQuestion()`.
+    if (selectedAnswer) {
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    
     }
+
+  
   }
 
 
@@ -190,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
 })
