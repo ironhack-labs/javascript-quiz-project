@@ -71,7 +71,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = setInterval(() => {
+    quiz.timeRemaining--;
+
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+    .toString()
+    .padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    if (quiz.timeRemaining <= 0) {
+      clearInterval(timer);
+    }
+  }, 1000);
 
   /************  EVENT LISTENERS  ************/
 
@@ -158,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     elementsArray.forEach(function (element) {
       if (element.checked === true) {
-        selectedAnswer = element;
+        selectedAnswer = element.getAttribute("value");
       }
     });
 
@@ -188,6 +201,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    
+    clearInterval(timer);
+    quiz.timeRemaining = quizDuration;
   }
 
   const restartButton = document.querySelector("#restartButton");
@@ -198,6 +214,29 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
+
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+    .toString()
+    .padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    let timer = setInterval(() => {
+      quiz.timeRemaining--;
+
+      const minutes = Math.floor(quiz.timeRemaining / 60)
+      .toString()
+      .padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+  
+      if (quiz.timeRemaining <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000)
+
     showQuestion();
   });
 });
