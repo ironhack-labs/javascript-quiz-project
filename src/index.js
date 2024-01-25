@@ -148,7 +148,7 @@ function convertSecToMin() {
       const radioButton = document.createElement("input");
       const label = document.createElement("label");
       radioButton.setAttribute("type", "radio");
-      radioButton.setAttribute("name", "choice" + index);
+      radioButton.setAttribute("name", "choice");
       radioButton.setAttribute("value", choice);
       label.innerText = choice;
       const br = document.createElement("br");
