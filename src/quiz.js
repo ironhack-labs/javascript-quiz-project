@@ -67,6 +67,10 @@ class Quiz {
         }, 0) / this.questions.length;
         return aveDiff;
     };
-
+    
+    // set counter correctAnswers to 0
+    resetCorrectAnswerCounter() {
+        this.correctAnswers = 0;
+    };
 };
 

@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
   const choicesRadioInput = document.querySelectorAll("#choices input[type='radio']");
+  const restartButton = document.getElementById("restartButton");
+
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -72,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextButton.addEventListener("click", nextButtonHandler);
 
-  let correctAnswers = quiz.correctAnswers;
+  // let correctAnswers = quiz.correctAnswers;
 
   /************  FUNCTIONS  ************/
 
@@ -202,8 +204,32 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerText = `You scored ${quiz.correctAnswers} correct answers out of ${questions.length} questions!`;
 
   }; // end of showResult fn
-
+  
+  function restartQuiz(){
+      restartButton.addEventListener('click', () => {
+    
+      // hide the endView
+    endView.style.display = "none";
+      // display the quiz view
+    quizView.style.display = "block";
+    
+  
+    // reset the quiz
+    quiz = new Quiz(questions, quizDuration, quizDuration);
+    quiz.shuffleQuestions();
+    quiz.resetCorrectAnswerCounter(); // fn to reset the correctAnswers into quiz.js
+  
+  });
+};
+  
+  
+  
+  
+  
 });
 
+
 // Notes by Pauline
-// no more errors but does not stock the right answers yet
+// errors fixed
+// added on top const "restart btn"
+// added fn restart quiz
