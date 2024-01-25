@@ -71,20 +71,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer = setInterval(() => {
+  let timerInterval;
+
+  function countDown() {
     quiz.timeRemaining--;
 
     const minutes = Math.floor(quiz.timeRemaining / 60)
-    .toString()
-    .padStart(2, "0");
+      .toString()
+      .padStart(2, "0");
     const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
     timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
     if (quiz.timeRemaining <= 0) {
-      clearInterval(timer);
+      clearInterval(timerInterval);
     }
-  }, 1000);
+  }
+
+  timerInterval = setInterval(countDown, 1000);
 
   /************  EVENT LISTENERS  ************/
 
@@ -201,8 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
-    
-    clearInterval(timer);
+
+    clearInterval(timerInterval);
     quiz.timeRemaining = quizDuration;
   }
 
@@ -216,26 +220,13 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.shuffleQuestions();
 
     const minutes = Math.floor(quiz.timeRemaining / 60)
-    .toString()
-    .padStart(2, "0");
+      .toString()
+      .padStart(2, "0");
     const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
     timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
-    let timer = setInterval(() => {
-      quiz.timeRemaining--;
-
-      const minutes = Math.floor(quiz.timeRemaining / 60)
-      .toString()
-      .padStart(2, "0");
-      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-  
-      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
-  
-      if (quiz.timeRemaining <= 0) {
-        clearInterval(timer);
-      }
-    }, 1000)
+    timerInterval = setInterval(countDown, 1000);
 
     showQuestion();
   });
