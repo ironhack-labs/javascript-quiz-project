@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add more questions here
   ];
   // const quizDuration = 120; // 120 seconds (2 minutes)
-  const quizDuration = 10; // modify for the test
+  const quizDuration = 15; // modify for the test
 
 
   /************  QUIZ INSTANCE  ************/
@@ -79,9 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
   This way we can reuse the function when calling restartQuiz() without having to rewrite the setInterval() code block.
   */
 
+  let timerRunning = true;
   const timer = (time) => {
-
-    let timerRunning = true;
+    
 
     const minutes = Math.floor(time / 60).toString().padStart(2, "0");
     const seconds = (time % 60).toString().padStart(2, "0");
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => {
         
-        if (time === 0) {
+        if (time === 0 || !timerRunning) {
           timerRunning = false;
           showResults()
           time = null;
@@ -209,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedAnswer.forEach(choice => {
 
       if (choice.checked) {
-        console.log(choice.value)
 
         // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
         // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
@@ -230,10 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // YOUR CODE HERE:
     //
-
-    clearInterval(timer)
-
     // 1. Hide the quiz view (div#quizView)
+    timerRunning = false;
     quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
@@ -253,8 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
     showQuestion();
 
     // Resetting timer upon quiz restart
+    timerRunning = true;
     timer(quiz.timeRemaining)
-    
   }
 
 });
