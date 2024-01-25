@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add more questions here
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
+  // const quizDuration = 10;
 
   /************  QUIZ INSTANCE  ************/
 
@@ -73,7 +74,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = quiz.timeRemaining; // 120 sec
+
+  function makeMinAndSec(time) {
+    const minutes = Math.floor(time / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (time % 60).toString().padStart(2, "0");
+
+    return `${minutes}:${seconds}`;
+  }
+
+  function timeRemaining() {
+    timer--;
+
+    if (timer === 0) {
+      showResults();
+      clearInterval(timerOut);
+    }
+
+    timeRemainingContainer.innerText = makeMinAndSec(timer);
+  }
+
+  let timerOut = setInterval(timeRemaining, 1_000);
 
   /************  EVENT LISTENERS  ************/
 
@@ -186,6 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+
+    clearInterval(timerOut);
   }
 
   function restartButtonHandler() {
@@ -199,5 +224,11 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.shuffleQuestions();
 
     showQuestion();
+
+    timer = quiz.timeRemaining;
+
+    timeRemainingContainer.innerText = makeMinAndSec(timer);
+
+    timerOut = setInterval(timeRemaining, 1_000);
   }
 });
