@@ -10,9 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const choicesRadioInput = document.querySelectorAll("#choices input[type='radio']");
 
   // End view elements
   const resultContainer = document.querySelector("#result");
+
+  // Used Counter
+  let answeredQuestions = 0; 
+  let correctAnswers = 0;
+  
 
 
   /************  SET VISIBILITY OF VIEWS  ************/
@@ -33,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add more questions here
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
-
+  const totalQuestions = questions.length;
 
   /************  QUIZ INSTANCE  ************/
 
@@ -83,127 +89,128 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     };
 
+    // update the counter of answered answers 
+    answeredQuestions++;
+
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
     choiceContainer.innerHTML = "";
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
+
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
 
     const showQuestion = document.getElementById('question');
+    questionContainer.innerText = question.text;
     showQuestion.innerText = question.text;
 
-    
-     // Update the green progress bar
-  const totalQuestions = questions.length;
-  const answeredQuestions = 0; // counter!!
-  const percentage = (answeredQuestions / totalQuestions) * 100;
-  progressBar.style.width = percentage + '%';
+
+    // Update the green progress bar
+    const percentage = (answeredQuestions / totalQuestions) * 100;
+    progressBar.style.width = percentage + '%';
 
 
-  // Update the question count (div#questionCount) show the current question out of total questions
-  const actualQuestion = answeredQuestions+1;
-  questionCount.innerText = `Question ${actualQuestion} of ${totalQuestions}`; 
+    // Update the question count (div#questionCount) show the current question out of total questions
+    const actualQuestion = answeredQuestions;
+    //questionCount.innerText = `Question ${actualQuestion} of ${totalQuestions}`;
+    questionCount.innerText = `Question ${answeredQuestions} of ${totalQuestions}`;
 
 
-  // Display the choices calling a new function
-  const createInputs = setChoices(question.choices);
+    // Display the choices calling a new function
+    const createInputs = setChoices(question.choices);
 
-      }; // end of showquestion function
+  
+
+  }; // end of showquestion function
 
 
   // function to show the choices 
-      function setChoices(choices) {
-        
-        while (choiceContainer.firstChild) {
-          choiceContainer.removeChild(choiceContainer.firstChild);
-        };
-      
-        
-        for (const key in choices) {
-          if (choices.hasOwnProperty(key)) {
-            const choice = choices[key];
-      
-            // Create a new radio input
-            const input = document.createElement('input');
-            input.setAttribute('type', 'radio');
-            input.setAttribute('name', 'choice');
-            input.setAttribute('value', choice);
-            input.setAttribute('id', `choice-${key}`);
-      
-            // Create a new label
-            const label = document.createElement('label');
-            label.setAttribute('for', `choice-${key}`);
-            label.appendChild(input);
-            label.appendChild(document.createTextNode(choice));
-      
-            // Append the label to the choice container
-            choiceContainer.appendChild(label);
-          };
-        };
-      }; // end of choices function
+  function setChoices(choices) {
+
+    while (choiceContainer.firstChild) {
+      choiceContainer.removeChild(choiceContainer.firstChild);
+    };
 
 
-  
-  function nextButtonHandler() {
-  // let selectedAnswer; // A variable to store the selected answer value
+    for (const key in choices) {
+      if (choices.hasOwnProperty(key)) {
+        const choice = choices[key];
 
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-const getChoices = document.querySelectorAll("choices");
+        // Create a new radio input
+        const input = document.createElement('input');
+        input.setAttribute('type', 'radio');
+        input.setAttribute('name', 'choice');
+        input.setAttribute('value', choice);
+        input.setAttribute('id', `choice-${key}`);
 
-    // 2. Loop through all the choice elements and check which one is selected
+        // Create a new label
+        const label = document.createElement('label');
+        label.setAttribute('for', `choice-${key}`);
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(choice));
 
-    let selectedAnswer = function getChoiceSelected (element){
-      for (let i=0; i<question.choices; i++){
-        if (element.checked===true){
-          return element.checked;
-        } else {
-          return false;
-        };
+        // Append the label to the choice container
+        choiceContainer.appendChild(label);
       };
     };
-    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-    //  When a radio input gets selected the `.checked` property will be set to true.
-    //  You can use check which choice was selected by checking if the `.checked` property is true.
+  }; // end of choices function
+
+  function getSelectedAnswer(choice) {
+    for (let i=0; i<choices.length; i++){
+      if (choice[i].checked===choice[i].value){
+        return true;
+      } else {
+        return null;
+      }
+    }
+  }; 
+
+
+  function nextButtonHandler() {
+
+    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
+    const choices = document.querySelectorAll("#choices input[type='radio']");
+
+    // 2. Loop through all the choice elements and check which one is selected
+    let selectedAnswer = getSelectedAnswer();
 
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-    let correctAnswers = 0;
-    function getCorrectAnswers () {
-      quiz.checkAnswer(selectedAnswer);
-    if (quiz.checkAnswer(selectedAnswer)===true){
+    if (quiz.checkAnswer(selectedAnswer)) {
       correctAnswers++;
     };
-    };
+    
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     quiz.moveToNextQuestion();
     // Show the next question by calling the function `showQuestion()`.
     showQuestion();
-  // }  
-
-}; // end of nextbtnhandler function
+    let totalCorrectAnswers = nextButtonHandler();
+    console.log(`Total Correct Answers: ${totalCorrectAnswers}`);
+    
+    return correctAnswers;
+  
+  }; // end of nextbtnhandler function
 
 
   function showResults() {
 
     // 1. Hide the quiz view (div#quizView)
-  quizView.style.display = "none";
+    quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
- endView.style.display = "flex";
+    endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    let correctAnswers = 0;
-    getCorrectAnswers();
-  resultContainer.innerText = `You scored ${correctAnswers} correct answers out of ${questions.length} questions!`; 
- 
-}; // end of showResult fn
-  
-}); 
+    // let correctAnswers = getCorrectAnswers();
+    resultContainer.innerText = `You scored ${correctAnswers} correct answers out of ${questions.length} questions!`;
+
+  }; // end of showResult fn
+
+});
 
 /* 2501notes by Pauline:
 1. the result doesn't display, I don't know how to call a function inside another function inside the same file 
-2. we need to connect the "question 1 on 10" to real data because it doesn't actualize during the test 
+2. we need to connect the "question 1 on 10" to real data because it doesn't actualize during the test */
