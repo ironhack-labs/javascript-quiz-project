@@ -213,6 +213,12 @@ document.addEventListener("DOMContentLoaded", () => {
       quizView.style.display = "flex";
       endView.style.display = "none";
 
+      const totalQuestions = quiz.questions.length;
+      const currentQuestion = quiz.currentQuestionIndex
+      const progressPercent = (currentQuestion / totalQuestions) * 100
+
+      progressBar.style.width = `${progressPercent}%`;
+
 
     }
   }
