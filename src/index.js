@@ -171,8 +171,13 @@ const getChoices = document.querySelectorAll("choices");
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-    quiz.checkAnswer(selectedAnswer);
-
+    let correctAnswers = 0;
+    function getCorrectAnswers () {
+      quiz.checkAnswer(selectedAnswer);
+    if (quiz.checkAnswer(selectedAnswer)===true){
+      correctAnswers++;
+    };
+    };
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     quiz.moveToNextQuestion();
     // Show the next question by calling the function `showQuestion()`.
@@ -182,18 +187,23 @@ const getChoices = document.querySelectorAll("choices");
 }; // end of nextbtnhandler function
 
 
-  // function showResults() {
+  function showResults() {
 
-    // YOUR CODE HERE:
-    //
     // 1. Hide the quiz view (div#quizView)
-  //  quizView.style.display = "none";
+  quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
- //   endView.style.display = "flex";
+ endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-  //  resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
- // }
+    let correctAnswers = 0;
+    getCorrectAnswers();
+  resultContainer.innerText = `You scored ${correctAnswers} correct answers out of ${questions.length} questions!`; 
+ 
+}; // end of showResult fn
   
 }); 
+
+/* 2501notes by Pauline:
+1. the result doesn't display, I don't know how to call a function inside another function inside the same file 
+2. we need to connect the "question 1 on 10" to real data because it doesn't actualize during the test 
