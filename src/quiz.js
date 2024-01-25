@@ -28,12 +28,7 @@ class Quiz {
     // 5. checkAnswer(answer)
     checkAnswer(answer) {
 
-        console.log(".........");
-        console.log(this.questions);
-        console.log(this.currentQuestionIndex);
-        console.log(".........");
-
-        const correctAnswer = this.questions[this.currentQuestionIndex].answer;
+        let correctAnswer = this.questions[this.currentQuestionIndex].answer;
         if (answer === correctAnswer) {
             this.correctAnswers++;
         }

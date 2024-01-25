@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Used Counter
   let answeredQuestions = 0; 
-  let correctAnswers = 0;
+ 
   
 
 
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextButton.addEventListener("click", nextButtonHandler);
 
-
+  let correctAnswers = quiz.correctAnswers;
 
   /************  FUNCTIONS  ************/
 
@@ -157,40 +157,34 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }; // end of choices function
 
-  function getSelectedAnswer(choice) {
-    for (let i=0; i<choices.length; i++){
-      if (choice[i].checked===choice[i].value){
-        return true;
-      } else {
-        return null;
-      }
-    }
-  }; 
-
-
   function nextButtonHandler() {
 
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
     const choices = document.querySelectorAll("#choices input[type='radio']");
 
     // 2. Loop through all the choice elements and check which one is selected
-    let selectedAnswer = getSelectedAnswer();
-
+    let selectedAnswer = null;
+    for (let i = 0; i < choices.length; i++) {
+      if (choices[i].checked) {
+        selectedAnswer = choices[i].value;
+      break;
+    }
+  }
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     if (quiz.checkAnswer(selectedAnswer)) {
-      correctAnswers++;
-    };
+      quiz.correctAnswers++;
+    }
     
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     quiz.moveToNextQuestion();
     // Show the next question by calling the function `showQuestion()`.
     showQuestion();
-    let totalCorrectAnswers = nextButtonHandler();
-    console.log(`Total Correct Answers: ${totalCorrectAnswers}`);
+
+    console.log(`Total Correct Answers: ${quiz.correctAnswers}`);
     
-    return correctAnswers;
+    // return correctAnswers;
   
   }; // end of nextbtnhandler function
 
@@ -205,12 +199,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     // let correctAnswers = getCorrectAnswers();
-    resultContainer.innerText = `You scored ${correctAnswers} correct answers out of ${questions.length} questions!`;
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} correct answers out of ${questions.length} questions!`;
 
   }; // end of showResult fn
 
 });
 
-/* 2501notes by Pauline:
-1. the result doesn't display, I don't know how to call a function inside another function inside the same file 
-2. we need to connect the "question 1 on 10" to real data because it doesn't actualize during the test */
+// Notes by Pauline
+// no more errors but does not stock the right answers yet
