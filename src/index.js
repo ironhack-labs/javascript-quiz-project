@@ -59,7 +59,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = setInterval(() => {
+
+    quiz.timeRemaining--
+
+    let minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    let seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    timeRemainingContainer.innerHTML = `${minutes}:${seconds}`;
+
+    if (minutes === '00' && seconds === '00') {
+      clearTimeout(timer)
+      showResults()
+    }
+  }, 1000)
+
+
+
 
 
   /************  EVENT LISTENERS  ************/
@@ -146,6 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
       choiceContainer.appendChild(lineBreak)
 
     })
+
+
   }
 
 
@@ -204,6 +222,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const restartButton = document.querySelector("#restartButton");
 
+    function reloadBrowser() {
+      location.reload();
+    }
+
     restartButton.onclick = () => {
 
       quiz.currentQuestionIndex = 0;
@@ -219,8 +241,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       progressBar.style.width = `${progressPercent}%`;
 
+      reloadBrowser()
 
     }
   }
-
 });
