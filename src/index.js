@@ -57,14 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60)
+function convertSecToMin() {
+    const minutes = Math.floor(quiz.timeRemaining / 60)
     .toString()
     .padStart(2, "0");
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
-  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+  timeRemainingContainer.innerText = convertSecToMin();
+
 
   // Show first question
   showQuestion();
@@ -76,12 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function countDown() {
     quiz.timeRemaining--;
 
-    const minutes = Math.floor(quiz.timeRemaining / 60)
-      .toString()
-      .padStart(2, "0");
-    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-
-    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    timeRemainingContainer.innerText = convertSecToMin();
 
     if (quiz.timeRemaining <= 0) {
       clearInterval(timerInterval);
@@ -208,6 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     clearInterval(timerInterval);
     quiz.timeRemaining = quizDuration;
+    timeRemainingContainer.innerText = convertSecToMin();
   }
 
   const restartButton = document.querySelector("#restartButton");
@@ -218,13 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
-
-    const minutes = Math.floor(quiz.timeRemaining / 60)
-      .toString()
-      .padStart(2, "0");
-    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-
-    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
     timerInterval = setInterval(countDown, 1000);
 
