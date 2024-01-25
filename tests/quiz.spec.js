@@ -194,6 +194,30 @@ describe("Quiz", () => {
       // Check if the correctAnswers property has been increased by 1
       expect(quiz.correctAnswers).toEqual(3);
     });
+
+    it("should check if the answer is correct by comparing it to the 'answer' property of the current question", () => {
+      const testQuestions = [
+        { text: "Question 1", choices: ["a", "b", "c"], answer: "b" },
+        { text: "Question 2", choices: ["d", "e", "f"], answer: "f" },
+        { text: "Question 3", choices: ["x", "y", "z"], answer: "y" },
+      ];
+
+      // Get a random index from the test questions array
+      const randomQuestionIndex = Math.floor(Math.random() * testQuestions.length);
+
+      // Instantiate a new Quiz object with the test questions
+      const quiz = new Quiz(testQuestions, 60, 60);
+      const initialCorrectAnswers = quiz.correctAnswers;
+
+      // Manualy set the `quiz.currentQuestionIndex` to the random index
+      quiz.currentQuestionIndex = randomQuestionIndex;
+
+      // Call the checkAnswer() method with the correct answer for the current question
+      quiz.checkAnswer(testQuestions[randomQuestionIndex].answer);
+
+      // Check if the correctAnswers property has been increased by 1
+      expect(quiz.correctAnswers).toEqual(initialCorrectAnswers + 1);
+    });
   });
 
   describe("hasEnded() method", () => {
