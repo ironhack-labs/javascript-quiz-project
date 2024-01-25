@@ -10,9 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const choicesRadioInput = document.querySelectorAll("#choices input[type='radio']");
+  const restartButton = document.getElementById("restartButton");
+  const timerContainer = document.getElementById('timeRemaining');
+
 
   // End view elements
   const resultContainer = document.querySelector("#result");
+
+  // Used Counter
+  let answeredQuestions = 0; 
+ 
+  
 
 
   /************  SET VISIBILITY OF VIEWS  ************/
@@ -23,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /************  QUIZ DATA  ************/
-  
+
   // Array with the quiz questions
   const questions = [
     new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
@@ -33,10 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add more questions here
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
-
+  const totalQuestions = questions.length;
 
   /************  QUIZ INSTANCE  ************/
-  
+
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
   // Shuffle the quiz questions
@@ -55,18 +64,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
-
+ 
 
   /************  TIMER  ************/
 
+  // let timer = timerInterval();
   let timer;
+
+  function startTimer() {
+    timer = setInterval(() => {
+      quiz.timeRemaining--;
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timerContainer.innerText = `${minutes}:${seconds}`;
+
+      if (quiz.timeRemaining === showResults) {
+        clearInterval();
+        showResults();
+      }
+    }, 1000);
+  }
+  startTimer()
 
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
-
-
+  restartButton.addEventListener('click', restartQuiz);
+   // window.onload = timerInterval();
+  
 
   /************  FUNCTIONS  ************/
 
@@ -81,7 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (quiz.hasEnded()) {
       showResults();
       return;
-    }
+    };
+   
+
+    // update the counter of answered answers 
+    answeredQuestions++;
 
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
@@ -89,86 +119,163 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
+
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
-    
 
-    // YOUR CODE HERE:
-    //
-    // 1. Show the question
-    // Update the inner text of the question container element and show the question text
-
-    
-    // 2. Update the green progress bar
-    // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-    
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    const showQuestion = document.getElementById('question');
+    questionContainer.innerText = question.text;
+   showQuestion.innerText = question.text;
 
 
+    // Update the green progress bar
+    const percentage = (answeredQuestions / totalQuestions) * 100;
+    progressBar.style.width = percentage + '%';
 
-    // 3. Update the question count text 
+
     // Update the question count (div#questionCount) show the current question out of total questions
-    
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    //const actualQuestion = answeredQuestions;
+    //questionCount.innerText = `Question ${actualQuestion} of ${totalQuestions}`;
+    questionCount.innerText = `Question ${answeredQuestions} of ${totalQuestions}`;
 
 
-    
-    // 4. Create and display new radio input element with a label for each choice.
-    // Loop through the current question `choices`.
-      // For each choice create a new radio input with a label, and append it to the choice container.
-      // Each choice should be displayed as a radio input element with a label:
-      /* 
-          <input type="radio" name="choice" value="CHOICE TEXT HERE">
-          <label>CHOICE TEXT HERE</label>
-        <br>
-      */
-      // Hint 1: You can use the `document.createElement()` method to create a new element.
-      // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-      // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-      // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-
-  }
+    // Display the choices calling a new function
+    const createInputs = setChoices(question.choices);
+     
+  }; // end of showquestion function
 
 
-  
-  function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
+  // function to show the choices 
+  function setChoices(choices) {
+
+    while (choiceContainer.firstChild) {
+      choiceContainer.removeChild(choiceContainer.firstChild);
+    };
 
 
+    for (const key in choices) {
+      if (choices.hasOwnProperty(key)) {
+        const choice = choices[key];
 
-    // YOUR CODE HERE:
-    //
+        // Create a new radio input
+        const input = document.createElement('input');
+        input.setAttribute('type', 'radio');
+        input.setAttribute('name', 'choice');
+        input.setAttribute('value', choice);
+        input.setAttribute('id', `choice-${key}`);
+
+        // Create a new label
+        const label = document.createElement('label');
+        label.setAttribute('for', `choice-${key}`);
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(choice));
+
+        // Append the label to the choice container
+        choiceContainer.appendChild(label);
+      };
+    };
+  }; // end of choices function
+
+  function nextButtonHandler() {
+
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
+    const choices = document.querySelectorAll("#choices input[type='radio']");
 
     // 2. Loop through all the choice elements and check which one is selected
-      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-      //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
+    let selectedAnswer = null;
+    for (let i = 0; i < choices.length; i++) {
+      if (choices[i].checked) {
+        selectedAnswer = choices[i].value;
+      break;
+    }
+  }
 
-      
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-      // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-      // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-      // Show the next question by calling the function `showQuestion()`.
-  }  
+    // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
+    if (quiz.checkAnswer(selectedAnswer)) {
+      quiz.correctAnswers++;
+    }
+    
+    // Move to the next question by calling the quiz method `moveToNextQuestion()`.
+    quiz.moveToNextQuestion();
+    // Show the next question by calling the function `showQuestion()`.
+    showQuestion();
 
-
+    console.log(`Total Correct Answers: ${quiz.correctAnswers}`);
+    
+    // return correctAnswers;
+  
+  }; // end of nextbtnhandler function
 
 
   function showResults() {
 
-    // YOUR CODE HERE:
-    //
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
     
+
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
-  }
+    // let correctAnswers = getCorrectAnswers();
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} correct answers out of ${questions.length} questions!`;
+    clearInterval(timer);
+
+  }; // end of showResult fn
   
-});
+  function restartQuiz(){
+    console.log('restart quiz');
+    
+      // hide the endView
+    endView.style.display = "none";
+      // display the quiz view
+    quizView.style.display = "block";
+    
+  
+    // reset the quiz
+    quiz.shuffleQuestions();
+    quiz.resetCorrectAnswerCounter(); // fn to reset the correctAnswers into quiz.js
+    quiz.resetCurrentQuestionIndex(); //fn to reset to current question index into quiz.js
+
+    //show
+    showQuestion();
+    startTimer();////dilan modified
+  };
+
+/*
+  function timerInterval (timeRemaining){
+
+    for (let i= timeRemaining; i>0; i--){
+
+    const timer = setInterval(() => {
+      timeRemaining--;
+      timerContainer.innerText = timeRemaining;
+      if (timeRemaining === 0) {
+        showResults();
+        timeRemaining = this.timeRemaining;
+        clearInterval();
+      };
+    }, 1000);
+
+    };
+  };
+  */
+
+
+}); // end of page DO NOT DELETE
+
+
+// Notes by Pauline
+// errors fixed
+// added on top const "restart btn"
+// added fn restart quiz
+// trying to make it work
+// it works motherfuckers IT WORKS
+// try to implement the timer now
+// don't get it yet 
+// add timerContainer l15
+// add function l227-242
+// comment l78 to start the counter when arriving on the page (doesnt work)
+// comment timer l71
