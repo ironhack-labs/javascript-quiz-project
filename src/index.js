@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   /************  HTML ELEMENTS  ************/
-  // View divs
+  // View div
   const quizView = document.querySelector("#quizView");
   const endView = document.querySelector("#endView");
 
@@ -57,11 +57,25 @@ document.addEventListener("DOMContentLoaded", () => {
   showQuestion();
 
 
-  /************  TIMER  ************/
+  /************  TIMER  *************/
+// function runTimer(){
+  let timer = setInterval(() => {
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      
+      if (quiz.timeRemaining <= 0) {
+        // clearInterval(timer);
+        showResults();
+      } else {
+        quiz.timeRemaining--;
+      } 
+     
+  }, 1000)
+//}
 
-  let timer;
-
-
+  resultContainer.style.display = "block";//
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
@@ -78,10 +92,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
-      showResults();
+    clearInterval(timer);
+     showResults();
       return;
     }
-
+  
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
     choiceContainer.innerHTML = "";
@@ -188,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const isCorrect = quiz.checkAnswer(selectedAnswer);
     quiz.moveToNextQuestion();
     showQuestion();*/
-    quiz.currentQuestionIndex ++;
+    quiz.currentQuestionIndex++;
     showQuestion();
   
 }
@@ -199,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showResults() {
 
     // YOUR CODE HERE:
-    //
+    clearInterval(timer);
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -218,9 +233,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function restartQuiz() {
     endView.style.display = "none";
     quizView.style.display = "block";
-    quiz.reset(); 
+    quiz.currentQuestionIndex = 0; 
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+    quiz.timeRemaining = quizDuration
     showQuestion();
-}
-
+  }
+  
 });
 
+
+// clearInterval(timer);
