@@ -95,23 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const showQuestion = document.getElementById('question');
     showQuestion.innerText = question.text;
 
-    /* questions.forEach ((question) => {
-      const showQuestion = document.getElementById('question');
-    showQuestion.innerText = questions[0].text;
-    }); */
-  
-
-    // YOUR CODE HERE:
-    //
-    // 1. Show the question -> line95
-     // 2. Update the green progress bar
+    
+     // Update the green progress bar
   const totalQuestions = questions.length;
-  const answeredQuestions = 2;
+  const answeredQuestions = 0; // counter!!
   const percentage = (answeredQuestions / totalQuestions) * 100;
   progressBar.style.width = percentage + '%';
 
 
-  // 3. Update the question count text 
   // Update the question count (div#questionCount) show the current question out of total questions
   const actualQuestion = answeredQuestions+1;
   questionCount.innerText = `Question ${actualQuestion} of ${totalQuestions}`; 
@@ -119,10 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Display the choices calling a new function
   const createInputs = setChoices(question.choices);
+
       }; // end of showquestion function
 
+      
   // function to show the choices 
-
       function setChoices(choices) {
         
         while (choiceContainer.firstChild) {
@@ -194,4 +186,4 @@ document.addEventListener("DOMContentLoaded", () => {
   //  resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
  // }
   
-});
+}); 
