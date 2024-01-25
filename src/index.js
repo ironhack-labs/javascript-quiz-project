@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (quiz.hasEnded()) {
       showResults();
       return;
-    }
+    };
 
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
@@ -115,43 +115,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // Update the question count (div#questionCount) show the current question out of total questions
   const actualQuestion = answeredQuestions+1;
   questionCount.innerText = `Question ${actualQuestion} of ${totalQuestions}`; 
-};
 
 
-  // 4. Create and display new radio input element with a label for each choice.
-  // Loop through the current question `choices`.
-  // For each choice create a new radio input with a label, and append it to the choice container.
-  // Each choice should be displayed as a radio input element with a label:
- 
-  // const choicesInput = function setChoices(choices) {
-    for (const key in choices) {
-      if (choices.hasOwnProperty(key)) {
-        const choice = choices[key];
-  
-        const input = document.createElement('input');
-        input.setAttribute('type', 'radio');
-        input.setAttribute('name', 'choice');
-        input.setAttribute('value', choice);
-        input.setAttribute('id', `choice-${key}`);
-  
-        const label = document.createElement('label');
-        label.setAttribute('for', `choice-${key}`);
-        label.appendChild(input);
-        label.appendChild(document.createTextNode(choice));
-  
-        choiceContainer.appendChild(label);
-      };
-    };
-  
-  /* 
-      <input type="radio" name="choice" value="CHOICE TEXT HERE">
-      <label>CHOICE TEXT HERE</label>
-    <br>
-  */
-  // Hint 1: You can use the `document.createElement()` method to create a new element.
-  // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-  // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-  // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+  // Display the choices calling a new function
+  const createInputs = setChoices(question.choices);
+      }; // end of showquestion function
+
+  // function to show the choices 
+
+      function setChoices(choices) {
+        
+        while (choiceContainer.firstChild) {
+          choiceContainer.removeChild(choiceContainer.firstChild);
+        };
+      
+        
+        for (const key in choices) {
+          if (choices.hasOwnProperty(key)) {
+            const choice = choices[key];
+      
+            // Create a new radio input
+            const input = document.createElement('input');
+            input.setAttribute('type', 'radio');
+            input.setAttribute('name', 'choice');
+            input.setAttribute('value', choice);
+            input.setAttribute('id', `choice-${key}`);
+      
+            // Create a new label
+            const label = document.createElement('label');
+            label.setAttribute('for', `choice-${key}`);
+            label.appendChild(input);
+            label.appendChild(document.createTextNode(choice));
+      
+            // Append the label to the choice container
+            choiceContainer.appendChild(label);
+          };
+        };
+      }; // end of choices function
 
 
   

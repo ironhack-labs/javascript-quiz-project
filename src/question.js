@@ -12,5 +12,5 @@ class Question {
         [this.choices[i], this.choices[randomize]] = [this.choices[randomize], this.choices[i]];
       };
     };
-  }
+  };
   
