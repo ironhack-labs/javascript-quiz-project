@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
   const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -55,12 +56,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
+ 
 
 
   /************  TIMER  ************/
+  let min
+  let sec
+  let timer ;
+  countimeDown()
+  function countimeDown(){
+      timer = setInterval(function(){
 
-  let timer;
+      quiz.timeRemaining--
+       
+         min = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+         sec = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
+     // timeRemainingContainer.innerText =quiz.timeRemaining
+      timeRemainingContainer.innerText = `${min}:${sec}`;
+      if(quiz.timeRemaining === 0){
+        showResults()
+        clearInterval(timer)
+      }
+      if(quiz.timeRemaining < 0){
+      }
+     // console.log('timeRemainingContainer.innerText ',timeRemainingContainer.innerText)
+    },1000)
+  
+  }
+  //countimeDown()
 
   /************  EVENT LISTENERS  ************/
 
@@ -185,6 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // YOUR CODE HERE:
     //
+    
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -193,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    clearInterval(timer)
   }
 
   document.querySelector("#restartButton").addEventListener("click", () => {
@@ -202,6 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
     showQuestion();
-
+    timer = quiz.timeRemaining
+    
+    timeRemainingContainer.innerText = `${min}:${sec}`;
+    countimeDown()
   })
 });
