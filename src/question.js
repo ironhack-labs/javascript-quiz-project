@@ -1,9 +1,9 @@
 class Question {
     constructor(text, choices, answer, difficulty) {
-      this.text = text;
-      this.choices = choices;
-      this.answer = answer;
-      this.difficulty = difficulty;
+      this.text = text; // is a str
+      this.choices = choices; //is an array
+      this.answer = answer; // is a str
+      this.difficulty = difficulty; //is a number
     }
   
     shuffleChoices() {
