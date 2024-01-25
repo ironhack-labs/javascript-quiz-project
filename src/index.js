@@ -59,8 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = 120;
 
+  const id = setInterval(function () {
+   
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    const minutes = Math.floor(timer / 60).toString().padStart(2, "0");
+  const seconds = (timer % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    timer--;
+    if(timer === 0){
+      showResults()
+      clearInterval(id)
+    }
+  }, 1000)
 
   /************  EVENT LISTENERS  ************/
 
@@ -181,6 +193,7 @@ console.log(quiz)
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
+    timer = 120
     quizView.style.display = "none";
     
 
@@ -188,8 +201,10 @@ console.log(quiz)
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored ${quiz.correctAnswers} of ${quiz.questions.length} !`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} of ${quiz.questions.length} !`; // This value is hardcoded as a placeholder)
+    
   }
+  
 
   const restartButton = document.querySelector("#restartButton")
 
@@ -200,5 +215,7 @@ console.log(quiz)
     quiz.correctAnswers = 0
     quiz.shuffleQuestions()
     showQuestion()
+
+  
   })
 });
