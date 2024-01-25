@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
-  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  let minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+  let seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -141,8 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
       choiceContainer.appendChild(labelRadio);
       choiceContainer.appendChild(brRadio);
 
-
     });
+    
       // Each choice should be displayed as a radio input element with a label:
       /* 
           <input type="radio" name="choice" value="CHOICE TEXT HERE">
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   function nextButtonHandler () {
 
-    let selectedAnswer ;
+    let selectedAnswer;
 
 
     // YOUR CODE HERE:
@@ -199,7 +199,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function showResults() {
 
     // YOUR CODE HERE:
-    //
+    clearInterval(timer);
+    
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -211,15 +212,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   
-  const newButton = document.getElementById('restartButton') ;
-  newButton.addEventListener('click' , function restartQuiz() {
-    endView.style.display = "none" ;
-    quizView.style.display = "block" ;
-    quiz.currentQuestionIndex = 0 ;
-    quiz.correctAnswers = 0 ;
-    quiz.shuffleQuestions() ;
-    showQuestion() ;
-  }) ;
+  const newButton = document.getElementById('restartButton');
+  newButton.addEventListener('click', restartQuiz);
+
+  function restartQuiz() {
+    endView.style.display = "none";
+    quizView.style.display = "block";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
+
+    quiz.timeRemaining = quizDuration;
+    minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    timer = setInterval(timeInterval, 1000);
+  }
   
+  /* The file already contains a variable timer in the global scope which you can use to store the timer ID returned by the setInterval() method.
+In short, when the quiz starts, the timer should:
+
+1. Start counting down from the time specified in the timeRemaining property of the Quiz instance.
+2. Update the timeRemaining and the timer text every second
+3. Stop counting down when the time is up
+4. When the time is up, it should display the end view and the score */
+
+timer = setInterval(timeInterval, 1000);
+
+function timeInterval() {
+  if (quiz.timeRemaining === 0) {
+    console.log("Time's up!");
+
+    clearInterval(timer);
+    showResults();
+  } 
+  quiz.timeRemaining--;
+  minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+  seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+}
 
 });
