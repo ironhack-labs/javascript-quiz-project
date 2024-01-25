@@ -10,13 +10,17 @@ class Quiz {
         this.currentQuestionIndex = 0;
     }
 
+    // 2. getQuestion()
     getQuestion() {
         return this.questions[this.currentQuestionIndex];
     }
 
+    // 3. moveToNextQuestion()
     moveToNextQuestion() {
         this.currentQuestionIndex++;
     }
+
+    // 4. shuffleQuestions()
     shuffleQuestions() {
         const array = this.questions;
         for (let i = array.length - 1; i > 0; i--) {
@@ -28,15 +32,12 @@ class Quiz {
     }
 
     checkAnswer(answer) {
-        this.shuffleQuestions();
-        // console.log(this)
-        this.correctAnswers++;
+        const expectedAnswer = this.questions[this.currentQuestionIndex].answer;
+        if (answer === expectedAnswer) {
+            this.correctAnswers++
+        }
     }
-    // 2. getQuestion()
 
-    // 3. moveToNextQuestion()
-
-    // 4. shuffleQuestions()
 
     // 5. checkAnswer(answer)
 

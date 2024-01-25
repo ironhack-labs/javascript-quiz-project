@@ -151,7 +151,7 @@ console.log(quiz)
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-   const choiceElm = document.querySelectorAll("choices")
+   const choiceElm = document.querySelectorAll("#choices input")
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
