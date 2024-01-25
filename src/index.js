@@ -64,11 +64,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
-
+ 
 
   /************  TIMER  ************/
 
   // let timer = timerInterval();
+  let timer;
+
+  function startTimer() {
+    timer = setInterval(() => {
+      quiz.timeRemaining--;
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timerContainer.innerText = `${minutes}:${seconds}`;
+
+      if (quiz.timeRemaining === showResults) {
+        clearInterval();
+        showResults();
+      }
+    }, 1000);
+  }
+  startTimer()
 
 
   /************  EVENT LISTENERS  ************/
@@ -92,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showResults();
       return;
     };
+   
 
     // update the counter of answered answers 
     answeredQuestions++;
@@ -105,10 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
+    
 
     const showQuestion = document.getElementById('question');
     questionContainer.innerText = question.text;
-    showQuestion.innerText = question.text;
+   showQuestion.innerText = question.text;
 
 
     // Update the green progress bar
@@ -117,13 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Update the question count (div#questionCount) show the current question out of total questions
-    const actualQuestion = answeredQuestions;
+    //const actualQuestion = answeredQuestions;
     //questionCount.innerText = `Question ${actualQuestion} of ${totalQuestions}`;
     questionCount.innerText = `Question ${answeredQuestions} of ${totalQuestions}`;
 
 
     // Display the choices calling a new function
     const createInputs = setChoices(question.choices);
+     
   }; // end of showquestion function
 
 
@@ -197,10 +216,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
+    
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     // let correctAnswers = getCorrectAnswers();
     resultContainer.innerText = `You scored ${quiz.correctAnswers} correct answers out of ${questions.length} questions!`;
+    clearInterval(timer);
 
   }; // end of showResult fn
   
@@ -220,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //show
     showQuestion();
-    
+    startTimer();////dilan modified
   };
 
 /*
