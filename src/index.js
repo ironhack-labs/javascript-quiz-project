@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextButton = document.querySelector("#nextButton");
   const choicesRadioInput = document.querySelectorAll("#choices input[type='radio']");
   const restartButton = document.getElementById("restartButton");
+  const timerContainer = document.getElementById('timeRemaining');
 
 
   // End view elements
@@ -67,14 +68,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  // let timer = timerInterval();
 
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
   restartButton.addEventListener('click', restartQuiz);
-
+   // window.onload = timerInterval();
   
 
   /************  FUNCTIONS  ************/
@@ -123,9 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Display the choices calling a new function
     const createInputs = setChoices(question.choices);
-
-  
-
   }; // end of showquestion function
 
 
@@ -224,7 +222,28 @@ document.addEventListener("DOMContentLoaded", () => {
     showQuestion();
     
   };
-});
+
+/*
+  function timerInterval (timeRemaining){
+
+    for (let i= timeRemaining; i>0; i--){
+
+    const timer = setInterval(() => {
+      timeRemaining--;
+      timerContainer.innerText = timeRemaining;
+      if (timeRemaining === 0) {
+        showResults();
+        timeRemaining = this.timeRemaining;
+        clearInterval();
+      };
+    }, 1000);
+
+    };
+  };
+  */
+
+
+}); // end of page DO NOT DELETE
 
 
 // Notes by Pauline
@@ -232,3 +251,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // added on top const "restart btn"
 // added fn restart quiz
 // trying to make it work
+// it works motherfuckers IT WORKS
+// try to implement the timer now
+// don't get it yet 
+// add timerContainer l15
+// add function l227-242
+// comment l78 to start the counter when arriving on the page (doesnt work)
+// comment timer l71
