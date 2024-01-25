@@ -70,9 +70,24 @@ document.addEventListener('DOMContentLoaded', () => {
   showQuestion();
 
   /************  TIMER  ************/
-
   let timer;
 
+  function timerInit() {
+    timer = setInterval(function () {
+      quiz.timeRemaining--;
+      timeRemainingContainer.innerText = `${Math.floor(quiz.timeRemaining / 60)
+        .toString()
+        .padStart(2, '0')}:${(quiz.timeRemaining % 60)
+        .toString()
+        .padStart(2, '0')}`;
+
+      if (quiz.timeRemaining === 0) {
+        showResults();
+      }
+    }, 1000);
+  }
+
+  timerInit();
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener('click', nextButtonHandler);
@@ -173,7 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showResults() {
     // YOUR CODE HERE:
-    //
+    // Stop the Timer
+    clearInterval(timer);
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = 'none';
 
@@ -187,9 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#restartButton').addEventListener('click', () => {
     endView.style.display = 'none';
     quizView.style.display = 'block';
-    quiz.reset();
+    quiz.reset(quizDuration);
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    timerInit();
     showQuestion();
   });
 });
 
 // ------ END
+
+// (GlobalScope : let timer (timerInitScope -- timer = bbb ) (ShowResultScope -- timer .. ))

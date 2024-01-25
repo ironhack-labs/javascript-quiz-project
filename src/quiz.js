@@ -25,7 +25,8 @@ class Quiz {
   }
 
   checkAnswer(answer) {
-    if (answer === this.getQuestion().answer) {
+    const expectedAnswer = this.getQuestion().answer;
+    if (answer === expectedAnswer) {
       this.correctAnswers++;
     }
   }
@@ -50,10 +51,11 @@ class Quiz {
     return this.questions.filter((x) => x.difficulty === difficultyArg);
   }
 
-  reset() {
+  reset(quizDuration) {
     this.currentQuestionIndex = 0;
     this.correctAnswers = 0;
     this.shuffleQuestions();
+    this.timeRemaining = quizDuration;
   }
   //AVERAGE DIFFIULTY
 
