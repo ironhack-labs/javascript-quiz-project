@@ -90,8 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
       clearInterval(timerStart) 
       startAgain()
     }
-    
-  
     timeRemainingContainer.innerText = makeTime(timer)
   }
 
