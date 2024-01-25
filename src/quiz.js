@@ -1,15 +1,67 @@
+// YOUR CODE HERE:
+
 class Quiz {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
+    constructor(questionsValue, timeLimitValue, timeRemainingValue) {
 
-    // 2. getQuestion()
-    
-    // 3. moveToNextQuestion()
+        this.questions = questionsValue
+        this.timeLimit = timeLimitValue
+        this.timeRemaining = timeRemainingValue
+        this.correctAnswers = 0
+        this.currentQuestionIndex = 0
 
-    // 4. shuffleQuestions()
+    }
+    getQuestion() {
+        return this.questions[this.currentQuestionIndex]
 
-    // 5. checkAnswer(answer)
+    }
 
-    // 6. hasEnded()
+    moveToNextQuestion() {
+        this.currentQuestionIndex++
+
+    }
+
+    shuffleQuestions() {
+        this.questions.sort(() => Math.random() - .5)
+    }
+
+    checkAnswer(answer) {
+        const currentAnswer = this.questions[this.currentQuestionIndex].answer
+        if (answer === currentAnswer) {
+            this.correctAnswers++
+        }
+
+    }
+
+    hasEnded() {
+        if (this.currentQuestionIndex === this.questions.length) {
+            return true
+
+        }
+        else {
+            return false
+        }
+    }
+
+    filterQuestionsByDifficulty(difficulty) {
+        if (!isNaN(difficulty) && difficulty > 0 && difficulty < 4) {
+            const filteredQuestions = this.questions.filter(elm => {
+                return elm.difficulty === difficulty
+            })
+            this.questions = filteredQuestions
+        }
+    }
+    averageDifficulty() {
+        const sumDifficulties = this.questions.reduce((acc, elm) => acc + elm.difficulty, 0)
+        const totalQuestions = this.questions.length
+        const average = sumDifficulties / totalQuestions
+        return average
+    }
+
 }
+
+
+
+
+
+
+
