@@ -73,8 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener('click', restartQuiz);
 
-  // let correctAnswers = quiz.correctAnswers;
+  
 
   /************  FUNCTIONS  ************/
 
@@ -206,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }; // end of showResult fn
   
   function restartQuiz(){
-      restartButton.addEventListener('click', () => {
+    console.log('restart quiz');
     
       // hide the endView
     endView.style.display = "none";
@@ -215,17 +216,14 @@ document.addEventListener("DOMContentLoaded", () => {
     
   
     // reset the quiz
-    quiz = new Quiz(questions, quizDuration, quizDuration);
     quiz.shuffleQuestions();
     quiz.resetCorrectAnswerCounter(); // fn to reset the correctAnswers into quiz.js
-  
-  });
-};
-  
-  
-  
-  
-  
+    quiz.resetCurrentQuestionIndex(); //fn to reset to current question index into quiz.js
+
+    //show
+    showQuestion();
+    
+  };
 });
 
 
@@ -233,3 +231,4 @@ document.addEventListener("DOMContentLoaded", () => {
 // errors fixed
 // added on top const "restart btn"
 // added fn restart quiz
+// trying to make it work

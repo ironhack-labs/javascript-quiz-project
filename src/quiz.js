@@ -72,5 +72,10 @@ class Quiz {
     resetCorrectAnswerCounter() {
         this.correctAnswers = 0;
     };
+
+    // set index current question to 0
+    resetCurrentQuestionIndex() {
+        this.currentQuestionIndex = 0;
+    };
 };
 
