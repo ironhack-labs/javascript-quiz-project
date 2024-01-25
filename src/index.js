@@ -242,7 +242,6 @@ timer = setInterval(timeInterval, 1000);
 
 function timeInterval() {
   if (quiz.timeRemaining === 0) {
-    console.log("Time's up!");
 
     clearInterval(timer);
     showResults();
