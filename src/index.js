@@ -146,34 +146,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   
-  function nextButtonHandler () {
+  function nextButtonHandler() {
     let selectedAnswer; // A variable to store the selected answer value
-
-
-
-    // YOUR CODE HERE:
-    //
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-    let choices = document.querySelectorAll("choices");
-
+  
+    // 1. Get all the choice elements. Use the correct selector.
+    let choices = document.querySelectorAll("input[type='radio'][name='choice']");
+  
     // 2. Loop through all the choice elements and check which one is selected
-      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-      //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
-    selectedAnswer = choices.forEach((choice) => {
-      if (choice.checked === true)
-      return true
+    choices.forEach((choice) => {
+      if (choice.checked) {
+        selectedAnswer = choice.value;
+      }
     });
-      
+  
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-      // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-      // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-      // Show the next question by calling the function `showQuestion()`.
-    let correctAnswer = checkAnswer(selectedAnswer)
-    if (correctAnswer === true) 
-    moveToNextQuestion();
-    showQuestion();
-    }  
+    if (selectedAnswer !== undefined) {
+      // Check if the selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
+      let isCorrect = quiz.checkAnswer(selectedAnswer);
+  
+      // Move to the next question only if the answer is correct
+      if (isCorrect) {
+        // Move to the next question by calling the quiz method `moveToNextQuestion()`.
+        quiz.moveToNextQuestion();
+  
+        // Show the next question by calling the function `showQuestion()`.
+        showQuestion();
+      }
+    }
+  }
 
 
 
@@ -193,4 +193,4 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
   }
   
-});
+})

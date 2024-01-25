@@ -17,7 +17,7 @@ class Quiz {
     }
 
     checkAnswer(answer){
-        
+    
         return this.correctAnswers += 1
     
     }
