@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     // Add more questions here
   ];
-  const quizDuration = 120; // 120 seconds (2 minutes)
+  // const quizDuration = 120; // 120 seconds (2 minutes)
+  const quizDuration = 10; // modify for the test
 
 
   /************  QUIZ INSTANCE  ************/
@@ -61,7 +62,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  const timerElm = document.getElementById("timeRemaining");
+
+  let timer = setInterval(() => {
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timerElm.innerHTML = `${minutes}:${seconds}`;
+    if (quiz.timeRemaining === 0) {
+      showResults()
+    }
+    quiz.timeRemaining -= 1;
+  }, 1000)
+
+
+
 
 
   /************  EVENT LISTENERS  ************/
@@ -184,6 +198,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // YOUR CODE HERE:
     //
+    
+    clearInterval(timer)
+
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -195,7 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function restartQuiz () {
-
     endView.style.display = "none";
     quizView.style.display = "flex";
     quiz.currentQuestionIndex = 0;
@@ -203,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.shuffleQuestions();
     quiz.getQuestion();
     showQuestion();
-
+    quiz.timeRemaining = 120;
   }
   
 });
