@@ -28,7 +28,11 @@ class Quiz {
     /* Doesn't check the answer, only increments the amount of 
     correct answers */
     checkAnswer(answer){
-        return this.correctAnswers ++
+        const question = this.getQuestion()
+        const correctAnswers = question.answer === answer
+        if(correctAnswers){
+            this.correctAnswers ++
+        } 
     }
 
     hasEnded(){
