@@ -194,7 +194,7 @@ console.log(quiz)
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
 
-  quiz.timeRemaining = 10;
+  quiz.timeRemaining = 120;
   let timeRem = document.getElementById("timeRemaining");
 
   const countDown = setInterval(()=>{
