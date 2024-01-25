@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
-  let count = 1;
+
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -47,20 +47,35 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
-  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-
-  // Display the time remaining in the time remaining container
-  const timeRemainingContainer = document.getElementById("timeRemaining");
-  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+  
 
   // Show first question
   showQuestion();
 
 
   /************  TIMER  ************/
+  function startTimer() {
+    
+ const timer = setInterval(() => {
+    
+  const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
-  let timer;
+  // Display the time remaining in the time remaining container
+  const timeRemainingContainer = document.getElementById("timeRemaining");
+  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    
+      if (quiz.timeRemaining === 0) {
+        
+        clearInterval(timer);
+        showResults();
+      } else {
+      
+       quiz.timeRemaining--;
+      }
+    }, 1000); 
+  }
+
 
 
   /************  EVENT LISTENERS  ************/
@@ -82,6 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showQuestion() {
     // If the quiz has ended, show the results
+   
     if (quiz.hasEnded()) {
       showResults();
       return;
@@ -102,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+   startTimer()
    questionContainer.textContent = question.text;
   
   
@@ -121,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
    
     questionCount.innerText = `Question ${quiz.currentQuestionIndex} of ${questions.length}`;
     console.log(`index: ${quiz.currentQuestionIndex}`);
+  
 
   
 
@@ -138,7 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         question.choices.forEach(choice => {
           myInput = document.createElement("li");
-          myInput.innerHTML = `<input type="radio" class="choice" name="choice" value="${choice}">
+          myInput.innerHTML = 
+          
+          `<input type="radio" class="choice" name="choice" value="${choice}">
           <label>${choice}</label>
         <br>`
         
@@ -154,11 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
   function nextButtonHandler () {
- 
-   
-    
-  
-    
+
    let selectedAnswer;
    
 
@@ -176,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
+
       choices.forEach(choice =>{
         console.log(choice);
        if(choice.checked){
@@ -196,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       
   }  
- // document.querySelectorAll(question.answer);
+
 
 
 
