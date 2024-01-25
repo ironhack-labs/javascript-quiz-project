@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+
   const minutes = Math.floor(quiz.timeRemaining / 60)
     .toString()
     .padStart(2, "0");
@@ -72,7 +73,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  function countdown() {
+    let timer = quiz.timeRemaining
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    this.intervalTimer = setInterval(function () {
+      timer--;
+
+      let minutes = Math.floor(timer / 60);
+      let seconds = timer % 60;
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+      console.log(seconds);
+
+      if (timer <= 0) {
+        clearInterval(intervalTimer);
+        showResults();
+      }
+    }, 1000);
+  }
+
+  countdown();
+
+
 
   /************  EVENT LISTENERS  ************/
 
@@ -184,8 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //  When a radio input gets selected the `.checked` property will be set to true.
     //  You can use check which choice was selected by checking if the `.checked` property is true.
 
-
-
     inputsAll.forEach((inputElm) => {
       if (inputElm.checked) {
         selectedAnswer = inputElm.value;
@@ -196,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     // Show the next question by calling the function `showQuestion()`.
-
 
     quiz.checkAnswer(selectedAnswer);
 
@@ -219,6 +239,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let resetBtn = document.getElementById("restartButton");
     resetBtn.addEventListener("click", restartGame);
+
+    // stop countdown
+    clearInterval(intervalTimer);
+
+
   }
 
   function restartGame() {
@@ -238,5 +263,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // show first question
     showQuestion();
+
+    // reset timer
+   
+    countdown()
   }
 });
