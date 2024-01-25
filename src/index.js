@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
+      // console.log(quiz.hasEnded())
       showResults();
       return;
     }
@@ -99,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const question = quiz.getQuestion();
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
-    
 
     // YOUR CODE HERE:
     //
@@ -111,25 +111,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
     // progressBar.style.width = `80%`; // This value is hardcoded as a placeholder
-    let process = 0;
-    progressBar.style.width = process + `%`; // This value is hardcoded as a placeholder
 
-    const btn = document.getElementById("nextButton");
-    btn.addEventListener("click", () => {
-      process = process + 100 / questions.length;
-      progressBar.style.width = process + `%`;
-    });
+    let progressPercentage =
+      (quiz.currentQuestionIndex / questions.length) * 100;
+    progressBar.style.width = progressPercentage + `%`;
 
     // 3. Update the question count text
     // Update the question count (div#questionCount) show the current question out of total questions
-    let currentQuestionNumber = 1;
-    let totalQuestionNumber = questions.length;
-    questionCount.innerText = `Question ${currentQuestionNumber} of ${totalQuestionNumber}`; //  This value is hardcoded as a placeholder
 
-    btn.addEventListener("click", () => {
-      currentQuestionNumber++;
-      questionCount.innerText = `Question ${currentQuestionNumber} of ${totalQuestionNumber}`;
-    });
+    let currentQuestionNumber = quiz.currentQuestionIndex + 1; // This should be the index plus 1 because arrays are zero-indexed
+    let totalQuestionNumber = questions.length;
+    questionCount.innerText = `Question ${currentQuestionNumber} of ${totalQuestionNumber}`;
 
     // 4. Create and display new radio input element with a label for each choice.
     // Loop through the current question `choices`.
@@ -192,13 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
     //  When a radio input gets selected the `.checked` property will be set to true.
     //  You can use check which choice was selected by checking if the `.checked` property is true.
 
-    // console.log("before:", selectedAnswer )
 
-    inputsAll.forEach((inputElm, index) => {
+
+    inputsAll.forEach((inputElm) => {
       if (inputElm.checked) {
         selectedAnswer = inputElm.value;
-
-        // console.log("after:", selectedAnswer )
       }
     });
 
@@ -207,11 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     // Show the next question by calling the function `showQuestion()`.
 
-    // question as array and check each for right answer and compare to selected answer
 
     quiz.checkAnswer(selectedAnswer);
-    quiz.moveToNextQuestion();
 
+    quiz.moveToNextQuestion();
     showQuestion();
   }
 
@@ -225,28 +214,29 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
+
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
 
     let resetBtn = document.getElementById("restartButton");
-
     resetBtn.addEventListener("click", restartGame);
   }
+
+  function restartGame() {
+    // show
+    quizView.style.display = "flex";
+
+    // 2. hide the end view (div#endView)
+    endView.style.display = "none";
+
+    //reset values
+    // const quiz = new Quiz(questions, quizDuration, quizDuration);
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+
+    //shuffle
+    quiz.shuffleQuestions();
+
+    // show first question
+    showQuestion();
+  }
 });
-
-function restartGame() {
-  // show
-  quizView.style.display = "flex";
-
-  // 2. hide the end view (div#endView)
-  endView.style.display = "none";
-
-  //reset values
-  quiz.currentQuestionIndex = 0
-  quiz.correctAnswers = 0
-
-  //shuffle
-  quiz.shuffleQuestions();
-
-  // show first question
-  showQuestion();
-}
