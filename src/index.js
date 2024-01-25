@@ -190,8 +190,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function restartButtonHandler() {
+    
     quizView.style.display = "flex";
-
     endView.style.display = "none";
 
     quiz.currentQuestionIndex = 0;

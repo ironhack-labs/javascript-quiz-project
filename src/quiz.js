@@ -20,7 +20,8 @@ class Quiz {
   }
   
     checkAnswer(answer) {
-        if (this.getQuestion().answer === answer) {
+      const expectedAnswer = this.getQuestion().answer;
+        if (expectedAnswer === answer) {
             this.correctAnswers++;
 
         }
