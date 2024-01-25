@@ -23,15 +23,17 @@ class Quiz {
         const j = Math.floor(Math.random() * (i + 1)); 
         [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]]; 
       } 
-      // return this.questions; 
    }; 
 
 
     checkAnswer(answer){
-     if (typeof answer === "string"){
+        const expectedAnswer = this.getQuestion().answer
+        console.log(`answer: ${answer}`);
+       
+     if (answer === expectedAnswer){
         this.correctAnswers++; 
-        //return answer === "true" ? correctAnswers ++ : "not right!" 
-        //if(!arr.length)
+    }else{
+        this.correctAnswers;
     }
 
 }

@@ -20,6 +20,3 @@ class Question {
     
 }
 
-const question = new Question("Hallo", ["EIns", "Zwei", "Drei"], "Yes", 3);
-
-console.log(question.shuffleChoices());
