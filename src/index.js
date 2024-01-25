@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
-  restartButton.addEventListener("click", restartButtonHandler);
+  //restartButton.addEventListener("click", restartButtonHandler);
 
   /************  FUNCTIONS  ************/
 
@@ -173,7 +173,44 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.checkAnswer(selectedAnswer);
     quiz.moveToNextQuestion();
     showQuestion();
+    //start countDown
+    // let spanInTimeRemaining = document.querySelector("#timeRemaining");
+    // let counter = parseInt(spanInTimeRemaining.innerHTML);
+
+    // console.log(counter);
+
+    // spanInTimeRemaining = setInterval(() => {
+    //   while (counter > 0) {
+    //     spanInTimeRemaining.innerHTML = --counter;
+    //   }
+    // }, 1000);
+    let spanInTimeRemaining = document.querySelector("#timeRemaining");
+    let counter = 120; //parseInt(spanInTimeRemaining.innerHTML); //.querySelector("span")
+
+    let countdownInterval = setInterval(() => {
+      if (counter > 0) {
+        spanInTimeRemaining.innerHTML = formatTime(counter);
+        counter--;
+      } else if (quizView.style.display === "none") {
+        clearInterval(countdownInterval);
+      } else {
+        clearInterval(countdownInterval);
+      }
+    }, 1000);
   }
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+    const formattedSeconds =
+      remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds;
+
+    return formattedMinutes + ":" + formattedSeconds;
+  }
+
+  ///////////////////////////////////////////////
 
   function showResults() {
     // YOUR CODE HERE:
@@ -186,18 +223,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
-  }
-
-  function restartButtonHandler() {
-    endView.style.display = "none";
-
-    quizView.style.display = "flex";
-
-    quiz.currentQuestionIndex = 0;
-    quiz.correctAnswers = 0;
-
-    quiz.shuffleQuestions();
-
-    showQuestion();
   }
 });
