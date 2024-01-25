@@ -23,7 +23,10 @@ class Quiz {
     }
     // 5. checkAnswer(answer)
     checkAnswer(answer) {
-        ++this.correctAnswers
+        const currentAnswer = this.questions[this.currentQuestionIndex].answer
+        if (answer === currentAnswer) {
+            this.correctAnswers++
+        }
     }
     // 6. hasEnded()
     hasEnded() {
