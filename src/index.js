@@ -55,12 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
-
+  
 
   /************  TIMER  ************/
 
   let timer;
-
+  showTimer();
 
   /************  EVENT LISTENERS  ************/
 
@@ -78,6 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showQuestion() {
     // If the quiz has ended, show the results
+
+
+
     if (quiz.hasEnded()) {
       showResults();
       return;
@@ -154,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
+      
   }
 
 
@@ -198,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showResults() {
 
+    closeTimer();
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
@@ -212,15 +217,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function restartQuiz(){
 
- 
+    
+    closeTimer();
     endView.style.display = "none";
     quizView.style.display = "flex";
     quiz.currentQuestionIndex=0;
     quiz.correctAnswers=0;
     quiz.shuffleQuestions();
     showQuestion();
+    showTimer();
 
+  }
+
+  function showTimer(){
+     
+    timer = setInterval(function () {
+      quiz.timeRemaining--;
+      setTimerArea();
+      
+      if (quiz.timeRemaining === 0) {
+        showResults();
+      }
+    }, 1000);
+
+    
+  
+  }
+
+  function setTimerArea(){
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+  }
+
+  function closeTimer(){
+    quiz.timeRemaining=quizDuration;
+    setTimerArea();
+    clearInterval(timer);
   }
   
 });
+
+
 
