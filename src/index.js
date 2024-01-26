@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Show first question
   showQuestion();
 
-
   /************  TIMER  ************/
 
   let timer;
@@ -74,9 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // nextButtonHandler() - Handles the click on the next button
   // showResults() - Displays the end view and the quiz results
 
-
-
   function showQuestion() {
+    
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
       showResults();
@@ -98,19 +96,20 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+    questionContainer.innerText = question.text;
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    let percentage = (quiz.currentQuestionIndex +1)/questions.length;
+    progressBar.style.width = `${percentage}%`; // This value is hardcoded as a placeholder
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Questions ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
 
 
     
@@ -128,14 +127,47 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
-  }
+question.choices.forEach((choice) => {
+  const radioBtn = document.createElement("input");
+  radioBtn.type = "radio";
+  radioBtn.name = "choice";
+  radioBtn.value = choice;
+  choiceContainer.appendChild(radioBtn);
 
+  const label = document.createElement("label");
+  label.innerText = choice;
+  choiceContainer.appendChild(label);
 
+  const br = document.createElement("br");
+  choiceContainer.appendChild(br);
+  
+});
+}
   
   function nextButtonHandler () {
     let selectedAnswer; // A variable to store the selected answer value
 
+    let choiceElements = document.querySelectorAll("choices");
 
+    const choices = document.querySelectorAll('input [name = "choice"]');
+
+    selectedAnswer = choices.forEach(choice => {
+      if(choiceElements.checked === true) {
+        return choice;
+      }
+
+      /*
+      if (checkAnswer(selectedAnswer) === true ) {
+        quiz.moveToNextQuestion();
+        showQuestion();
+      }  Here I put wrongly the check answer, I should have put it by calling quiz and assigned it to a variable outside the if statement */
+
+      if (selectedAnswer !== undefined){
+        let correctAnswer = quiz.checkAnswer(selectedAnswer)
+        quiz.moveToNextQuestion();
+        showQuestion();
+      }   
+    });
 
     // YOUR CODE HERE:
     //
@@ -154,9 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Show the next question by calling the function `showQuestion()`.
   }  
 
-
-
-
   function showResults() {
 
     // YOUR CODE HERE:
@@ -168,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswer} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
 });
