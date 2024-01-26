@@ -35,7 +35,7 @@ class Quiz {
     }
   }
 
-  filterQuestionsByDifficulty(difficulty) {
+ /* filterQuestionsByDifficulty(difficulty) {
     // number
     if (difficulty >= 1 && difficulty <= 3) {
       const filteredDifficulty = this.questions.filter(function (element) {
@@ -46,7 +46,21 @@ class Quiz {
     } else {
       return this.questions; // Return the original questions array if the difficulty is not between 1 and 3
     }
+  }*/
+  filterQuestionsByDifficulty(difficulty) {
+    // number
+    let filteredDifficulty;
+    if (difficulty >= 1 && difficulty <= 3) {
+      filteredDifficulty = this.questions.filter(function (element) {
+        return element.difficulty === difficulty;
+      });
+    } else {
+      filteredDifficulty = this.questions; // Return the original questions array if the difficulty is not between 1 and 3
+    }
+    
+    return filteredDifficulty;
   }
+  
 
   averageDifficulty() {
     const totalDifficulty = this.questions.reduce((accumulator, question) => {

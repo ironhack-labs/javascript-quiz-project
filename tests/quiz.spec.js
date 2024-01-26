@@ -327,13 +327,14 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-        const quiz = new Quiz(testQuestions, 60, 60);
+        const quiz = new Quiz(questions, 60, 60);
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
-        quiz.filterQuestionsByDifficulty(2);
+      const filteredQuestions = quiz.filterQuestionsByDifficulty(2);
       // 4. Check if the questions array has been filtered correctly
-        expect(quiz.questions.length).toEqual(2);
-        expect(quiz.questions[0].difficulty).toEqual(2);
-        expect(quiz.questions[1].difficulty).toEqual(2);
+        expect(filteredQuestions.length).toEqual(2);
+        expect(filteredQuestions[0].difficulty).toEqual(2);
+        expect(filteredQuestions[1].difficulty).toEqual(2);
+        
       });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
@@ -365,7 +366,7 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-      const quiz = new Quiz(testQuestions, 60, 60);
+      const quiz = new Quiz(questions, 60, 60);
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
       quiz.filterQuestionsByDifficulty(4);
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
@@ -477,7 +478,7 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object with the test questions
-        const quiz = new Quiz(testQuestions, 60, 60);
+        const quiz = new Quiz(questions, 60, 60);
       // 2. Check that the averageDifficulty() method returns the correct average when called
       describe('averageDifficulty', function() {
         it('should return the correct average difficulty', function() {
