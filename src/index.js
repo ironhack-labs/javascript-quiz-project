@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultContainer = document.querySelector("#result");
 
   // Used Counter
-  let answeredQuestions = 0; 
- 
-  
+  let answeredQuestions = 0;
+
+
 
 
   /************  SET VISIBILITY OF VIEWS  ************/
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
- 
+
 
   /************  TIMER  ************/
 
@@ -73,13 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function startTimer() {
     timer = setInterval(() => {
-      quiz.timeRemaining--;
-      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
-      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-      timerContainer.innerText = `${minutes}:${seconds}`;
-
-      if (quiz.timeRemaining === showResults) {
-        clearInterval();
+      if (quiz.timeRemaining > 0) {
+        quiz.timeRemaining--;
+   const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+   timerContainer.innerText = `${minutes}:${seconds}`;
+      } else {
+        clearInterval(timer);
         showResults();
       }
     }, 1000);
@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextButton.addEventListener("click", nextButtonHandler);
   restartButton.addEventListener('click', restartQuiz);
-   // window.onload = timerInterval();
-  
+  // window.onload = timerInterval();
+
 
   /************  FUNCTIONS  ************/
 
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showResults();
       return;
     };
-   
+
 
     // update the counter of answered answers 
     answeredQuestions++;
@@ -122,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
-    
+
 
     const showQuestion = document.getElementById('question');
     questionContainer.innerText = question.text;
-   showQuestion.innerText = question.text;
+    showQuestion.innerText = question.text;
 
 
     // Update the green progress bar
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Display the choices calling a new function
     const createInputs = setChoices(question.choices);
-     
+
   }; // end of showquestion function
 
 
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         label.setAttribute('for', `choice-${key}`);
         label.appendChild(input);
         label.appendChild(document.createTextNode(choice));
-
+        label.style.display = 'block';
         // Append the label to the choice container
         choiceContainer.appendChild(label);
       };
@@ -187,25 +187,25 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < choices.length; i++) {
       if (choices[i].checked) {
         selectedAnswer = choices[i].value;
-      break;
+        break;
+      }
     }
-  }
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
     // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
     if (quiz.checkAnswer(selectedAnswer)) {
       quiz.correctAnswers++;
     }
-    
+
     // Move to the next question by calling the quiz method `moveToNextQuestion()`.
     quiz.moveToNextQuestion();
     // Show the next question by calling the function `showQuestion()`.
     showQuestion();
 
     console.log(`Total Correct Answers: ${quiz.correctAnswers}`);
-    
+
     // return correctAnswers;
-  
+
   }; // end of nextbtnhandler function
 
 
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
-    
+
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     // let correctAnswers = getCorrectAnswers();
@@ -224,16 +224,16 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInterval(timer);
 
   }; // end of showResult fn
-  
-  function restartQuiz(){
+
+  function restartQuiz() {
     console.log('restart quiz');
-    
-      // hide the endView
+
+    // hide the endView
     endView.style.display = "none";
-      // display the quiz view
+    // display the quiz view
     quizView.style.display = "block";
-    
-  
+
+
     // reset the quiz
     quiz.shuffleQuestions();
     quiz.resetCorrectAnswerCounter(); // fn to reset the correctAnswers into quiz.js
@@ -244,24 +244,24 @@ document.addEventListener("DOMContentLoaded", () => {
     startTimer();////dilan modified
   };
 
-/*
-  function timerInterval (timeRemaining){
-
-    for (let i= timeRemaining; i>0; i--){
-
-    const timer = setInterval(() => {
-      timeRemaining--;
-      timerContainer.innerText = timeRemaining;
-      if (timeRemaining === 0) {
-        showResults();
-        timeRemaining = this.timeRemaining;
-        clearInterval();
+  /*
+    function timerInterval (timeRemaining){
+  
+      for (let i= timeRemaining; i>0; i--){
+  
+      const timer = setInterval(() => {
+        timeRemaining--;
+        timerContainer.innerText = timeRemaining;
+        if (timeRemaining === 0) {
+          showResults();
+          timeRemaining = this.timeRemaining;
+          clearInterval();
+        };
+      }, 1000);
+  
       };
-    }, 1000);
-
     };
-  };
-  */
+    */
 
 
 }); // end of page DO NOT DELETE
