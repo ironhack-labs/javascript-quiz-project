@@ -167,6 +167,8 @@ input[type="radio"] {
     font-style: italic;
     color: #333;
     margin: 0 auto;
-    margin-top: -35px;
+    text-align: right;
+    margin-top: -25px;
+    margin-right: 20px;
     margin-bottom: 12px;
 }
