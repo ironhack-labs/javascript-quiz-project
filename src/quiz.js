@@ -15,12 +15,7 @@ class Quiz {
   }
 
   shuffleQuestions() {
-    for (let i = this.questions.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = this.questions[i];
-      this.questions[i] = this.questions[j];
-      this.questions[j] = temp;
-    }
+    this.questions.sort(() => Math.random() - 0.5);
   }
 
   checkAnswer(answer) {
@@ -35,20 +30,7 @@ class Quiz {
     }
   }
 
- /* filterQuestionsByDifficulty(difficulty) {
-    // number
-    if (difficulty >= 1 && difficulty <= 3) {
-      const filteredDifficulty = this.questions.filter(function (element) {
-        return element.difficulty === difficulty;
-      });
-      this.questions = filteredDifficulty;
-      return filteredDifficulty;
-    } else {
-      return this.questions; // Return the original questions array if the difficulty is not between 1 and 3
-    }
-  }*/
   filterQuestionsByDifficulty(difficulty) {
-    // number
     let filteredDifficulty;
     if (difficulty >= 1 && difficulty <= 3) {
       filteredDifficulty = this.questions.filter(function (element) {
@@ -57,10 +39,9 @@ class Quiz {
     } else {
       filteredDifficulty = this.questions; // Return the original questions array if the difficulty is not between 1 and 3
     }
-    
+
     return filteredDifficulty;
   }
-  
 
   averageDifficulty() {
     const totalDifficulty = this.questions.reduce((accumulator, question) => {
