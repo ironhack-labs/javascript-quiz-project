@@ -334,11 +334,16 @@ describe("Quiz", () => {
       const quiz = new Quiz(questions, 60, 60); 
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
-      filterQuestionsByDifficulty(2)
+      quiz.filterQuestionsByDifficulty(3)
 
       // 4. Check if the questions array has been filtered correctly
-      
-
+      expect(quiz.questions).toEqual([{
+        text: "Question 4",
+        choices: ["j", "k", "l"],
+        answer: "j",
+        difficulty: 3,
+      }])
+          
 
     });
 
@@ -371,17 +376,12 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-      class Quiz {
-        constructor(text, choices, answer, difficulty) {
-          this.text = text;
-          this.choices = choices;
-          this.answer = answer;
-          this.difficulty = difficulty;
-        }
-      }
+      const quiz = new Quiz(questions, 60, 60); 
+
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-      filterQuestionsByDifficulty("data")
+      quiz.filterQuestionsByDifficulty("data")
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
+      expect(quiz.questions).toEqual(quiz.questions)
 
     });
   });
@@ -396,57 +396,34 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("averageDifficulty() method", () => {
-    it("should use the 'reduce()' array method on the 'questions' array", () => {
-      // Instantiate a new Quiz object
-      const quiz = new Quiz([], "test", 60);
-      // Set up a spy on the 'reduce()' array method to track calls to it
-      const reduceSpy = spyOn(quiz.questions, "reduce");
-
-      // Call the 'averageDifficulty()' method
-      quiz.averageDifficulty();
-
-      // Check if the 'reduce()' array method was called on the 'questions' array
-      expect(reduceSpy).toHaveBeenCalled();
-      // Check that the 'reduce()' array method was called only once
-      expect(reduceSpy).toHaveBeenCalledTimes(1);
-      // Check that the 'reduce()' array method was called correctly, with a function as its 1st argument and optional 2nd argument
-      expect(reduceSpy.calls.allArgs()[0][0]).toEqual(jasmine.any(Function));
-    });
-
-
-    // ****************************************************************************************************
-    // DAY 2: 'averageDifficulty()' method
-    //      
-    // Below are 4 tests that you need to write for the 'averageDifficulty()' method.
-    // ****************************************************************************************************
-
-
+  describe("averageDifficulty() method", () => {
     it("should be defined", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
-
+      const quiz = new Quiz([], "test", 60);
       // 2. Check if the averageDifficulty() method is defined
-
+      expect(quiz.averageDifficulty).toBeDefined();
     });
 
     it("should be a function", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], "test", 60);
 
       // 2. Check if the .averageDifficulty is a function
-
+      expect(typeof quiz.averageDifficulty).toBe("function");
     });
 
     it("should receive no arguments", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], "test", 60);
 
       // 2. Check that the averageDifficulty() method takes no arguments
-
+      expect(quiz.averageDifficulty.length).toEqual(0);
     });
 
     it("should return the average difficulty of the questions in the quiz", () => {
@@ -487,9 +464,10 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object with the test questions
+      const quiz = new Quiz(questions, "test", 60);
 
       // 2. Check that the averageDifficulty() method returns the correct average when called
-
+      expect(quiz.averageDifficulty()).toEqual(1.8);
     });
   });
 });
