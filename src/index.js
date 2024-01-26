@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const timeRemainingContainer = document.getElementById("timeRemaining");
     timeRemainingContainer.innerText = `${minutes}:${seconds}`;
-    
+
   if (quiz.timeRemaining === 0) {
     clearInterval(timer);
     showResults();
@@ -219,7 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
       quiz.correctAnswers = 0;
       quiz.shuffleQuestions();
       showQuestion()
-      
+      quiz.timeRemaining = quizDuration;
+      minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timeRemainingContainer = document.getElementById("timeRemaining");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      timer = setInterval(timeInterval,1000)
     })
 
     
