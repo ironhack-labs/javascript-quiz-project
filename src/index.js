@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+  
   const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
@@ -60,7 +61,20 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  TIMER  ************/
 
   let timer;
+  timer = setInterval(()=>{
+    quiz.timeRemaining-=1;
 
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    
+  if (quiz.timeRemaining === 0) {
+    clearInterval(timer);
+    showResults();
+  }
+ }, 1000)
 
   /************  EVENT LISTENERS  ************/
 
@@ -194,6 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
     
   }
+
+  
     
     const restartButton = document.getElementById("restartButton")
     restartButton.addEventListener("click",  function restartQuiz(){
@@ -205,6 +221,11 @@ document.addEventListener("DOMContentLoaded", () => {
       showQuestion()
       
     })
+
+    
+
+    
+    
   
   
 })
