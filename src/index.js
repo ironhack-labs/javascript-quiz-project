@@ -188,8 +188,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
     quiz.checkAnswer(selectedAnswer);
+    if(selectedAnswer){
     quiz.moveToNextQuestion();
-    showQuestion();
+    showQuestion();}
   }  
 
 
