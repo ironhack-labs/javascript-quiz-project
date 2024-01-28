@@ -199,5 +199,31 @@ question.choices.forEach((choice) => {
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswer} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
+
+  quiz.timeRemaining = 120;
+  let timeLeft = document.getElementById("timeRemaining");
+
+  const countDown = setInterval(()=>{
+      timeLeft.innerHTML = `${quiz.timeRemaining}`
+      if(quiz.timeRemaining === 0){
+          clearInterval(countDown)
+          showResults()
+      }
+      quiz.timeRemaining --;
+      let minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      let seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    
+      // Display the time remaining in the time remaining container
+      const timeRemainingContainer = document.getElementById("timeRemaining");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+
+  }, 1000)
+
+  let restarBtn = document.getElementById('restartButton');
+  restarBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
+  
   
 });
