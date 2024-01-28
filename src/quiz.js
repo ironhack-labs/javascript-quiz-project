@@ -24,10 +24,12 @@ class Quiz {
     }; 
 
     checkAnswer(answer) {
-        if (this.checkAnswer) {
-         this.correctAnswers += 1;
+        const question = this.getQuestion();
+        const isCorrectAnswer = question.answer === answer;
+        if (isCorrectAnswer) {
+         this.correctAnswers ++;
         } 
-     }   
+     };   
     hasEnded(){
         if (this.currentQuestionIndex < this.questions.length) {
             return false;
@@ -35,5 +37,26 @@ class Quiz {
         else if (this.currentQuestionIndex === this.questions.length) {
             return true;
         }
+    };
+
+    filterQuestionsByDifficulty(difficulty) {
+            if (difficulty < 1 || difficulty > 3 || typeof difficulty !== "number") {
+              return;
+            }
+        
+            const filteredQuestions = this.questions.filter((question) => {
+              return question.difficulty === difficulty;
+            });
+
+            return filteredQuestions;
+          }
+
+    averageDifficulty() {
+        const sumDifficulty = this.questions.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.difficulty
+        }, 0);
+        const average = sumDifficulty/this.questions.length;
+        return average;
     }
-}
+    };
+    
