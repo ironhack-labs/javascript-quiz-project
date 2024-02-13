@@ -8,73 +8,41 @@ class Quiz {
     } // end of constructor
     
     getQuestion() {
-// return {this.currentQuestionIndex}
+        return this.questions[this.currentQuestionIndex]
     } // end of gotQuestion method
     
     moveToNextQuestion() {
+        this.currentQuestionIndex += 1;
+        return this.currentQuestionIndex;
 
     } // end of moveToNextQuestion method
 
     shuffleQuestions() {
-
+        for (let i = this.questions.length - 1; i > 0; i--) { 
+              const j = Math.floor(Math.random() * (i + 1)); 
+              [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]]; 
+            } 
+            return this.questions; 
     } // end of shuffleQuestions
 
     checkAnswer(answer) {
+        if (answer === Object.values(this.questions[2])) {
+         this.correctAnswers += 1;
+        }
+        
+/* Nota para Shannon: Solo nos falta lograr esto -
+1.  should increase 'correctAnswers' by 1 when a correct answer is passed as an argument
+2. should check if the answer is correct by comparing it to the 'answer' property of the current question
+Al cumplir con esto, cuadramos con lo asignado hoy. */
 
     } // end of checkAnswer
     
     hasEnded() {
-
+        if (this.currentQuestionIndex < this.questions.length) {
+            return false;
+        }
+        else if (this.currentQuestionIndex === this.questions.length) {
+            return true;
+        }
     } //end of hasEnded 
 } // end of Quiz class
-
-
-// getQuestion() method
-
-// Returns the question from the questions array at the position of currentQuestionIndex.
-
-// should be defined.
-// should be a function.
-// should receive no arguments.
-// should return the item from the questions array at the position of currentQuestionIndex.
-
-// moveToNextQuestion() method
-
-// When called, increments the currentQuestionIndex by 1.
-
-// should be defined.
-// should be a function.
-// should receive no arguments.
-// should increment the currentQuestionIndex by 1.
-
-// shuffleQuestions() method
-
-// Shuffles the elements stored in the questions array of the Quiz.
-
-// should be defined.
-// should be a function.
-// should receive no arguments.
-// should shuffle the items in the questions array.
-
-// checkAnswer(answer) method
-
-// Checks if the passed answer is correct for the current question and increments correctAnswers by 1 if the answer is correct.
-
-// should be defined.
-// should be a function.
-// should receive 1 argument (answer - string).
-// should increase correctAnswers by 1 when called with a correct answer for the current question
-
-// hasEnded() method
-
-// Returns true if the quiz has ended (the last question has been answered), and false otherwise.
-
-// should be defined.
-
-// should be a function.
-
-// should receive no arguments.
-
-// should return false when currentQuestionIndex is less than the questions array length
-
-// should return true when currentQuestionIndex is equal to the questions array length
