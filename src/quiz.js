@@ -46,3 +46,6 @@ Al cumplir con esto, cuadramos con lo asignado hoy. */
         }
     } //end of hasEnded 
 } // end of Quiz class
+
+
+// WEEEPAAAA!!!
