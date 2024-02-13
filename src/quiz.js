@@ -26,14 +26,9 @@ class Quiz {
     } // end of shuffleQuestions
 
     checkAnswer(answer) {
-        if (answer === Object.values(this.questions[2])) {
+        if (answer === this.questions[this.currentQuestionIndex].answer) {
          this.correctAnswers += 1;
         }
-        
-/* Nota para Shannon: Solo nos falta lograr esto -
-1.  should increase 'correctAnswers' by 1 when a correct answer is passed as an argument
-2. should check if the answer is correct by comparing it to the 'answer' property of the current question
-Al cumplir con esto, cuadramos con lo asignado hoy. */
 
     } // end of checkAnswer
     
