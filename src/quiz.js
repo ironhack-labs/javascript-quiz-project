@@ -1,4 +1,4 @@
-class Quiz  {
+class Quiz {
     // YOUR CODE HERE:
 
     // 1. constructor (questions, timeLimit, timeRemaining)
@@ -47,5 +47,64 @@ class Quiz  {
             return false;
         }
     }
+
+    //DAY 2:
+    filterQuestionsByDifficulty(difficulty){
+        if( typeof difficulty !== 'number') {
+            return "Wrong datatype"
+        }
+
+        if(difficulty < 1 || difficulty > 3){
+            return "There are only 3 difficulties"
+        }
+        this.questions = this.questions.filter(function(question) {
+            return question.difficulty === difficulty;
+        });
+        return this.questions;
+    }
+
+    averageDifficulty() {
+
+       let result =  this.questions.reduce(function(accum,question){
+        return accum += question.difficulty;
+        },0);
+ 
+        return result/this.questions.length;
+    }
+
+    
 }
 
+
+
+//FOR TESTING 
+const questions = [
+    {
+      text: "Question 1",
+      choices: ["a", "b", "c"],
+      answer: "a",
+      difficulty: 1,
+    },
+    {
+      text: "Question 2",
+      choices: ["d", "e", "f"],
+      answer: "d",
+      difficulty: 2,
+    },
+    {
+      text: "Question 3",
+      choices: ["g", "h", "i"],
+      answer: "g",
+      difficulty: 2,
+    },
+    {
+      text: "Question 4",
+      choices: ["j", "k", "l"],
+      answer: "j",
+      difficulty: 3,
+    },
+  ];
+
+const quiz = new Quiz(questions, 10, 10)
+
+console.log(quiz.averageDifficulty());
