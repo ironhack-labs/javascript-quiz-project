@@ -39,5 +39,26 @@ class Quiz {
         else if (this.currentQuestionIndex === this.questions.length) {
             return true;
         }
-    } //end of hasEnded 
+    } //end of hasEnded
+    
+    filterQuestionsByDifficulty(difficulty) {
+        if (difficulty > 0 && difficulty <= 3){
+            const filteredQuestions = this.questions.filter(question => {
+                return question.difficulty === difficulty
+            })
+            return filteredQuestions
+        } else {
+            return this.questions
+        }
+    } // end of filterQuestionsByDifficulty method
+
+    averageDifficulty(){
+        let difficultySum = this.questions.reduce((acc, curr) => { 
+            return (acc + curr.difficulty)
+
+        },0)
+
+        return difficultySum / this.questions.length
+
+    } // end of averageDifficulty
 } // end of Quiz class

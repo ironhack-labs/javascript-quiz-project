@@ -14,5 +14,5 @@ class Question {
             } 
             return this.choices; 
   }// end of shuffle method
-   
-} // en of Question class
+  
+  } // en of Question class
