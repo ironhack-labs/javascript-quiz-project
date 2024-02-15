@@ -206,19 +206,16 @@ document.addEventListener("DOMContentLoaded", () => {
   //buttonHandler function:
   function restartButtonHandler() {
 
-
       quiz.currentQuestionIndex = 0; 
       quiz.correctAnswers = 0;
       quiz.shuffleQuestions(); 
     
-      
       questionCounter = 0;
       questionNum = 1; 
     
       quizView.style.display = "block";
       endView.style.display = "none";
     
-     
       showQuestion();
   }
 });
