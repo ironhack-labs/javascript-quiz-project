@@ -78,33 +78,33 @@ class Quiz {
 
 
 //FOR TESTING 
-const questions = [
-    {
-      text: "Question 1",
-      choices: ["a", "b", "c"],
-      answer: "a",
-      difficulty: 1,
-    },
-    {
-      text: "Question 2",
-      choices: ["d", "e", "f"],
-      answer: "d",
-      difficulty: 2,
-    },
-    {
-      text: "Question 3",
-      choices: ["g", "h", "i"],
-      answer: "g",
-      difficulty: 2,
-    },
-    {
-      text: "Question 4",
-      choices: ["j", "k", "l"],
-      answer: "j",
-      difficulty: 3,
-    },
-  ];
+// const questions = [
+//     {
+//       text: "Question 1",
+//       choices: ["a", "b", "c"],
+//       answer: "a",
+//       difficulty: 1,
+//     },
+//     {
+//       text: "Question 2",
+//       choices: ["d", "e", "f"],
+//       answer: "d",
+//       difficulty: 2,
+//     },
+//     {
+//       text: "Question 3",
+//       choices: ["g", "h", "i"],
+//       answer: "g",
+//       difficulty: 2,
+//     },
+//     {
+//       text: "Question 4",
+//       choices: ["j", "k", "l"],
+//       answer: "j",
+//       difficulty: 3,
+//     },
+//   ];
 
-const quiz = new Quiz(questions, 10, 10)
+// const quiz = new Quiz(questions, 10, 10)
 
-console.log(quiz.averageDifficulty());
+// console.log(quiz.averageDifficulty());
