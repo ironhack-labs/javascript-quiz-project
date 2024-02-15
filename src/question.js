@@ -21,5 +21,4 @@ class Question {
 }
 
 let question1 = new Question("text", [1,2,3,5,6,7,8,9,10], "answer", "difficulty")
-console.log(question1.choices)
 question1.shuffleChoices()

@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const restartButton = document.querySelector("#restartButton")
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -67,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
   nextButton.addEventListener("click", nextButtonHandler);
 
 
-
   /************  FUNCTIONS  ************/
 
   // showQuestion() - Displays the current question and its choices
@@ -99,22 +99,35 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
 
+    const questionText = quiz.getQuestion().text
+    questionContainer.innerText = questionText
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
+
+    const currentQuestionNumber = quiz.currentQuestionIndex + 1
+    const progressPercentage = (currentQuestionNumber / quiz.questions.length) * 100
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
-
+    progressBar.style.width = `${progressPercentage}%`; // This value is hardcoded as a placeholder
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
-
+    questionCount.innerText = `Question ${currentQuestionNumber} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
 
     
     // 4. Create and display new radio input element with a label for each choice.
+    quiz.questions[quiz.currentQuestionIndex].choices.forEach(element => {
+      let choicesHtml = `
+      <input type="radio" name="choice" value="${element}">
+      <label>${element}</label>
+      <br>
+      `
+      choiceContainer.innerHTML += choicesHtml
+    });
+
+
+    
     // Loop through the current question `choices`.
       // For each choice create a new radio input with a label, and append it to the choice container.
       // Each choice should be displayed as a radio input element with a label:
@@ -140,9 +153,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
+    const choiceElements = document.querySelectorAll("input")
+    console.log(choiceElements)
 
     // 2. Loop through all the choice elements and check which one is selected
+    choiceElements.forEach(inputEl => {
+      console.log(inputEl.checked)
+
+      if (inputEl.checked) {
+        if (quiz.checkAnswer(inputEl.value)) {
+          quiz.moveToNextQuestion()
+          showQuestion()
+        } 
+      }     
+    })
+
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
@@ -153,8 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
   }  
-
-
 
 
   function showResults() {
@@ -168,7 +191,17 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
+  
+  restartButton.addEventListener('click', () => {
+    quizView.style.display = "block";
+    endView.style.display = "none";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
+    console.log(quiz.currentQuestionIndex)
+  })
   
 });
