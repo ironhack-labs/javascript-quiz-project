@@ -26,7 +26,9 @@ class Quiz {
     } // end of shuffleQuestions
 
     checkAnswer(answer) {
+        console.log("Checking ===>", answer, this.questions[this.currentQuestionIndex].answer)
         if (answer === this.questions[this.currentQuestionIndex].answer) {
+            console.log("CORRECT!!!!")
          this.correctAnswers += 1;
         }
 

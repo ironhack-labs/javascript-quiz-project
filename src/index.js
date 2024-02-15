@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let selectedAnswer;
+  let progress = 25
+
   /************  HTML ELEMENTS  ************/
   // View divs
   const quizView = document.querySelector("#quizView");
@@ -89,8 +92,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
+    questionContainer.innerText = question.text;
+    question.choices.forEach((choice) => {
+      choiceContainer.innerHTML += `
+      <input type="radio" name="choice" value=\'${choice}\'>
+      <label>${choice}</label>
+    <br>
+`
+    })
+    let choices = document.getElementsByTagName('input')
+    let choicesArray = [...choices]
+    choicesArray.forEach((choice) => {
+      choice.addEventListener('click', (e) => {
+          selectedAnswer = e.target.value
+      })
+
+    })
+  // })
+
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
-    question.shuffleChoices();
     
     
 
@@ -98,19 +118,22 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+  
+    //  function showQuestion() {}
 
+    // showQuestion();
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    progressBar.style.width = `${progress}%`; // This value is hardcoded as a placeholder
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of 4`; //  This value is hardcoded as a placeholder
 
 
     
@@ -133,9 +156,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
-
-
+    quiz.checkAnswer(selectedAnswer)
+    if (quiz.currentQuestionIndex === 3) {
+      showResults()
+      return
+    }
+    quiz.currentQuestionIndex++
+    progress += 25
+    console.log("Selected ===>", selectedAnswer)
+    showQuestion()
+  
+    
+    // let selectedAnswer; // A variable to store the selected answer value
 
     // YOUR CODE HERE:
     //
@@ -168,7 +200,9 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of 4 correct answers!`; // This value is hardcoded as a placeholder
   }
   
 });
+
+
