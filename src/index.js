@@ -62,6 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timer;
 
+  //countdown starts:
+
+
+// Ensure to start the timer when the quiz starts
+  startQuizTimer();
+ 
+
+
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
@@ -190,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showResults() {
 
+    clearInterval(timer); // Clear the timer if the quiz has ended
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
@@ -200,15 +209,33 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+
+   
+
   }
   
 
   //buttonHandler function:
   function restartButtonHandler() {
+  
+    // Restart the timer
+
+
+    // Show the first question again
+    showQuestion();
 
       quiz.currentQuestionIndex = 0; 
       quiz.correctAnswers = 0;
+
+      //reseting timer
+      clearInterval(timer);
+      quiz.timeRemaining = quizDuration;
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
       quiz.shuffleQuestions(); 
+      startQuizTimer();
     
       questionCounter = 0;
       questionNum = 1; 
@@ -218,4 +245,23 @@ document.addEventListener("DOMContentLoaded", () => {
     
       showQuestion();
   }
-});
+
+
+  function startQuizTimer() {
+    timer = setInterval(function () {
+        if (quiz.timeRemaining > 0) {
+            quiz.timeRemaining--;
+
+
+            const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+            const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+            timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+        } else {
+          // Time's up, end the quiz
+            learInterval(timer);
+            showResults();
+        }
+    }, 1000);
+  }
+  });
