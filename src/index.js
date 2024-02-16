@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
-  // const resetButton = document.querySelector("#resetButton") todavia no me funciona - Luis
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -52,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
   const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-  let remtime = 120000
+  
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -64,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /************  TIMER  ************/
-  let timer = null
+  let timer;
   startCountdown()  
   // en el timer tengo duda si estoy usando el tiempo de referencia correcto como quiz.remainingTime. - Luis
   // de todas formas, restan 2 problemas:  que corra el tiempo y que se refleje en el texto. - Luis
@@ -82,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
-  restartButton.addEventListener('click', restartButtonHandler) // Aún no me sale - Luis
+  restartButton.addEventListener('click', restartButtonHandler)
 
 
 
