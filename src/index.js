@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  // const resetButton = document.querySelector("#resetButton") todavia no me funciona - Luis
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
   const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  let remtime = 120000
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -58,16 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
+ 
 
 
   /************  TIMER  ************/
-
-  let timer;
-
+  let timer = null
+  startCountdown()  
+  // en el timer tengo duda si estoy usando el tiempo de referencia correcto como quiz.remainingTime. - Luis
+  // de todas formas, restan 2 problemas:  que corra el tiempo y que se refleje en el texto. - Luis
+  // sospecho que el timeRemainingContainer nos puede ayudar en algo. - Luis
+  function startCountdown() {
+    console.log('timer start')
+    timer = setInterval(() => {
+      remtime--; 
+      if (remtime <= 0) {
+        showResults();
+      }
+    },1000)
+  }
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener('click', restartButtonHandler) // Aún no me sale - Luis
 
 
 
@@ -153,8 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
-
+  function restartButtonHandler () {
+    endView.style.display = "none";
+    quizView.style.display = "flex";
+    quiz.currentQuestionIndex = 0
+    quiz.correctAnswers = 0
+    quiz.shuffleQuestions()
+    showQuestion()
+  } 
   
+
   function nextButtonHandler () {
     quiz.checkAnswer(selectedAnswer)
     if (quiz.currentQuestionIndex === 3) {
@@ -165,8 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     progress += 25
     console.log("Selected ===>", selectedAnswer)
     showQuestion()
-  
-    
     // let selectedAnswer; // A variable to store the selected answer value
 
     // YOUR CODE HERE:
@@ -201,6 +222,10 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of 4 correct answers!`; // This value is hardcoded as a placeholder
+    
+    // 4. Update the timer to clear interval when quiz ends.
+    console.log('time is up!')
+    clearInterval(timer)
   }
   
 });

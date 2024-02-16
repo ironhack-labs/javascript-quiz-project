@@ -30,6 +30,8 @@ class Quiz {
         if (answer === this.questions[this.currentQuestionIndex].answer) {
             console.log("CORRECT!!!!")
          this.correctAnswers += 1;
+         console.log("Current correct answers ===>", this.correctAnswers)
+         console.log("Current question # ===>", this.currentQuestionIndex+1 )
         }
 
     } // end of checkAnswer
