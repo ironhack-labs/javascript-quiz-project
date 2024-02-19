@@ -263,7 +263,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("filterQuestionsByDifficulty() method", () => {   
+  describe("filterQuestionsByDifficulty() method", () => {   
     it("should use the 'filter()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);
@@ -288,37 +288,28 @@ describe("Quiz", () => {
     // Below are 4 tests that you need to write for the 'filterQuestionsByDifficulty()' method.
     // ****************************************************************************************************
 
-
     it("should be defined", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the filterQuestionsByDifficulty() method is defined
-
+      // Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
+      // Check if the hasEnded() method is defined
+      expect(quiz.filterQuestionsByDifficulty).toBeDefined();
     });
 
     it("should be a function", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the .filterQuestionsByDifficulty is a function
+      // Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
+      // Check if the .hasEnded is a function
+      expect(typeof quiz.filterQuestionsByDifficulty).toBe("function");
     });
 
+
     it("should receive 1 argument (difficulty)", () => {
-      // YOUR CODE HERE:
-      //
-      // 1. Instantiate a new Quiz object
-
-      // 2. Check if the filterQuestionsByDifficulty() method takes 1 argument
-
+      const quiz = new Quiz([], 60, 60);
+      expect(quiz.filterQuestionsByDifficulty.length).toEqual(1)
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {
-      // 1. Read the above test description to understand what this test should do
 
-      // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
           text: "Question 1",
@@ -346,20 +337,20 @@ describe("Quiz", () => {
         },
       ];
 
-      // YOUR CODE HERE:
-      //
-      // 2. Instantiate a new Quiz object with the test questions
-
-      // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
-
-      // 4. Check if the questions array has been filtered correctly
+      const quiz = new Quiz(questions, 60, 60);
+      expect(quiz.questions.length).toEqual(4)
+      quiz.filterQuestionsByDifficulty(2)
+      expect(quiz.questions.length).toEqual(3)
+      quiz.filterQuestionsByDifficulty(1)
+      expect(quiz.questions).toEqual([{
+        text: "Question 1",
+        choices: ["a", "b", "c"],
+        answer: "a",
+        difficulty: 1,
+      }])
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
-      // 1. Read the above test description to understand what this test should do
-
-
-      // Array with questions to be used in the test and passed to the Quiz constructor
       const questions = [
         {
           text: "Question 1",
@@ -381,13 +372,11 @@ describe("Quiz", () => {
         },
       ];
 
-      // YOUR CODE HERE:
-      //
-      // 2. Instantiate a new Quiz object with the test questions
-
-      // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
-
-      // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
+      const quiz = new Quiz(questions, 60, 60);
+      quiz.filterQuestionsByDifficulty('foo');
+      expect(quiz.questions).toEqual(questions);
+      quiz.filterQuestionsByDifficulty();
+      expect(quiz.questions).toEqual(questions)
 
     });
   });
