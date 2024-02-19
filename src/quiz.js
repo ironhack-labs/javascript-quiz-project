@@ -36,7 +36,59 @@ class Quiz {
             question => question.difficulty <= difficulty
             )
     }
+
+    averageDifficulty(){
+        return Math.round(this.questions.reduce((acc, cur) => 
+            acc + Number(cur.difficulty),0) / this.questions.length);
+    }
 }
+
+
+
+
+const questionsAve = [
+    {
+      text: "Question 1",
+      choices: ["a", "b", "c"],
+      answer: "a",
+      difficulty: 1,
+    },
+    {
+      text: "Question 2",
+      choices: ["d", "e", "f"],
+      answer: "d",
+      difficulty: 2,
+    },
+    {
+      text: "Question 3",
+      choices: ["g", "h", "i"],
+      answer: "g",
+      difficulty: 2,
+    },
+    {
+      text: "Question 4",
+      choices: ["j", "k", "l"],
+      answer: "j",
+      difficulty: 1,
+    },
+    {
+      text: "Question 5",
+      choices: ["m", "n", "o"],
+      answer: "m",
+      difficulty: 3,
+    },
+  ];
+
+  questionsAve.reduce((acc, cur) => acc + cur.difficulty,0) / questionsAve.length;
+
+
+  const quizAve = new Quiz(questionsAve, 60, 60);
+
+  quizAve.averageDifficulty()
+
+
+
+
 
 const questions = [
     {
