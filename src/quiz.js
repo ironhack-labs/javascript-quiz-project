@@ -11,7 +11,7 @@ class Quiz {
 
     getQuestion(){
 
-      
+
     }
 
     // 3. moveToNextQuestion()
