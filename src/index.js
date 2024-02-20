@@ -231,12 +231,12 @@ document.addEventListener('DOMContentLoaded',() => {
     const minutesRemainingMessage = minutesRemaining > 0 
                                       ? minutesRemaining === 1 
                                         ? ' 1 minute ' 
-                                        : minutesRemaining + ' minutes '
+                                        : minutesRemaining + ' minutes ' + secondsRemaining > 0 ? 'and' : ''
                                       : '';
     const secondsRemainingMessage = secondsRemaining  > 0 
                                       ? secondsRemaining === 1 
-                                        ? 'and 1 second ' 
-                                        : ' and' + secondsRemaining + ' seconds ' 
+                                        ? ' 1 second ' 
+                                        : secondsRemaining + ' seconds ' 
                                       : '';
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
