@@ -26,11 +26,24 @@ class Quiz {
 
   }
 
-  // 5. checkAnswer(answer)
+  checkAnswer(answer){
+    this.questions.forEach(question => {
+if (answer === question.answer){
 
-  // 6. hasEnded()
+  this.correctAnswers += 1;
 }
 
-let questions = [1, 2, 3, 4, 5];
+    })
 
-console.log(questions);
+  }
+
+ hasEnded(){
+if (this.currentQuestionIndex < this.questions.length){
+
+  return false;
+} else {
+  return true;
+}
+
+ }
+}
