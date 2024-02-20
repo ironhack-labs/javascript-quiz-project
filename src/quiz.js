@@ -27,7 +27,13 @@ class Quiz {
     }
   }
 
-  checkAnswer(answer) {}
+  checkAnswer(answer) {
+    this.questions.forEach((element) => {
+      if (answer == element.answer) {
+        this.correctAnswers += 1;
+      }
+    });
+  }
 
   // 6. hasEnded()
 }
