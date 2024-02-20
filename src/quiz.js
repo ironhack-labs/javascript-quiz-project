@@ -12,11 +12,22 @@ class Quiz {
     return this.questions[this.currentQuestionIndex];
   }
 
-  moveToNextQuestion() {}
+  moveToNextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex += 1;
+    }
+  }
 
-  // 4. shuffleQuestions()
+  shuffleQuestions() {
+    for (let i = this.questions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = this.questions[i];
+      this.questions[i] = this.questions[j];
+      this.questions[j] = temp;
+    }
+  }
 
-  // 5. checkAnswer(answer)
+  checkAnswer(answer) {}
 
   // 6. hasEnded()
 }
