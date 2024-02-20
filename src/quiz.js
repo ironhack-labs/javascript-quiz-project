@@ -8,9 +8,7 @@ class Quiz {
     this.currentQuestionIndex = 0;
   }
 
-  getQuestion() {
-    return;
-  }
+  getQuestion() {}
 
   // 3. moveToNextQuestion()
 
@@ -22,4 +20,5 @@ class Quiz {
 }
 
 let questions = [1, 2, 3, 4, 5];
-console.log(questions[1]);
+
+console.log(questions);
