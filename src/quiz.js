@@ -9,10 +9,10 @@ class Quiz {
   }
 
   getQuestion() {
-    return;
+    return this.questions[this.currentQuestionIndex];
   }
 
-  // 3. moveToNextQuestion()
+  moveToNextQuestion() {}
 
   // 4. shuffleQuestions()
 
@@ -21,5 +21,5 @@ class Quiz {
   // 6. hasEnded()
 }
 
-let questions = [1, 2, 3, 4, 5];
-console.log(questions[1]);
+// let questions = [1, 2, 3, 4, 5];
+// console.log(questions[1]);
