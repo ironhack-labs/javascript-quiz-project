@@ -45,12 +45,23 @@ class Quiz {
 	// 6. hasEnded()
 
 	hasEnded() {
-		console.log(this.currentQuestionIndex);
-		console.log(this.questions.length);
-
 		if (this.currentQuestionIndex < this.questions.length) {
 			return false;
 		}
 		return true;
+	}
+
+	filterQuestionsByDifficulty(difficulty) {
+		let filterQuestion = this.questions.filter(
+			(question) => question.difficulty === difficulty
+		);
+		return filterQuestion;
+	}
+
+	averageDifficulty() {
+		let totalDifficulty = this.questions.reduce((acc, curr) => {
+			return (acc += curr.difficulty);
+		}, 0);
+		return totalDifficulty / 2;
 	}
 }
