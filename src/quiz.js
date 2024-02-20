@@ -27,7 +27,23 @@ class Quiz {
     }
   }
   hasEnded() {
-    return this.currentQuestionIndex === this.questions.length
+    return this.currentQuestionIndex === this.questions.length;
+  }
+  filterQuestionsByDifficulty(difficulty) {
+    if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
+      return;
+    }
+    this.questions = this.questions.filter(
+      (questions) => questions.difficulty == difficulty
+    );
+  }
+  averageDifficulty() {
+    const totalDifficulty = this.questions.reduce((acc, question) => {
+      return acc + question.difficulty;
+    }, 0);
+
+    const averageDiff = totalDifficulty / this.questions.length;
+
+    return averageDiff;
   }
 }
-
