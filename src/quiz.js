@@ -35,7 +35,13 @@ class Quiz {
     });
   }
 
-  // 6. hasEnded()
+  hasEnded() {
+    if (this.currentQuestionIndex < this.questions.length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
 
 // let questions = [1, 2, 3, 4, 5];
