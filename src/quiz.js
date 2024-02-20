@@ -23,6 +23,12 @@ class Quiz {
     checkAnswer(answer) {
         if (answer === this.questions[this.currentQuestionIndex].answer) {
             this.correctAnswers++
+            //console.log('correct answer', answer);
+            return true
+        }
+        else {
+            //console.log('no, wrong,', answer);
+            return false
         }
     }
 
@@ -45,7 +51,7 @@ class Quiz {
 
 
 
-
+//#region testing
 const questionsAve = [
     {
       text: "Question 1",
@@ -77,6 +83,30 @@ const questionsAve = [
       answer: "m",
       difficulty: 3,
     },
+    {
+        text: "Question 5",
+        choices: ["m", "n", "o"],
+        answer: "m",
+        difficulty: 1,
+      },
+      {
+        text: "Question 5",
+        choices: ["m", "n", "o"],
+        answer: "m",
+        difficulty: 1,
+      },
+      {
+        text: "Question 5",
+        choices: ["m", "n", "o"],
+        answer: "m",
+        difficulty: 1,
+      },
+      {
+        text: "Question 5",
+        choices: ["m", "n", "o"],
+        answer: "m",
+        difficulty: 1,
+      },
   ];
 
   questionsAve.reduce((acc, cur) => acc + cur.difficulty,0) / questionsAve.length;
@@ -123,3 +153,6 @@ const questions = [
 
   quiz.filterQuestionsByDifficulty(2)
   quiz.questions.length
+
+  //#endregion
+

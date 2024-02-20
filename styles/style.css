@@ -71,6 +71,11 @@ button {
     margin-bottom: -12px;
 }
 
+.button-disabled {
+    background-color: #333;
+    pointer-events: none;
+}
+
 
 button:hover {
     background-color: #4cae4c;
