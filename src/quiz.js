@@ -1,5 +1,5 @@
 class Quiz {
-    // YOUR CODE HERE:
+    // DAY 1 YOUR CODE HERE:
     //
     // 1. constructor (questions, timeLimit, timeRemaining)
     constructor (questions, timeLimit, timeRemaining){
@@ -27,6 +27,7 @@ class Quiz {
         const randomize = Math.floor(Math.random() * (i + 1));
         [this.questions[i], this.questions[randomize]] = [this.questions[randomize], this.questions[i]];
     };
+        this.questions = this.questions.filter(function(question) {
 };
 
 
@@ -45,4 +46,37 @@ class Quiz {
 hasEnded() {
     if (this.currentQuestionIndex < this.questions.length) { return false }
     else { return true }
+
+  // DAY 2 YOUR CODE HERE
+  // 1. filterQuestionsByDifficulty()
+  filterQuestionsByDifficulty(questionDifficulty) {
+    if (
+      typeof questionDifficulty != "number" ||
+      questionDifficulty >= 3 ||
+      questionDifficulty <= 0
+    ) {
+      const filteredQuestions = this.questions.filter((el) => {
+        return el;
+        //return this.questions;
+      });
+      return filteredQuestions;
+    } else {
+      const filteredQuestions = this.questions.filter((el) => {
+        if (el.difficulty === questionDifficulty) {
+          return el;
+        }
+      });
+      return filteredQuestions;
+
+  // DAY 2 AverageDifficulty
+  averageDifficulty() {
+    const sumDifficulties = this.questions.reduce((acc, elm) => acc + elm.difficulty, 0)
+    const totalQuestions = this.questions.length
+    const average = sumDifficulties / totalQuestions
+    return average
 }
+
+
+
+
+
