@@ -318,14 +318,18 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
       // 2. Check if the .filterQuestionsByDifficulty is a function
+      expect(typeof quiz.filterQuestionsByDifficulty).toBe("function");
     });
 
     it("should receive 1 argument (difficulty)", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
       // 2. Check if the filterQuestionsByDifficulty() method takes 1 argument
+      expect(quiz.filterQuestionsByDifficulty.length).toEqual(1);
     });
 
     it("should update the 'questions' array with the questions filtered by difficulty", () => {

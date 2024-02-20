@@ -41,7 +41,7 @@ class Quiz {
       return true;
     }
   }
-  filterQuestionsByDifficulty() {
+  filterQuestionsByDifficulty(difficulty) {
     return this.questions.filter((question) => {});
   }
 }
