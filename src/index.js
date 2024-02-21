@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded',() => {
   
     function timer(){
       document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
+      timerDuration--;
       var timer = setInterval(function(){
           document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
           timerDuration--;
@@ -281,6 +282,7 @@ document.addEventListener('DOMContentLoaded',() => {
         quiz.currentQuestionIndex = 0;
         quiz.correctAnswers = 0;
         showQuestion();
+        endTimer = false
         timer();
     
     //
