@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded',() => {
     const question = quiz.getQuestion();
     const imageElement = document.getElementById('image-question-image')
     
-    console.log('question',question)
+    //console.log('question',question)
     if (question.type === 'picture') {
       imageElement.setAttribute('src',question.media)
       imageElement.style.display = 'block'
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded',() => {
       
       const choiceInputs = document.querySelectorAll('input')
       choiceInputs.forEach(element => element.addEventListener("input", () => {
-        console.log('selected',element)
+        //console.log('selected',element)
         if (nextButton.disabled = true) {
           nextButton.disabled = false
 
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded',() => {
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
-      console.log(selectedAnswer);
+      //console.log(selectedAnswer);
       if (selectedAnswer !== null) {
          
           
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
     const returnImage = (correctAnswers, questions) => {
       const percentage = (correctAnswers / questions) * 100
-      console.log(percentage)
+      //console.log(percentage)
       const images = {
         great: '/img/75.webp',
         good: '/img/50.jpeg',
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
     const returnSuccessText = (correctAnswers, questions) => {
       const percentage = (correctAnswers / questions) * 100
-      console.log(percentage)
+      //console.log(percentage)
       const text = {
         great: 'You are the one',
         good: 'You\'re breathtaking',
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded',() => {
     
     You took ${minutesRemainingMessage} ${secondsRemainingMessage} to finish the quiz!`; // This value is hardcoded as a placeholder
 
-    console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
+    //console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('success-text').innerText = returnSuccessText(quiz.correctAnswers,quiz.questions.length)
