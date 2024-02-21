@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded',() => {
   // End view elements
   const resultContainer = document.querySelector("#result");
 
+  // something else
+  let timeRanOut = false
+
 
   /************  SET VISIBILITY OF VIEWS  ************/
 
@@ -79,6 +82,7 @@ document.addEventListener('DOMContentLoaded',() => {
           timerDuration--;
           quiz.timeRemaining--;
           if (timerDuration < 0) {
+              timeRanOut = true
               clearInterval(timer);
               showResults()
           }
@@ -350,7 +354,7 @@ document.addEventListener('DOMContentLoaded',() => {
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!
     
-    You took ${minutesRemainingMessage} ${secondsRemainingMessage} to finish the quiz!`; // This value is hardcoded as a placeholder
+    You ${timeRanOut ? 'ran out of time' : 'took ' + minutesRemainingMessage + ' ' + secondsRemainingMessage + ' to finish the quiz!'}`; // This value is hardcoded as a placeholder
 
     //console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
@@ -370,6 +374,7 @@ document.addEventListener('DOMContentLoaded',() => {
         document.getElementById('results-image').style.opacity = 0
         document.getElementById('results-image').setAttribute('src','/img/blank.png')
         endTimer = false
+        timeRanOut = false
         timer();
     
     //
