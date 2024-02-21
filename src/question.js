@@ -19,5 +19,30 @@ class Question {
     }
 
 
+
+
+filterQuestionsByDifficulty(difficulty) {
+ if (difficulty < 1 || difficulty > 3 || typeof difficulty !== "number"){
+    return;
+ }  
+
+    const filteredQuestions = this.questions.filter((selectedDifficulty) => { 
+    return selectedDifficulty.difficulty === difficulty;
+})
+
+this.questions = filteredQuestions;
+return this.questions;
 }
 
+
+averageDifficulty() {
+
+    const sumDifficulty = this.questions.reduce((sum, question) => {
+        const totalDifficulty = sum + question.difficulty
+        return totalDifficulty;
+    }, 0);
+return sumDifficulty / this.questions.length;
+
+}
+
+}
