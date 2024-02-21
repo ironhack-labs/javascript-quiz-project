@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded',() => {
         sad: '/img/default.webp'
       }
 
-      if (percentage > 74) return images.great
+      if (percentage > 75) return images.great
       if (percentage > 49) return images.good
       if (percentage > 24) return images.promising
       return images.sad
