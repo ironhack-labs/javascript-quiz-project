@@ -10,6 +10,7 @@ class Quiz {
 
   getQuestion() {
     return this.questions[this.currentQuestionIndex];
+    return this.questions[this.currentQuestionIndex];
   }
 
   moveToNextQuestion() {
