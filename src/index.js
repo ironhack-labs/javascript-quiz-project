@@ -231,6 +231,22 @@ document.addEventListener('DOMContentLoaded',() => {
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
 
+    const returnImage = (correctAnswers, questions) => {
+      const percentage = (correctAnswers / questions) * 100
+      console.log(percentage)
+      const images = {
+        great: '/img/75.webp',
+        good: '/img/50.jpeg',
+        promising: '/img/25.jpeg',
+        sad: '/img/default.webp'
+      }
+
+      if (percentage > 74) return images.great
+      if (percentage > 49) return images.good
+      if (percentage > 24) return images.promising
+      return images.sad
+    }
+
     const minutesRemaining = Number(toMinutesAndSeconds(quiz.timeLimit - quiz.timeRemaining).minutes)
     const secondsRemaining = Number(toMinutesAndSeconds(quiz.timeLimit - quiz.timeRemaining).seconds)
 
@@ -249,6 +265,9 @@ document.addEventListener('DOMContentLoaded',() => {
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!
     
     You took ${minutesRemainingMessage} ${secondsRemainingMessage} to finish the quiz!`; // This value is hardcoded as a placeholder
+
+    console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
+    document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
   }
 
   function restartButtonHandler() {
