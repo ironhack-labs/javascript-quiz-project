@@ -201,3 +201,7 @@ justify-content: center;
 .sound-question-container {
     align-self: center;
 }
+
+.video-question-video {
+    max-width: 45%;
+}

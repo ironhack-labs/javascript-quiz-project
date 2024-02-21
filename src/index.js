@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded',() => {
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     new Question('who dis?',['keanu','mr potato head','the goodyear blimp','brendan eich'],'keanu',1,'picture','/img/50.jpeg'),
     new Question('what dis?',['a horse','mr potato head','keanu','brendan eich'],'a horse',1,'sound','/sound/horse.ogg'),
+    new Question('nevva gonna what?',['give you up','keanu','learn javascript','eat broccolli'],'give you up',1,'video','/video/never.mp4')
     // Add more questions here
   ];
   
@@ -178,6 +179,25 @@ document.addEventListener('DOMContentLoaded',() => {
       }
     }
 
+    if (question.type === 'video') {
+      const videoContainer = document.createElement('video')
+      const videoElement = document.createElement('source')
+      videoElement.setAttribute('src',question.media)
+      videoElement.setAttribute('type','video/mp4')
+      videoElement.setAttribute('id', 'video-question-video')
+      videoContainer.classList.add('video-question-video')
+      videoContainer.setAttribute('controls',true)
+      videoContainer.setAttribute('autoplay',true)
+      videoContainer.appendChild(videoElement)
+      document.querySelector('#choices').insertAdjacentElement('beforebegin',videoContainer)
+    }
+    else {
+      if (document.querySelector('.video-question-container')){
+        document.querySelector('.video-question-container').remove()
+      }
+    }
+
+
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
@@ -270,6 +290,9 @@ document.addEventListener('DOMContentLoaded',() => {
   function showResults() {
 
     endTimer = true
+    if (document.getElementsByClassName('video-question-video')[0]){
+      document.getElementsByClassName('video-question-video')[0].remove()
+    }
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
