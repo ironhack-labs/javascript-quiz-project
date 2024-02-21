@@ -273,7 +273,8 @@ document.addEventListener('DOMContentLoaded',() => {
 
     console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
-    document.getElementById('results-image').style.opacity = 1
+    setTimeout(() => document.getElementById('results-image').style.opacity = 1,250)
+    
   }
 
   function restartButtonHandler() {
