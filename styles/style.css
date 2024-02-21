@@ -183,5 +183,6 @@ input[type="radio"] {
 #results-image {
     max-height: 175px;
     object-fit: cover;
-    transition: display fade-in 1s;
+    transition: opacity 1s;
+    opacity: 0;
 }

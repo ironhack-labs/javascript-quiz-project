@@ -273,6 +273,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
     console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
+    document.getElementById('results-image').style.opacity = 1
   }
 
   function restartButtonHandler() {
@@ -282,6 +283,8 @@ document.addEventListener('DOMContentLoaded',() => {
         quiz.currentQuestionIndex = 0;
         quiz.correctAnswers = 0;
         showQuestion();
+        document.getElementById('results-image').style.opacity = 0
+        document.getElementById('results-image').setAttribute('src','/img/blank.png')
         endTimer = false
         timer();
     
