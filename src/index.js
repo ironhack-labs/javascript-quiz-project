@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded',() => {
  
     let timerDuration = quiz.timeLimit; // 120 seconds (2 minutes)
     //quiz.timeRemaining = timeRemaining;
+    let endTimer = false
   
     const toMinutesAndSeconds = number => {
       const minutes = Math.floor(number / 60).toString().padStart(2, "0");
@@ -69,13 +70,16 @@ document.addEventListener('DOMContentLoaded',() => {
   
     function timer(){
       document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
-      let timer = setInterval(function(){
+      var timer = setInterval(function(){
           document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
           timerDuration--;
           quiz.timeRemaining--;
           if (timerDuration < 0) {
               clearInterval(timer);
               showResults()
+          }
+          if (endTimer) {
+            clearInterval(timer);
           }
       }, 1000);
   }
@@ -222,7 +226,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
   function showResults() {
 
-    clearInterval(timer);
+    endTimer = true
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
