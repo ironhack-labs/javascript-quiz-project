@@ -186,3 +186,18 @@ input[type="radio"] {
     transition: opacity 1s;
     opacity: 0;
 }
+
+#choice-and-media {
+display: flex;
+justify-content: center;
+}
+
+#image-question-image {
+    max-width: 25%;
+    object-fit: cover;
+    margin-left: auto;
+}
+
+.sound-question-container {
+    align-self: center;
+}

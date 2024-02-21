@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded',() => {
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question('who dis?',['keanu','mr potato head','the goodyear blimp','brendan eich'],'keanu',1,'picture','/img/50.jpeg'),
+    new Question('what dis?',['a horse','mr potato head','keanu','brendan eich'],'a horse',1,'sound','/sound/horse.ogg'),
     // Add more questions here
   ];
   
@@ -118,6 +120,7 @@ document.addEventListener('DOMContentLoaded',() => {
       showResults();
       return;
     }
+    
 
     // Clear the previous question text and question choices
     questionContainer.innerText = quiz.currentQuestionIndex;
@@ -125,6 +128,27 @@ document.addEventListener('DOMContentLoaded',() => {
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
+    const imageElement = document.getElementById('image-question-image')
+    
+    console.log('question',question)
+    if (question.type === 'picture') {
+      imageElement.setAttribute('src',question.media)
+      imageElement.style.display = 'block'
+    }
+    else {
+      imageElement.setAttribute('src','')
+      imageElement.style.display = 'none'
+    }
+
+    
+
+    
+
+
+    // else {
+    //   soundElement.setAttribute('src','')
+    //   soundContainer.style.display = 'none'
+    // }
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
@@ -135,6 +159,24 @@ document.addEventListener('DOMContentLoaded',() => {
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
     document.querySelector('#question').innerHTML = question.text
+
+    if (question.type === 'sound') {
+      const soundContainer = document.createElement('audio')
+      const soundElement = document.createElement('source')
+      soundElement.setAttribute('src',question.media)
+      soundElement.setAttribute('type','audio/mp3')
+      soundElement.setAttribute('id', 'sound-question-sound')
+      soundContainer.classList.add('sound-question-container')
+      soundContainer.setAttribute('controls',true)
+      soundContainer.setAttribute('autoplay',true)
+      soundContainer.appendChild(soundElement)
+      document.querySelector('#question').insertAdjacentElement('afterend',soundContainer)
+    }
+    else {
+      if (document.querySelector('.sound-question-container')){
+        document.querySelector('.sound-question-container').remove()
+      }
+    }
 
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered

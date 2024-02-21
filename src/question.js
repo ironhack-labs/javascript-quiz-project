@@ -1,10 +1,12 @@
 class Question {
 
-    constructor(text, choices, answer, difficulty) {
+    constructor(text, choices, answer, difficulty, type = 'text', media = null) {
         this.text = text;
         this.choices = choices;
         this.answer = answer;
         this.difficulty = difficulty;
+        this.type = type;
+        this.media = media;
     }
 
     shuffleChoices() {
