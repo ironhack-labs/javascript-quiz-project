@@ -192,8 +192,8 @@ document.addEventListener('DOMContentLoaded',() => {
       document.querySelector('#choices').insertAdjacentElement('beforebegin',videoContainer)
     }
     else {
-      if (document.querySelector('.video-question-container')){
-        document.querySelector('.video-question-container').remove()
+      if (document.getElementsByClassName('video-question-video')[0]){
+        document.getElementsByClassName('video-question-video')[0].remove()
       }
     }
 
@@ -317,6 +317,22 @@ document.addEventListener('DOMContentLoaded',() => {
       return images.sad
     }
 
+    const returnSuccessText = (correctAnswers, questions) => {
+      const percentage = (correctAnswers / questions) * 100
+      console.log(percentage)
+      const text = {
+        great: 'You are the one',
+        good: 'You\'re breathtaking',
+        promising: 'You\'re going\nto military school ',
+        sad: 'You made Keanu sad'
+      }
+
+      if (percentage > 75) return text.great
+      if (percentage > 49) return text.good
+      if (percentage > 24) return text.promising
+      return text.sad
+    }
+
     const minutesRemaining = Number(toMinutesAndSeconds(quiz.timeLimit - quiz.timeRemaining).minutes)
     const secondsRemaining = Number(toMinutesAndSeconds(quiz.timeLimit - quiz.timeRemaining).seconds)
 
@@ -338,6 +354,8 @@ document.addEventListener('DOMContentLoaded',() => {
 
     console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
+    document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
+    document.getElementById('success-text').innerText = returnSuccessText(quiz.correctAnswers,quiz.questions.length)
     setTimeout(() => document.getElementById('results-image').style.opacity = 1,250)
     
   }

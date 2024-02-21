@@ -109,6 +109,7 @@ input[type="radio"] {
     min-height: 300px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 #choices {
@@ -205,3 +206,16 @@ justify-content: center;
 .video-question-video {
     max-width: 45%;
 }
+
+#success-text {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    font-size: x-large;
+    opacity: 0.1;
+    transition: opacity 1s;
+ }
+ #success-text:hover {
+    opacity: 1;
+ }
