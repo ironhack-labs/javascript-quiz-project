@@ -71,7 +71,7 @@ button {
     margin-bottom: -12px;
 }
 
-.button-disabled {
+button:disabled {
     background-color: #333;
     pointer-events: none;
 }

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded',() => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const restartButton = document.querySelector("#restartButton");
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -54,36 +55,38 @@ document.addEventListener('DOMContentLoaded',() => {
   const timeRemainingContainer = document.getElementById("timeRemaining");
   timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
+    /************  TIMER  ************/
+
+ 
+    let timerDuration = quiz.timeLimit; // 120 seconds (2 minutes)
+    //quiz.timeRemaining = timeRemaining;
+  
+    const toMinutesAndSeconds = number => {
+      const minutes = Math.floor(number / 60).toString().padStart(2, "0");
+      const seconds = (number % 60).toString().padStart(2, "0");
+      return ({minutes,seconds})
+    }
+  
+    function timer(){
+      document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
+      let timer = setInterval(function(){
+          document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
+          timerDuration--;
+          quiz.timeRemaining--;
+          if (timerDuration < 0) {
+              clearInterval(timer);
+              showResults()
+          }
+      }, 1000);
+  }
+  
+  // ****
+
   // Show first question
   showQuestion();
   timer()
 
-  /************  TIMER  ************/
 
- 
-  let timerDuration = quiz.timeLimit; // 120 seconds (2 minutes)
-  //quiz.timeRemaining = timeRemaining;
-
-  const toMinutesAndSeconds = number => {
-    const minutes = Math.floor(number / 60).toString().padStart(2, "0");
-    const seconds = (number % 60).toString().padStart(2, "0");
-    return ({minutes,seconds})
-  }
-
-  function timer(){
-    
-    let timer = setInterval(function(){
-        document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
-        timerDuration--;
-        quiz.timeRemaining--;
-        if (timerDuration < 0) {
-            clearInterval(timer);
-            showResults()
-        }
-    }, 1000);
-}
-
-// ****
 
 
 //******** */
@@ -91,6 +94,7 @@ document.addEventListener('DOMContentLoaded',() => {
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener("click", restartButtonHandler);
 
 
 
@@ -165,8 +169,8 @@ document.addEventListener('DOMContentLoaded',() => {
       const choiceInputs = document.querySelectorAll('input')
       choiceInputs.forEach(element => element.addEventListener("input", () => {
         console.log('selected',element)
-        if (nextButton.classList.contains('button-disabled')) {
-          nextButton.classList.toggle('button-disabled')
+        if (nextButton.disabled = true) {
+          nextButton.disabled = false
 
         }
       }))
@@ -206,7 +210,8 @@ document.addEventListener('DOMContentLoaded',() => {
           quiz.moveToNextQuestion();
           showQuestion();
           selectedAnswer = null;
-          nextButton.classList.toggle('button-disabled')
+          
+          nextButton.disabled = true;
         }
 
       
@@ -217,6 +222,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
   function showResults() {
 
+    clearInterval(timer);
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
@@ -243,6 +249,25 @@ document.addEventListener('DOMContentLoaded',() => {
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!
     
     You took ${minutesRemainingMessage} ${secondsRemainingMessage} to finish the quiz!`; // This value is hardcoded as a placeholder
+  }
+
+  function restartButtonHandler() {
+        // YOUR CODE HERE:
+        timerDuration = quiz.timeLimit;
+        quiz.shuffleQuestions();
+        quiz.currentQuestionIndex = 0;
+        quiz.correctAnswers = 0;
+        showQuestion();
+        timer();
+    
+    //
+    // 1. Show the quiz view (div#quizView)
+    quizView.style.display = "flex";
+
+    // 2. Hide the end view (div#endView)
+    endView.style.display = "none";
+
+
   }
   
 }
