@@ -308,9 +308,9 @@ describe("Quiz", () => {
     it("should be defined", () => {
       // YOUR CODE HERE:
       // 1. Instantiate a new Quiz object
-      // 2. Check if the filterQuestionsByDifficulty() method is defined
       const quiz = new Quiz([], 60, 60);
-      // Check if the hasEnded() method is defined
+
+      // 2. Check if the filterQuestionsByDifficulty() method is defined
       expect(quiz.filterQuestionsByDifficulty).toBeDefined();
     });
 
@@ -366,10 +366,28 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
-
+      const quiz = new Quiz(questions, 60, 60);
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
+      filterQuestionsByDifficulty(2);
 
       // 4. Check if the questions array has been filtered correctly
+
+      const expectedFilteredQuestions = [
+        {
+          text: "Question 2",
+          choices: ["d", "e", "f"],
+          answer: "d",
+          difficulty: 2,
+        },
+        {
+          text: "Question 3",
+          choices: ["g", "h", "i"],
+          answer: "g",
+          difficulty: 2,
+        },
+      ];
+
+      expect(quiz.questions).toEqual(expectedFilteredQuestions);
     });
 
     it("should not change the 'questions' array if the 1st argument is not a number between 1 and 3", () => {
