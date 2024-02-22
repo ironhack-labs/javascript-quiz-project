@@ -91,7 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Clear the previous question text and question choices
-    questionContainer.innerText = "";
+    questionContainer.innerText = quiz.questions[0].text;
+
     choiceContainer.innerHTML = "";
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
@@ -107,12 +108,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    const progressBarWidth = `${
+      ((quiz.currentQuestionIndex + 1) / questions.length) * 100
+    }%`;
+    progressBar.style.width = progressBarWidth;
+
+    // This value is hardcoded as a placeholder
 
     // 3. Update the question count text
     // Update the question count (div#questionCount) show the current question out of total questions
 
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${
+      questions.length
+    }`; //  This value is hardcoded as a placeholder
 
     // 4. Create and display new radio input element with a label for each choice.
     // Loop through the current question `choices`.
