@@ -28,11 +28,12 @@ class Quiz {
   }
 
   checkAnswer(answer) {
-    this.questions.forEach((element) => {
-      if (answer == element.answer) {
-        this.correctAnswers += 1;
-      }
-    });
+    const currentQuestion = this.getQuestion();
+    if (answer == currentQuestion.answer) {
+      this.correctAnswers += 1;
+      return true;
+    }
+    return false;
   }
 
   hasEnded() {
