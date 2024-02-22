@@ -77,11 +77,16 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(() => {
     timer--;
 
+    const minutes = Math.floor(timer / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (timer % 60).toString().padStart(2, "0");
+
     const timerElement = document.getElementById("timeRemaining");
 
     console.log();
 
-    timerElement.innerText = timer;
+    timerElement.innerText = `${minutes}:${seconds}`;
     if (timer === 0) {
       quiz.hasEnded();
       showResults();
