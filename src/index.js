@@ -62,6 +62,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let timer;
 
 
+    
+    timer = setInterval(( ) => {
+      quiz.timeRemaining--;
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      const timeRemainingContainer = document.getElementById("timeRemaining");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      if (quiz.timeRemaining <= 0) {
+        clearInterval(timer)
+        showResults();
+      }
+    }, 1000);
+
+
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
@@ -183,17 +197,35 @@ if (selectedAnswer) {
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    clearInterval(timer)
+    timer=quiz.timeLimit; 
   }
   
 });
 
+function reloadBrowser(){
+  window.location.reload();
+}
+const restartButton = document.getElementById("restartButton")
 
-document.querySelector("#restartButton").addEventListener("click", () => { 
-  endView.style.display = "none";
-  quizView.style.display = "flex";
-  quiz.currentQuestionIndex = 0;
-  quiz.correctAnswers = 0;
-  quiz.shuffleQuestions()
-  show.Question()
+  restartButton.addEventListener("click", () => { 
+    window.location.reload();
+  });
 
-})
+  // restartButton.addEventListener("click", () => { 
+  // endView.style.display = "none";
+  // quizView.style.display = "flex";
+  // quiz.currentQuestionIndex = 0;
+  // quiz.correctAnswers = 0;
+  // quiz.moveToNextQuestion()
+  // quiz.showQuestion()
+  // questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`;
+  // window.location.reload();
+  // });
+  
+  
+
+
+
+
+  
