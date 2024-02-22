@@ -63,5 +63,6 @@ class Quiz {
     this.correctAnswers = 0;
     this.currentQuestionIndex = 0;
     this.timeLimit;
+    this.timeRemaining;
   }
 }

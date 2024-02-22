@@ -72,7 +72,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = quizDuration;
+
+  setInterval(() => {
+    timer--;
+
+    const timerElement = document.getElementById("timeRemaining");
+
+    console.log();
+
+    timerElement.innerText = timer;
+    if (timer === 0) {
+      quiz.hasEnded();
+      showResults();
+    }
+  }, 1000);
 
   /************  EVENT LISTENERS  ************/
 
@@ -205,6 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     quiz.resetScore();
     console.log(quiz.currentQuestionIndex);
+
+    timer = 120;
     showQuestion();
   }
 });
