@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded',() => {
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question('who dis?',['keanu','mr potato head','the goodyear blimp','brendan eich'],'keanu',1,'picture','/img/50.jpeg'),
-    new Question('what dis?',['a horse','mr potato head','keanu','brendan eich'],'a horse',1,'sound','/sound/horse.ogg'),
-    new Question('nevva gonna what?',['give you up','keanu','learn javascript','eat broccolli'],'give you up',1,'video','/video/never.mp4')
+    new Question('who dis?',['Keanu Reeves','Mr. Potato Head','the Goodyear Blimp','Brendan Eich'],'keanu',1,'picture','/img/50.jpeg'),
+    new Question('what dis?',['a horse','pizza','Keanu Reeves sneezing','French'],'a horse',1,'sound','/sound/horse.ogg'),
+    new Question('nevva gonna what?',['give you up','Keanu Reeves','learn javascript','eat broccolli'],'give you up',1,'video','/video/never.mp4')
     // Add more questions here
   ];
   
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
   /************  QUIZ INSTANCE  ************/
   
-  const quizDuration = 120
+  const quizDuration = 10
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
   // Shuffle the quiz questions
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded',() => {
  
     let timerDuration = quiz.timeLimit; // 120 seconds (2 minutes)
     //quiz.timeRemaining = timeRemaining;
-    let endTimer = false
+    let countdownTimer;
   
     const toMinutesAndSeconds = number => {
       const minutes = Math.floor(number / 60).toString().padStart(2, "0");
@@ -77,17 +77,17 @@ document.addEventListener('DOMContentLoaded',() => {
     function timer(){
       document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
       timerDuration--;
-      var timer = setInterval(function(){
+      countdownTimer = setInterval(function(){
           document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
           timerDuration--;
           quiz.timeRemaining--;
           if (timerDuration < 0) {
-              timeRanOut = true
-              clearInterval(timer);
+              
+              clearInterval(countdownTimer);
               showResults()
           }
           if (endTimer) {
-            clearInterval(timer);
+            clearInterval(countdownTimer);
           }
       }, 1000);
   }
@@ -354,8 +354,9 @@ document.addEventListener('DOMContentLoaded',() => {
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!
     
-    You ${timeRanOut ? 'ran out of time' : 'took ' + minutesRemainingMessage + ' ' + secondsRemainingMessage + ' to finish the quiz!'}`; // This value is hardcoded as a placeholder
+    You ${quiz.timeRemaining === 0 ? 'ran out of time' : 'took ' + minutesRemainingMessage + ' ' + secondsRemainingMessage + ' to finish the quiz!'}`; // This value is hardcoded as a placeholder
 
+    console.log(quiz.timeRemaining)
     //console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
     document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
@@ -373,8 +374,10 @@ document.addEventListener('DOMContentLoaded',() => {
         showQuestion();
         document.getElementById('results-image').style.opacity = 0
         document.getElementById('results-image').setAttribute('src','/img/blank.png')
-        endTimer = false
-        timeRanOut = false
+        
+        clearInterval(countdownTimer)
+        
+        
         timer();
     
     //
