@@ -207,7 +207,7 @@ justify-content: center;
     max-width: 45%;
 }
 
-#success-text {
+#results-text {
     position: absolute;
     bottom: 10px;
     left: 10px;
@@ -215,7 +215,8 @@ justify-content: center;
     font-size: x-large;
     opacity: 0.1;
     transition: opacity 1s;
- }
- #success-text:hover {
-    opacity: 1;
+
+    &:hover {
+        opacity: 1;
+    }
  }

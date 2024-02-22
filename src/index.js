@@ -11,12 +11,11 @@ document.addEventListener('DOMContentLoaded',() => {
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
   const restartButton = document.querySelector("#restartButton");
+  const resultsImage = document.getElementById('results-image');
+  const resultsText = document.getElementById('results-text');
 
   // End view elements
   const resultContainer = document.querySelector("#result");
-
-  // something else
-  let timeRanOut = false
 
 
   /************  SET VISIBILITY OF VIEWS  ************/
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded',() => {
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     new Question('who dis?',['Keanu Reeves','Mr. Potato Head','the Goodyear Blimp','Brendan Eich'],'keanu',1,'picture','/img/50.jpeg'),
     new Question('what dis?',['a horse','pizza','Keanu Reeves sneezing','French'],'a horse',1,'sound','/sound/horse.ogg'),
-    new Question('nevva gonna what?',['give you up','Keanu Reeves','learn javascript','eat broccolli'],'give you up',1,'video','/video/never.mp4')
+    new Question('nevva gonna what?',['give you up','Keanu Reeves','learn javascript','eat broccolli'],'give you up',1,'video','/video/never.mp4'),
     // Add more questions here
   ];
   
@@ -44,7 +43,7 @@ document.addEventListener('DOMContentLoaded',() => {
 
   /************  QUIZ INSTANCE  ************/
   
-  const quizDuration = 10
+  const quizDuration = 120
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
   // Shuffle the quiz questions
@@ -75,48 +74,35 @@ document.addEventListener('DOMContentLoaded',() => {
     }
   
     function timer(){
-      document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
+      timeRemainingContainer.innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
       timerDuration--;
       countdownTimer = setInterval(function(){
-          document.getElementById('timeRemaining').innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
+        timeRemainingContainer.innerHTML = toMinutesAndSeconds(timerDuration).minutes + ':' + toMinutesAndSeconds(timerDuration).seconds;
           timerDuration--;
           quiz.timeRemaining--;
           if (timerDuration < 0) {
-              
               clearInterval(countdownTimer);
               showResults()
-          }
-          if (endTimer) {
-            clearInterval(countdownTimer);
           }
       }, 1000);
   }
   
-  // ****
 
   // Show first question
   showQuestion();
   timer()
 
 
-
-
-//******** */
-
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
   restartButton.addEventListener("click", restartButtonHandler);
-
-
 
   /************  FUNCTIONS  ************/
 
   // showQuestion() - Displays the current question and its choices
   // nextButtonHandler() - Handles the click on the next button
   // showResults() - Displays the end view and the quiz results
-
-
 
   function showQuestion() {
 
@@ -135,7 +121,9 @@ document.addEventListener('DOMContentLoaded',() => {
     const question = quiz.getQuestion();
     const imageElement = document.getElementById('image-question-image')
     
-    //console.log('question',question)
+    // support picture type quetions
+    // replace image source with media link from question
+    // or hide if not a picture question
     if (question.type === 'picture') {
       imageElement.setAttribute('src',question.media)
       imageElement.style.display = 'block'
@@ -145,26 +133,17 @@ document.addEventListener('DOMContentLoaded',() => {
       imageElement.style.display = 'none'
     }
 
-    
-
-    
-
-
-    // else {
-    //   soundElement.setAttribute('src','')
-    //   soundContainer.style.display = 'none'
-    // }
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
-    
 
-    // YOUR CODE HERE:
-    //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-    document.querySelector('#question').innerHTML = question.text
+    questionContainer.innerHTML = question.text
 
+    // support sound type quetions
+    // create a sound element and set soruce to media link from question
+    // or destroy if next not a sound question
     if (question.type === 'sound') {
       const soundContainer = document.createElement('audio')
       const soundElement = document.createElement('source')
@@ -177,12 +156,11 @@ document.addEventListener('DOMContentLoaded',() => {
       soundContainer.appendChild(soundElement)
       document.querySelector('#question').insertAdjacentElement('afterend',soundContainer)
     }
-    else {
-      if (document.querySelector('.sound-question-container')){
-        document.querySelector('.sound-question-container').remove()
-      }
-    }
+  
 
+    // support video type quetions
+    // create a video element and set soruce to media link from question
+    // or destroy if next not a video question
     if (question.type === 'video') {
       const videoContainer = document.createElement('video')
       const videoElement = document.createElement('source')
@@ -195,20 +173,13 @@ document.addEventListener('DOMContentLoaded',() => {
       videoContainer.appendChild(videoElement)
       document.querySelector('#choices').insertAdjacentElement('beforebegin',videoContainer)
     }
-    else {
-      if (document.getElementsByClassName('video-question-video')[0]){
-        document.getElementsByClassName('video-question-video')[0].remove()
-      }
-    }
 
 
-    // 2. Update the green progress bar
-    // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
+
+    // 2. Update the  progress bar
+    // Update the  progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
     progressBar.style.width = (quiz.currentQuestionIndex / quiz.questions.length) * 100 + "%"; // This value is hardcoded as a placeholder
-
-  
-
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
@@ -216,37 +187,33 @@ document.addEventListener('DOMContentLoaded',() => {
 
     questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${questions.length}`; //  This value is hardcoded as a placeholder
 
-
-    
     // 4. Create and display new radio input element with a label for each choice.
     // { text: "Question 1", choices: ["a", "b", "c"], answer: "b" }...
     // Loop through the current question `choices`.
-      // For each choice create a new radio input with a label, and append it to the choice container.
-      // Each choice should be displayed as a radio input element with a label:
-      /* 
-          <input type="radio" name="choice" value="CHOICE TEXT HERE">
-          <label>CHOICE TEXT HERE</label>
-        <br>
-      */
-      // Hint 1: You can use the `document.createElement()` method to create a new element.
-      // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-      // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-      // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+    // For each choice create a new radio input with a label, and append it to the choice container.
+    // Each choice should be displayed as a radio input element with a label:
+    /* 
+        <input type="radio" name="choice" value="CHOICE TEXT HERE">
+        <label>CHOICE TEXT HERE</label>
+      <br>
+    */
+    // Hint 1: You can use the `document.createElement()` method to create a new element.
+    // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
+    // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
+    // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
-      question.choices.forEach(element => {
-        choiceContainer.innerHTML += `<li><input type="radio" name="answer" value="${element}"> ${element}</li>`;
-      });
-      
-      const choiceInputs = document.querySelectorAll('input')
-      choiceInputs.forEach(element => element.addEventListener("input", () => {
-        //console.log('selected',element)
-        if (nextButton.disabled = true) {
-          nextButton.disabled = false
-
-        }
-      }))
-
-
+    question.choices.forEach(element => {
+      choiceContainer.innerHTML += `<li><input type="radio" name="answer" value="${element}"> ${element}</li>`;
+    });
+    
+    // add an event listener to options to enable the button once an option has been selected
+    const choiceInputs = document.querySelectorAll('input')
+    choiceInputs.forEach(element => element.addEventListener("input", () => {
+      //console.log('selected',element)
+      if (nextButton.disabled = true) {
+        nextButton.disabled = false
+      }
+    }))
   }
 
 
@@ -255,48 +222,57 @@ document.addEventListener('DOMContentLoaded',() => {
   function nextButtonHandler () {
     let selectedAnswer = null; // A variable to store the selected answer value
 
-
-
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
     // 2. Loop through all the choice elements and check which one is selected
-      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-      //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
+    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
+    //  When a radio input gets selected the `.checked` property will be set to true.
+    //  You can use check which choice was selected by checking if the `.checked` property is true.
 
-      document.querySelectorAll('input').forEach(element => {if (element.checked) selectedAnswer = element})
-      //console.log('answer', selectedAnswer.value())
-      //console.log('check', quiz.checkAnswer(selectedAnswer.value))
+    document.querySelectorAll('input').forEach(element => {if (element.checked) selectedAnswer = element})
+    //console.log('answer', selectedAnswer.value())
+    //console.log('check', quiz.checkAnswer(selectedAnswer.value))
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-      // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-      // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-      // Show the next question by calling the function `showQuestion()`.
-      //console.log(selectedAnswer);
-      if (selectedAnswer !== null) {
-         
-          
-          quiz.checkAnswer(selectedAnswer.value);
-          quiz.moveToNextQuestion();
-          showQuestion();
-          selectedAnswer = null;
-          
-          nextButton.disabled = true;
-        }
+    // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
+    // Move to the next question by calling the quiz method `moveToNextQuestion()`.
+    // Show the next question by calling the function `showQuestion()`.
+    //console.log(selectedAnswer);
+    if (selectedAnswer !== null) {
 
-      
+      quiz.checkAnswer(selectedAnswer.value);
+      quiz.moveToNextQuestion();
+      //remove any video elements
+      if (document.getElementsByClassName('video-question-video')[0]){
+        document.getElementsByClassName('video-question-video')[0].remove()
+      }   
+      // remove any sound elements   
+      if (document.getElementsByClassName('sound-question-container')[0]){
+        document.getElementsByClassName('sound-question-container')[0].remove()
+      }
+      // re-disable the submit button for the next question
+      nextButton.disabled = true;
+      showQuestion();
+      selectedAnswer = null;
+    
+    } 
   }  
-
-
 
 
   function showResults() {
 
-    endTimer = true
+    // stop the timer if running
+    clearInterval(countdownTimer)
+    //remove any video or autio elements from the previous question
     if (document.getElementsByClassName('video-question-video')[0]){
       document.getElementsByClassName('video-question-video')[0].remove()
     }
+    if (document.getElementsByClassName('audio-question-audio')[0]){
+      document.getElementsByClassName('audio-question-audio')[0].remove()
+    }
+
+    const resultPercentage = Math.round((quiz.correctAnswers / quiz.questions.length) * 100)
     // YOUR CODE HERE:
     //
     // 1. Hide the quiz view (div#quizView)
@@ -305,9 +281,9 @@ document.addEventListener('DOMContentLoaded',() => {
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
 
-    const returnImage = (correctAnswers, questions) => {
-      const percentage = (correctAnswers / questions) * 100
-      //console.log(percentage)
+    // funciton to get a keanu picture based on performance in the quiz
+    const returnImage = (percentage) => {
+      
       const images = {
         great: '/img/75.webp',
         good: '/img/50.jpeg',
@@ -321,9 +297,9 @@ document.addEventListener('DOMContentLoaded',() => {
       return images.sad
     }
 
-    const returnSuccessText = (correctAnswers, questions) => {
-      const percentage = (correctAnswers / questions) * 100
-      //console.log(percentage)
+   // funciton to get a message based on performance in the quiz
+    const returnSuccessText = (percentage) => {
+     
       const text = {
         great: 'You are the one',
         good: 'You\'re breathtaking',
@@ -337,9 +313,11 @@ document.addEventListener('DOMContentLoaded',() => {
       return text.sad
     }
 
+    // get the minutes and seconds remaining for the quiz
     const minutesRemaining = Number(toMinutesAndSeconds(quiz.timeLimit - quiz.timeRemaining).minutes)
     const secondsRemaining = Number(toMinutesAndSeconds(quiz.timeLimit - quiz.timeRemaining).seconds)
 
+    // generate some strings for displaying time remaining
     const minutesRemainingMessage = minutesRemaining > 0 
                                       ? minutesRemaining === 1 
                                         ? ' 1 minute ' 
@@ -358,10 +336,11 @@ document.addEventListener('DOMContentLoaded',() => {
 
     console.log(quiz.timeRemaining)
     //console.log('image:', returnImage(quiz.correctAnswers,quiz.questions.length))
-    document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
-    document.getElementById('results-image').setAttribute('src',returnImage(quiz.correctAnswers,quiz.questions.length))
-    document.getElementById('success-text').innerText = returnSuccessText(quiz.correctAnswers,quiz.questions.length)
-    setTimeout(() => document.getElementById('results-image').style.opacity = 1,250)
+    // show the user a results image and success text based on their performance
+    resultsImage.setAttribute('src',returnImage(resultPercentage))
+    resultsText.innerText = returnSuccessText(resultPercentage)
+    // fade in the success image
+    setTimeout(() => resultsImage.style.opacity = 1,250)
     
   }
 
@@ -372,11 +351,9 @@ document.addEventListener('DOMContentLoaded',() => {
         quiz.currentQuestionIndex = 0;
         quiz.correctAnswers = 0;
         showQuestion();
-        document.getElementById('results-image').style.opacity = 0
-        document.getElementById('results-image').setAttribute('src','/img/blank.png')
-        
-        clearInterval(countdownTimer)
-        
+        resultsImage.style.opacity = 0
+        resultsImage.setAttribute('src','/img/blank.png')
+        resultsText.innerText = ''
         
         timer();
     
@@ -387,9 +364,6 @@ document.addEventListener('DOMContentLoaded',() => {
     // 2. Hide the end view (div#endView)
     endView.style.display = "none";
 
-
   }
-  
-}
-)
+})
 
