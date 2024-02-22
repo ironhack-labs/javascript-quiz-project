@@ -166,8 +166,8 @@ document.addEventListener('DOMContentLoaded',() => {
       const videoElement = document.createElement('source')
       videoElement.setAttribute('src',question.media)
       videoElement.setAttribute('type','video/mp4')
-      videoElement.setAttribute('id', 'video-question-video')
-      videoContainer.classList.add('video-question-video')
+      videoElement.setAttribute('id', 'video-question-container')
+      videoContainer.classList.add('video-question-container')
       videoContainer.setAttribute('controls',true)
       videoContainer.setAttribute('autoplay',true)
       videoContainer.appendChild(videoElement)
@@ -244,8 +244,8 @@ document.addEventListener('DOMContentLoaded',() => {
       quiz.checkAnswer(selectedAnswer.value);
       quiz.moveToNextQuestion();
       //remove any video elements
-      if (document.getElementsByClassName('video-question-video')[0]){
-        document.getElementsByClassName('video-question-video')[0].remove()
+      if (document.getElementsByClassName('video-question-container')[0]){
+        document.getElementsByClassName('video-question-container')[0].remove()
       }   
       // remove any sound elements   
       if (document.getElementsByClassName('sound-question-container')[0]){
@@ -265,11 +265,11 @@ document.addEventListener('DOMContentLoaded',() => {
     // stop the timer if running
     clearInterval(countdownTimer)
     //remove any video or autio elements from the previous question
-    if (document.getElementsByClassName('video-question-video')[0]){
-      document.getElementsByClassName('video-question-video')[0].remove()
+    if (document.getElementsByClassName('video-question-container')[0]){
+      document.getElementsByClassName('video-question-container')[0].remove()
     }
-    if (document.getElementsByClassName('audio-question-audio')[0]){
-      document.getElementsByClassName('audio-question-audio')[0].remove()
+    if (document.getElementsByClassName('sound-question-container')[0]){
+      document.getElementsByClassName('sound-question-container')[0].remove()
     }
 
     const resultPercentage = Math.round((quiz.correctAnswers / quiz.questions.length) * 100)
