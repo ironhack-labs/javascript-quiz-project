@@ -43,6 +43,35 @@ document.addEventListener("DOMContentLoaded", () => {
 			"E = mc^2",
 			3
 		),
+		new Question(
+			"Which city has the largest population?",
+			["Tokio", "Mexico", "New York", "Madrid"],
+			"Tokio",
+			2
+		),
+		new Question(
+			"which animal lives in the sea ?",
+			["Dog", "Cat", "Fisch", "Lion"],
+			"Fisch",
+			1
+		),
+		new Question(
+			"What is the most spoken language in the world?",
+			["English", "Chinese", "Spanish", "French"],
+			"English",
+			2
+		),
+		new Question(
+			"what was andy warhol's most famous quote?",
+			[
+				"In the future, everyone will be famous for 15 minutes.",
+				"A dream you dream alone is only a dream. A dream you dream together is reality.",
+				"Art is for everybody",
+				"I have no interest in making a work that doesn't elicit a feeling.",
+			],
+			"In the future, everyone will be famous for 15 minutes.",
+			3
+		),
 		// Add more questions here
 	];
 	const quizDuration = 120; // 120 seconds (2 minutes)
@@ -59,14 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	/************  SHOW INITIAL CONTENT  ************/
 
 	// Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-	const minutes = Math.floor(quiz.timeRemaining / 60)
+	/*const minutes = Math.floor(quiz.timeRemaining / 60)
 		.toString()
 		.padStart(2, "0");
 	const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
-
+*/
 	// Display the time remaining in the time remaining container
 	const timeRemainingContainer = document.getElementById("timeRemaining");
-	timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
 	// Show first question
 	showQuestion();
@@ -74,6 +102,22 @@ document.addEventListener("DOMContentLoaded", () => {
 	/************  TIMER  ************/
 
 	let timer;
+	console.log(quiz.timeRemaining);
+
+	timer = setInterval(() => {
+		const minutes = Math.floor(quiz.timeRemaining / 60)
+			.toString()
+			.padStart(2, "0");
+		const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+		quiz.timeRemaining--;
+		console.log(quiz.timeRemaining);
+		timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+		if (quiz.timeRemaining <= 0) {
+			clearInterval(timer);
+			document.getElementById("timeRemaining").innerHTML = "display quizend";
+			showResults();
+		}
+	}, 1000);
 
 	/************  EVENT LISTENERS  ************/
 
@@ -180,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		endView.style.display = "flex";
 
 		// 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-		resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+		//resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
 
 		resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`;
 	}
