@@ -59,4 +59,9 @@ class Quiz {
     );
     return totalDifficulty / this.questions.length;
   }
+  resetScore() {
+    this.correctAnswers = 0;
+    this.currentQuestionIndex = 0;
+    this.timeLimit;
+  }
 }

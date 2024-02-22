@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const restartButton = document.getElementById("restartButton");
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -192,5 +193,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+  }
+
+  restartButton.addEventListener("click", () => restartQuiz());
+
+  function restartQuiz() {
+    console.log("restartQuiz");
+    quizView.style.display = "block";
+
+    endView.style.display = "none";
+
+    quiz.resetScore();
+    console.log(quiz.currentQuestionIndex);
+    showQuestion();
   }
 });
