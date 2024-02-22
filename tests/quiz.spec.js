@@ -295,7 +295,7 @@ describe("Quiz", () => {
       expect(filterSpy).toHaveBeenCalled();
       // Check that the 'filter()' array method was called only once
       expect(filterSpy).toHaveBeenCalledTimes(1);
-      // Check that the 'filter()' array method was called correctly, with a function as its argument
+      // Check that the 'filter()' array method was called correctly, with a function as its arguments
       expect(filterSpy).toHaveBeenCalledWith(jasmine.any(Function));
     });
 
@@ -466,23 +466,28 @@ describe("Quiz", () => {
 
     it("should be defined", () => {
       // YOUR CODE HERE:
-      //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
       // 2. Check if the averageDifficulty() method is defined
+      expect(quiz.averageDifficulty).toBeDefined();
     });
 
     it("should be a function", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
       // 2. Check if the .averageDifficulty is a function
+      expect(typeof quiz.averageDifficulty).toBe("function");
     });
 
     it("should receive no arguments", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object
+      const quiz = new Quiz([], 60, 60);
       // 2. Check that the averageDifficulty() method takes no arguments
+      expect(quiz.averageDifficulty.length).toEqual(0);
     });
 
     it("should return the average difficulty of the questions in the quiz", () => {
@@ -523,8 +528,10 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 1. Instantiate a new Quiz object with the test questions
+      const quiz = new Quiz(questions, 60, 60);
 
       // 2. Check that the averageDifficulty() method returns the correct average when called
+      expect(quiz.averageDifficulty()).toEqual(1.8);
     });
   });
 });

@@ -50,4 +50,11 @@ class Quiz {
       );
     }
   }
+  averageDifficulty() {
+    const totalDifficulty = this.questions.reduce(
+      (sum, question) => sum + question.difficulty,
+      0
+    );
+    return totalDifficulty / this.questions.length;
+  }
 }
