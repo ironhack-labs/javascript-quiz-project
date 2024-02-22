@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Clear the previous question text and question choices
-
-    questionContainer.innerText = quiz.questions[0].text;
+    questionContainer.innerText =
+      quiz.questions[quiz.currentQuestionIndex].text;
 
     choiceContainer.innerHTML = "";
 
@@ -172,24 +172,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (isCorrect === true) {
       quiz.moveToNextQuestion();
-      console.log("BEXT QUESTION");
     }
+    console.log("NEXT QUESTION");
+    console.log(quiz.currentQuestionIndex);
 
     showQuestion();
-
-    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-    //  When a radio input gets selected the `.checked` property will be set to true.
-    //  You can use check which choice was selected by checking if the `.checked` property is true.
-
-    // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-    // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-    // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-    // Show the next question by calling the function `showQuestion()`.
   }
+
+  console.log(quiz.hasEnded());
 
   function showResults() {
     // YOUR CODE HERE:
-    //
+
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -197,6 +191,6 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
 });

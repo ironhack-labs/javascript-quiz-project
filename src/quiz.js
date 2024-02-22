@@ -13,7 +13,7 @@ class Quiz {
   }
 
   moveToNextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length - 1) {
+    if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestionIndex += 1;
     }
   }
