@@ -189,8 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let isCorrect = quiz.checkAnswer(selectedAnswer);
+    console.log(isCorrect);
 
     if (isCorrect === true) {
+      quiz.moveToNextQuestion();
+    } else {
+      quiz.correctAnswers == quiz.checkAnswer;
       quiz.moveToNextQuestion();
     }
     console.log("NEXT QUESTION");
