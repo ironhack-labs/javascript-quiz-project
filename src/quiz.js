@@ -42,4 +42,20 @@ class Quiz {
       return true;
     }
   }
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty !== 1 && difficulty !== 2 && difficulty !== 3) {
+      return this.questions;
+    } else {
+      this.questions = this.questions.filter(
+        (question) => question.difficulty === difficulty
+      );
+    }
+  }
+  averageDifficulty() {
+    const totalDifficulty = this.questions.reduce(
+      (sum, question) => sum + question.difficulty,
+      0
+    );
+    return totalDifficulty / this.questions.length;
+  }
 }
