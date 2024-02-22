@@ -367,8 +367,9 @@ describe("Quiz", () => {
       //
       // 2. Instantiate a new Quiz object with the test questions
       const quiz = new Quiz(questions, 60, 60);
+
       // 3. Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
-      filterQuestionsByDifficulty(2);
+      quiz.filterQuestionsByDifficulty(2);
 
       // 4. Check if the questions array has been filtered correctly
 
@@ -418,10 +419,15 @@ describe("Quiz", () => {
       // YOUR CODE HERE:
       //
       // 2. Instantiate a new Quiz object with the test questions
+      const quiz = new Quiz(questions, 60, 60);
 
       // 3. Call the `filterQuestionsByDifficulty()` method with a string as a 1st argument (wrong data type).
+      quiz.filterQuestionsByDifficulty("wrong data type");
 
       // 4. Check if the questions array is still the same as the original (it hasn't been filtered)
+      const originalQuestions = [...questions];
+
+      expect(quiz.questions).toEqual(originalQuestions);
     });
   });
 
@@ -434,7 +440,7 @@ describe("Quiz", () => {
   // Once you start working on the tests, change the 'xdescribe' to 'describe' to enable the tests.
   // ****************************************************************************************************
 
-  xdescribe("averageDifficulty() method", () => {
+  describe("averageDifficulty() method", () => {
     it("should use the 'reduce()' array method on the 'questions' array", () => {
       // Instantiate a new Quiz object
       const quiz = new Quiz([], "test", 60);

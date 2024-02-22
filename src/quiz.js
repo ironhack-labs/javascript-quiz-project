@@ -41,5 +41,13 @@ class Quiz {
       return true;
     }
   }
-  filterQuestionsByDifficulty(difficulty) {}
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty !== 1 && difficulty !== 2 && difficulty !== 3) {
+      return this.questions;
+    } else {
+      this.questions = this.questions.filter(
+        (question) => question.difficulty === difficulty
+      );
+    }
+  }
 }
