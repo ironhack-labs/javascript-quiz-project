@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// End view elements
 	const resultContainer = document.querySelector("#result");
+	const restartButton = document.querySelector("#restartButton");
 
 	/************  SET VISIBILITY OF VIEWS  ************/
 
@@ -228,4 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`;
 	}
+	restartButton.addEventListener("click", function () {
+		location.reload();
+	});
 });
