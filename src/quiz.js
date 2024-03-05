@@ -6,12 +6,15 @@ class Quiz {
     this.correctAnswers = 0;
     this.currentQuestionIndex = 0;
   }
+
   getQuestion() {
     return this.questions[this.currentQuestionIndex];
   }
+
   moveToNextQuestion() {
     this.currentQuestionIndex++;
   }
+
   shuffleQuestions() {
     let i = 0;
     let temp = "";
@@ -41,5 +44,19 @@ class Quiz {
     } else {
       return true;
     }
+  }
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty <= 3 && difficulty >= 1) {
+      this.questions = this.questions.filter(
+        (n) => n.difficulty === difficulty
+      );
+    }
+  }
+
+  averageDifficulty() {
+    const sum = this.questions.reduce((acc, val) => acc + val.difficulty, 0);
+    const avg = sum / this.questions.length;
+    return avg;
   }
 }
