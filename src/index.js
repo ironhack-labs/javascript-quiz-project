@@ -70,8 +70,25 @@ document.addEventListener("DOMContentLoaded", () => {
   showQuestion();
 
   /************  TIMER  ************/
+  let timer = setInterval(() => {
+    quiz.timeRemaining--;
+    const minutes = Math.floor(quiz.timeRemaining / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    console.log(quiz.timeRemaining);
+    if (quiz.timeRemaining === 0) {
+      clearInterval(timer);
+      showResults();
+    } else if (quiz.hasEnded()) {
+      clearInterval(timer);
+    }
+  }, 1000);
 
-  let timer;
+  if (quiz.hasEnded()) {
+    clearInterval(timer);
+  }
 
   /************  EVENT LISTENERS  ************/
 
@@ -86,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
+      quiz.timeRemaining = quizDuration + 1;
       showResults();
       return;
     }
@@ -184,4 +202,38 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
+
+  function resetQuiz() {
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.shuffleQuestions();
+    showQuestion();
+    quizView.style.display = "block";
+    endView.style.display = "none";
+
+    let timer = setInterval(() => {
+      quiz.timeRemaining--;
+      const minutes = Math.floor(quiz.timeRemaining / 60)
+        .toString()
+        .padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      console.log(quiz.timeRemaining);
+      if (quiz.timeRemaining === 0) {
+        clearInterval(timer);
+        showResults();
+      } else if (quiz.hasEnded()) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    if (quiz.hasEnded()) {
+      clearInterval(timer);
+    }
+  }
+
+  const restartButton = document.querySelector("#restartButton");
+  restartButton.addEventListener("click", (e) => {
+    resetQuiz();
+  });
 });
