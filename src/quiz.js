@@ -19,7 +19,7 @@ class Quiz {
   // 3. moveToNextQuestion()
 
   moveToNextQuestion() {
-    return this.questions[this.currentQuestionIndex++];
+    this.currentQuestionIndex++;
   }
 
   // 4. shuffleQuestions()
@@ -33,7 +33,6 @@ class Quiz {
       this.questions[j] = temp;
     }
 
-    return this.questions;
   }
 
   // 5. checkAnswer(answer)
@@ -44,8 +43,15 @@ class Quiz {
     if (answer ===  currentQuestion.answer) {
       this.correctAnswers++;
     }
-    return this.correctAnswers
   }
     
   // 6. hasEnded()
+
+  hasEnded(){
+    if (this.currentQuestionIndex < this.questions.length){
+      return false
+    }
+
+    return true
+  }
 }
