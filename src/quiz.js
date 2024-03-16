@@ -55,18 +55,20 @@ class Quiz {
 
   // 7. filterQuestionsByDifficulty()
 
-  filterQuestionsByDifficulty(difficulty) { }
-//     if (difficulty < 1 || difficulty > 3) {
-//       return
-//     } else {
-//       const questionSet = question.filter((element) => {
-//         if (element.difficulty === 1) {
-//           return true; 
-//         }
-//     }); 
-// }
-
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty > 0 || difficulty < 4) {
+      this.questions = this.questions.filter((question) => {
+        return question.difficulty === difficulty;
+      });
+    }
+  }
 
   // 8. averageDifficulty()
 
+  averageDifficulty() {
+    const sum = this.questions.reduce((acc, curr) => {
+      return acc + curr.difficulty;
+    }, 0);
+    return sum / this.questions.length;
+  }
 }
