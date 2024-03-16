@@ -32,26 +32,41 @@ class Quiz {
       this.questions[i] = this.questions[j];
       this.questions[j] = temp;
     }
-
   }
 
   // 5. checkAnswer(answer)
 
   checkAnswer(answer) {
-
-    let  currentQuestion = this.questions[this.currentQuestionIndex]
-    if (answer ===  currentQuestion.answer) {
+    let currentQuestion = this.questions[this.currentQuestionIndex];
+    if (answer === currentQuestion.answer) {
       this.correctAnswers++;
     }
   }
-    
+
   // 6. hasEnded()
 
-  hasEnded(){
-    if (this.currentQuestionIndex < this.questions.length){
-      return false
+  hasEnded() {
+    if (this.currentQuestionIndex < this.questions.length) {
+      return false;
     }
 
-    return true
+    return true;
   }
+
+  // 7. filterQuestionsByDifficulty()
+
+  filterQuestionsByDifficulty(difficulty) { }
+//     if (difficulty < 1 || difficulty > 3) {
+//       return
+//     } else {
+//       const questionSet = question.filter((element) => {
+//         if (element.difficulty === 1) {
+//           return true; 
+//         }
+//     }); 
+// }
+
+
+  // 8. averageDifficulty()
+
 }
