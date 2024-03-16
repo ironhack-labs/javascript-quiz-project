@@ -48,4 +48,34 @@ class Quiz {
   }
     
   // 6. hasEnded()
+
+  hasEnded() {
+    if (this.currentQuestionIndex < this.questions.length) {
+      return false;
+    } else return true; 
+
 }
+
+}
+// Day 1 Tasks
+
+// https://my.ironhack.com/cohorts/64f9d687e359e5002a77a120/lms/courses/course-v1:IRONHACK+WDPT+202402_RMT/modules/ironhack-course-chapter_5/units/ironhack-course-chapter_5-sequential_1-vertical_1
+
+// hasEnded() method
+
+// Returns true if the quiz has ended (the last question has been answered), and false otherwise.
+
+//     should be defined.
+
+//     should be a function.
+
+//     should receive no arguments.
+
+//     should return false when currentQuestionIndex is less than the questions array length
+
+//     should return true when currentQuestionIndex is equal to the questions array length
+
+// Research Tasks:
+
+//     Watch the video “What is THIS in JavaScript? in 100 seconds” (est. time ~7 min).
+//     Read the lesson “JS | Special keyword - this” on the Student Portal (est. time ~45 min).
