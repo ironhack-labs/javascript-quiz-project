@@ -19,6 +19,5 @@ class Question {
       // console.log(this.choices);
     }
 
-    return this.choices;
   }
 }
