@@ -10,7 +10,6 @@ class Quiz {
     // 1. constructor (questions, timeLimit, timeRemaining)
 
     // 2. getQuestion()
-    // It returns the current question.
     getQuestion() {
         return this.questions[this.currentQuestionIndex];
     }
@@ -46,5 +45,18 @@ class Quiz {
             return false;
         }
     }
+
+    filterQuestionsByDifficulty(difficulty) {
+        if (typeof difficulty == "number" && (difficulty > 1 || difficulty < 3)) {
+            this.questions = this.questions.filter(question => question.difficulty === difficulty); 
+        } 
+    }
+    
+    averageDifficulty() {
+        let totalDifficulty = this.questions.reduce((total, question) => 
+            (total + question.difficulty) 
+        ,0); 
+        return totalDifficulty / this.questions.length;
+    } 
 
 }   
