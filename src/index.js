@@ -130,13 +130,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-      choiceContainer.innerHTML = "";
-      question.choices.forEach(question => {
-        choiceContainer.innerHTML += `<li>
-        <input type="radio" name="choice" value="${question}">
-        <label>${question}</label><br>
+      choiceContainer.innerHTML = question.choices.reduce((currentChoice, choice) => {
+        return currentChoice + `<li>
+        <input type="radio" name="choice" value="${choice}">
+        <label>${choice}</label><br>
         </li>`
-      })
+      }, "");
   }
 
 
