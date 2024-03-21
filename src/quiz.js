@@ -54,10 +54,11 @@ class Quiz {
         }
 
         averageDifficulty() {
-            const average = this.questions.reduce(acc, curr =>{
-                return (curr + acc) / this.questions.length;
+            const sum = this.questions.reduce((acc, curr) =>{
+                return acc + curr.difficulty;
 
-            }, 0)
+            }, 0);
+            const average = sum / this.questions.length;
             return average;
         }
         
