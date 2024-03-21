@@ -144,8 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const label = document.createElement("label");
       label.innerText = el;
 
+      const breakChoice = document.createElement("br");
+
+
       choiceContainer.appendChild(label);
       choiceContainer.appendChild(inputRadio);
+      choiceContainer.appendChild(breakChoice)
     });
 
     // For each choice create a new radio input with a label, and append it to the choice container.
