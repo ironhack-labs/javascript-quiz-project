@@ -59,4 +59,11 @@ class Quiz {
         return totalDifficulty / this.questions.length;
     } 
 
+    resetQuiz(){
+        this.timeRemaining = this.timeLimit;
+        this.currentQuestionIndex = 0;
+        this.correctAnswers = 0;
+        this.shuffleQuestions();
+    }
+
 }   
