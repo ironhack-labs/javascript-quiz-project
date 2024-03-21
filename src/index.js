@@ -77,6 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function showQuestion() {
+    questionContainer.innerText = questions[0].text;
+    progressBar.style.width = ``;
+    questionCount.innerText = `Question 1 of 10`;
+    const choicesList = document.createElement("radio");
+   
+    choicesList.textContent = questions[0].choices;
+    body.appendChild(choicesList);
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
       showResults();
@@ -98,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    questionContainer.innerText = questions[0].text;
 
     
     // 2. Update the green progress bar
@@ -113,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
 
 
-    
+    showQuestion();
     // 4. Create and display new radio input element with a label for each choice.
     // Loop through the current question `choices`.
       // For each choice create a new radio input with a label, and append it to the choice container.
