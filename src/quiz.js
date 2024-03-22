@@ -27,7 +27,13 @@ moveToNextQuestion(){
    
 
 checkAnswer(answer){
-  return this.correctAnswers++;
+
+  if(answer === this.questions[this.currentQuestionIndex].answer){
+    return this.correctAnswers++;
+  }
+  else
+  return this.correctAnswers;
+
 }
 
  hasEnded(){
