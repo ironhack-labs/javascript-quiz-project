@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
 
     const temp = ((quiz.currentQuestionIndex +1) / questions.length)*100;
-    console.log(temp);
+  
    
     progressBar.style.width = `${temp}%`; // This value is hardcoded as a placeholder
 
@@ -197,7 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
 });
