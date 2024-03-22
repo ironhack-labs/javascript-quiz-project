@@ -1,59 +1,48 @@
 class Quiz {
-    constructor(questions, timeLimit, timeRemaining){
-        this.questions = questions
-        this.timeLimit = timeLimit
-        this.timeRemaining = timeRemaining
-        this.correctAnswers = this.correctAnswers
-        this.currentQuestionIndex = this.currentQuestionIndex
-        
+  constructor(questions, timeLimit, timeRemaining) {
+    this.questions = questions;
+    this.timeLimit = timeLimit;
+    this.timeRemaining = timeRemaining;
+    this.correctAnswers = 0;
+    this.currentQuestionIndex = 0;
+  }
+  getQuestion() {
+    return this.questions[this.currentQuestionIndex];
+  }
+  moveToNextQuestion() {
+    this.currentQuestionIndex += 1;
+  }
+  shuffleQuestions() {
+    const randomQuestion = this.questions.sort((a, b) => 0.5 - Math.random());
+  }
+  checkAnswer(answer) {
+    const currentQuestion = this.getQuestion();
+    if (currentQuestion.answer === answer) {
+      this.correctAnswers += 1;
     }
-        correctAnswers = 0
-        currentQuestionIndex = 0
-    
-        getQuestion() {
-        return this.questions[this.currentQuestionIndex];   
-        }
-
-        moveToNextQuestion(){
-           this.currentQuestionIndex +=1;
-        }
-
-        shuffleQuestions(){
-            for (let i = this.questions.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [this.questions[i], this.questions[j]] = [this.questions[j], this.questions[i]];
-            }
-        }
-        
-        
-
-        checkAnswer(answer){
-            this.checkAnswer = this.checkAnswer;
-                this.correctAnswers +=1;
-            }
-
-        hasEnded(){
-         if(this.currentQuestionIndex < this.questions.length){
-            return false;
-         }
-         else if (this.currentQuestionIndex = this.questions.length){ 
-            return true;}
-        }    
-            
-        }
-       
-    
-
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
-
-    // 2. getQuestion()
-    
-    // 3. moveToNextQuestion()
-
-    // 4. shuffleQuestions()
-
-    // 5. checkAnswer(answer)
-
-    // 6. hasEnded()
+  }
+  hasEnded() {
+    if (this.currentQuestionIndex < this.questions.length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  filterQuestionsByDifficulty(difficulty) {
+    if (typeof difficulty !== "number" || difficulty < 1 || difficulty > 3) {
+      return;
+    }
+    this.questions = this.questions.filter((currentQuestion) => {
+      return currentQuestion.difficulty === difficulty;
+    });
+  }
+  averageDifficulty() {
+    const difficultySum = this.questions.reduce(
+      (accumulator, currentQuestion) => {
+        return accumulator + currentQuestion.difficulty;
+      },
+      0
+    );
+    return difficultySum / this.questions.length;
+  }
+}
