@@ -168,7 +168,14 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
 
-    selectedAnswer = document.querySelector(`input[name="choice"]:checked`).value;
+    const selectedAnswerEl = document.querySelector(`input[name="choice"]:checked`);
+    if (selectedAnswerEl !== null) {
+      selectedAnswer = selectedAnswerEl.value;
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    }
+
    
 
 
@@ -178,9 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
     
-      quiz.checkAnswer(selectedAnswer);
-      quiz.moveToNextQuestion();
-      showQuestion();
  
      
 
@@ -216,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
-    //quiz.shuffleQuestions();
+    quiz.shuffleQuestions();
     showQuestion();
 
   }
