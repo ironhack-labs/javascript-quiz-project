@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener("click", restartButtonHandler);
 
   /************  FUNCTIONS  ************/
 
@@ -146,10 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const breakChoice = document.createElement("br");
 
-
       choiceContainer.appendChild(label);
       choiceContainer.appendChild(inputRadio);
-      choiceContainer.appendChild(breakChoice)
+      choiceContainer.appendChild(breakChoice);
     });
 
     // For each choice create a new radio input with a label, and append it to the choice container.
@@ -182,12 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
     allChoices.forEach((choice) => {
       if (choice.checked) {
         selectedAnswer = choice.value;
-        console.log(choice.value);
+        // console.log(choice.value);
         quiz.checkAnswer(selectedAnswer);
         quiz.moveToNextQuestion();
         showQuestion();
       }
-
     });
 
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
@@ -207,5 +206,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+  }
+
+  function restartButtonHandler() {
+    endView.style.display = "none";
+    quizView.style.display = "block";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.timeRemaining = quizDuration;
+    percentageCompleted =
+      ((quiz.currentQuestionIndex + 1) / questions.length) * 100;
+    progressBar.style.width = `${percentageCompleted}%`;
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${
+      questions.length
+    }`;
+    quiz.shuffleQuestions();
   }
 });
