@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ),
     // Add more questions here
   ];
-  const quizDuration = 120; // 120 seconds (2 minutes)
+  const quizDuration = 10; // 120 seconds (2 minutes)
 
   /************  QUIZ INSTANCE  ************/
 
@@ -57,10 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60)
+  let minutes = Math.floor(quiz.timeRemaining / 60)
     .toString()
     .padStart(2, "0");
-  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  let seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -71,7 +71,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let count = quiz.timeRemaining;
+
+  let myTimer = setInterval(function () {
+    count--;
+    seconds = (count % 60).toString().padStart(2, "0");
+    minutes = Math.floor(count / 60)
+      .toString()
+      .padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    if (count === 0) {
+      clearInterval(myTimer);
+      showResults();
+    }
+  }, 1000);
 
   /************  EVENT LISTENERS  ************/
 
@@ -221,5 +235,24 @@ document.addEventListener("DOMContentLoaded", () => {
       questions.length
     }`;
     quiz.shuffleQuestions();
+
+    if (myTimer) {
+      clearInterval(myTimer);
+    }
+
+    count = quiz.timeRemaining; // Reset the count to the initial time
+    myTimer = setInterval(function () {
+      count--;
+      let seconds = (count % 60).toString().padStart(2, "0");
+      let minutes = Math.floor(count / 60)
+        .toString()
+        .padStart(2, "0");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+      if (count === 0) {
+        clearInterval(myTimer);
+        showResults();
+      }
+    }, 1000);
   }
 });
