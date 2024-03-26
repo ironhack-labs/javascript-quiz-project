@@ -59,16 +59,30 @@ document.addEventListener("DOMContentLoaded", () => {
   showQuestion();
 
 
-  /************  TIMER  ************/
-
-  let timer;
-
-
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
   restartButton.addEventListener("click",restartQuiz);
 
+
+  /************  TIMER  ************/
+  startTimer();
+  let timer;
+  function startTimer() {
+    timer = setInterval(() => {
+      quiz.timeRemaining--;
+  
+      if (quiz.timeRemaining <= 0) {
+        clearInterval(timer);
+        showResults(); 
+      }
+  
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    }, 1000); 
+  }
 
 
 
