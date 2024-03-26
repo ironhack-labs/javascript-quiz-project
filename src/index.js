@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ),
     // Add more questions here
   ];
-  const quizDuration = 10; // 120 seconds (2 minutes)
+  const quizDuration = 120; // 120 seconds (2 minutes)
 
   /************  QUIZ INSTANCE  ************/
 
@@ -240,7 +240,17 @@ document.addEventListener("DOMContentLoaded", () => {
       clearInterval(myTimer);
     }
 
-    count = quiz.timeRemaining; // Reset the count to the initial time
+    resetTimer();
+  }
+  // Reset the count to the initial time
+
+  function resetTimer() {
+    count = quizDuration;
+    let seconds = (count % 60).toString().padStart(2, "0");
+    let minutes = Math.floor(count / 60)
+      .toString()
+      .padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
     myTimer = setInterval(function () {
       count--;
       let seconds = (count % 60).toString().padStart(2, "0");
