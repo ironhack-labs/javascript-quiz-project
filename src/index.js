@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("In which country is London?",["United Kingdom", "Germany", "Morocco", "United States"],"United Kingdom",1),
+    new Question("Which movie won the Best picture category in the Oscars 2023?",["Barbie", "Oppenheimer", "Killers of the Flower Moon", "Maestro"],"Oppenheimer",2),
+    new Question("What's the national animal of Australia?",["Red Kangaroo", "Koala", "Tasmanian devil", "Crocodile"],"Red Kangaroo",2),
+    new Question("What colors does the Canada flag have?",["Red and Blue", "Blue and Yellow", "Red and Yellow", "Red and White"],"Red and White",1),
+    new Question("What city do The Beatles come from?",["London", "Bristol", "Liverpool", "Birmingham"],"Liverpool",2),
+    new Question("How many stars are on the national flag of USA?",["56", "48", "50", "52"],"50",3),
     // Add more questions here
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
@@ -59,7 +65,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = setInterval(() => {
+    quiz.timeRemaining--
+    const timeSelector = document.querySelector("#timeRemaining");
+    let minutes = Math.floor(quiz.timeRemaining / 60);
+    let seconds = quiz.timeRemaining % 60;
+    timeSelector.textContent = `${minutes}:${seconds}`;
+    if(quiz.timeRemaining === 0){
+      showResults();
+      
+    }
+  }, 1000);
 
 
   /************  EVENT LISTENERS  ************/
@@ -204,7 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+    if(quiz.timeRemaining === 0){
+      clearInterval(timer);
+      
+    }
   }
   
 
@@ -218,8 +238,15 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
-  
+    quiz.timeRemaining = quizDuration;
     showQuestion();
+    timer = setInterval(() => {
+      
+      if(quiz.timeRemaining === 0){
+        showResults();
+        
+      }
+    }, 1000);
   }
 
   restartButton.addEventListener("click", restartQuiz);
