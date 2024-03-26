@@ -66,8 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /************  TIMER  ************/
-  startTimer();
   let timer;
+  startTimer();
+
   function startTimer() {
     timer = setInterval(() => {
       quiz.timeRemaining--;
@@ -97,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showQuestion() {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
+      clearInterval(timer);
       showResults();
       return;
     }
@@ -155,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         radioButton.value = choice;
         radioButton.name = "choice";
         var label = document.createElement('label'); 
-        label.textContent = choice;
+        label.textContent = choice + " ";
      
   
       choiceContainer.appendChild(radioButton);
@@ -235,8 +237,12 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.currentQuestionIndex = 0;
     quiz.correctAnswers = 0;
     quiz.shuffleQuestions();
+    quiz.timeRemaining = quizDuration ;
+    timeRemainingContainer.innerText = "02:00"
     showQuestion();
-
+    startTimer();
+    
+   
   }
   
 });
