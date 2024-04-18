@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const restartButton = document.querySelector('#restartButton');
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     // Add more questions here
   ];
-  const quizDuration = 120; // 120 seconds (2 minutes)
+  const quizDuration = 5; // 120 seconds (2 minutes)
 
 
   /************  QUIZ INSTANCE  ************/
@@ -54,17 +55,55 @@ document.addEventListener("DOMContentLoaded", () => {
   timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
   // Show first question
-  showQuestion();
+  showQuestion()
 
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = setInterval(setTimer ,1000);
+
+  const remainTime = document.querySelector('#timeRemaining');
+  let counter = quizDuration;
+  quiz.timeRemaining = counter;
+  
+  
+
+  function setTimer() {
+    counter --;
+    console.log(counter)
+    const minutes = Math.floor(counter / 60);
+    let seconds = counter % 60;
+    if(seconds < 10) {
+      remainTime.innerHTML = `0${minutes}:0${seconds}`;
+    } else {
+      remainTime.innerHTML = `0${minutes}:${seconds}`;
+    }
+    if(counter === 0) {
+      clearInterval(timer);
+      showResults();
+    } 
+  }
+  
+
+
+
 
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+
+  restartButton.addEventListener('click', () => {
+    endView.style.display = "none";
+    quizView.style.display = "block";
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    counter = quizDuration;
+    clearInterval(timer);
+    timer = setInterval(setTimer ,1000);
+    quiz.shuffleQuestions();
+    showQuestion();
+  })
 
 
 
@@ -82,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showResults();
       return;
     }
+    
 
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
@@ -98,23 +138,47 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    questionContainer.innerHTML = `${question.text}`;
 
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    progressBar.style.width = `${((quiz.currentQuestionIndex + 1) / quiz.questions.length) * 100}%` ; // This value is hardcoded as a placeholder
+    console.log(progressBar.style.width)
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
 
 
     
     // 4. Create and display new radio input element with a label for each choice.
+
+
+    question.choices.forEach((choice) => {
+      const inputRadio = document.createElement('input');
+      inputRadio.type = 'radio';
+      inputRadio.name = 'choice';
+      inputRadio.value = choice;
+      choiceContainer.appendChild(inputRadio);
+
+      const label = document.createElement('label');
+      label.innerText = choice;
+      choiceContainer.appendChild(label);
+
+      const br = document.createElement('br');
+      choiceContainer.appendChild(br);
+
+
+    });
+
+
+
+
     // Loop through the current question `choices`.
       // For each choice create a new radio input with a label, and append it to the choice container.
       // Each choice should be displayed as a radio input element with a label:
@@ -135,9 +199,31 @@ document.addEventListener("DOMContentLoaded", () => {
   function nextButtonHandler () {
     let selectedAnswer; // A variable to store the selected answer value
 
-
+    
 
     // YOUR CODE HERE:
+    const choices = choiceContainer.querySelectorAll('input[name=choice]');
+
+    choices.forEach((choice) => {
+      if(choice.checked) {
+        selectedAnswer = choice.value;
+      }
+    });
+
+    if (selectedAnswer) {
+      const question = quiz.getQuestion();
+      if(selectedAnswer !== question.answer) {
+        quiz.moveToNextQuestion();
+        showQuestion();
+        return;
+      }
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    }
+
+    
+
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
 
@@ -168,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
 });
