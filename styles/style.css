@@ -8,6 +8,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f4f4;
+    background-image: url("https://static.vecteezy.com/system/resources/previews/013/118/479/non_2x/questions-mark-illustration-inside-of-background-for-faq-and-question-and-answer-time-free-photo.jpg");
+    background-size: cover;
     color: #333;
     line-height: 1.6;
     padding: 20px;
@@ -24,6 +26,7 @@ header {
     padding: 20px;
     background: #fff;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
 }
 
 #quizView, #endView {
@@ -169,4 +172,5 @@ input[type="radio"] {
     margin: 0 auto;
     margin-top: -35px;
     margin-bottom: 12px;
+    position: absolute;
 }
