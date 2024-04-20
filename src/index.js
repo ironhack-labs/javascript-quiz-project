@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
-
+  const restartButton = document.querySelector(".button-secondary")
   // End view elements
   const resultContainer = document.querySelector("#result");
 
@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
+  console.log(quiz)
   // Shuffle the quiz questions
   quiz.shuffleQuestions();
 
@@ -46,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  SHOW INITIAL CONTENT  ************/
 
   // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
-  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  let minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+  let seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
@@ -55,16 +56,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show first question
   showQuestion();
-
+  restartBtn()
 
   /************  TIMER  ************/
+  function restartBtn(){
 
-  let timer;
+  
 
+  let timer = setInterval(() => {
+    minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0")
+    seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0")
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    quiz.timeRemaining--
+    if(quiz.timeRemaining === 0){
+      clearInterval(timer)
+      showResults()
+    }
+
+  }, 1000)
+}
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener("click", pacoCounter);
 
 
 
@@ -78,6 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showQuestion() {
     // If the quiz has ended, show the results
+
+    
     if (quiz.hasEnded()) {
       showResults();
       return;
@@ -89,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
     const question = quiz.getQuestion();
+    console.log(question)
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
     
@@ -98,19 +116,23 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+    //const questionContainer = document.querySelector("#question");
+      
+    questionContainer.innerText = question.text
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    let questionBar = ((quiz.currentQuestionIndex +1) / questions.length) *100
+    progressBar.style.width = `${questionBar}%`
+    // This value is hardcoded as a placeholder
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = "question"  +  (quiz.currentQuestionIndex+1)  +  "of"  +  (questions.length); //  This value is hardcoded as a placeholder
 
 
     
@@ -124,19 +146,61 @@ document.addEventListener("DOMContentLoaded", () => {
         <br>
       */
       // Hint 1: You can use the `document.createElement()` method to create a new element.
-      // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
+      // Hint 2: You can use the `createElement()`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-
-  }
-
+      const choiceBox =document.getElementById("choices")
+      
+      question.choices.forEach((eachChoices) => {
+        const radioButton = document.createElement ("radioBtn")
+        console.log(radioButton)
+        radioButton.innerHTML = `
+        <input class=respuesta type="radio" name="choice" value="${eachChoices}">
+          <label>"${eachChoices}"</label>
+          <br>
+        `
+        choiceBox.appendChild(radioButton)
+      });
+      
+      
+    }   
 
   
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
+    let selectedAnswer;  // A variable to store the selected answer value
 
+    const opciones = document.querySelectorAll(".respuesta")
+    
+    opciones.forEach((oneOption) => {
+      if(oneOption.checked === true){
+        selectedAnswer = oneOption.value
+      }
+    
+      //console.log(checkAnswer(oneOption.value))
+      //let selectedAnswer = allOpctions.querySelector(choiceBox)
+      //console.log(selectedAnswer)
+      
+    })
+    quiz.checkAnswer(selectedAnswer)
+    quiz.moveToNextQuestion()
+    showQuestion()
+  }
 
+  
 
+    function pacoCounter () {
+      quizView.style.display = "flex";
+      endView.style.display = "none";
+      quiz.timeRemaining = quizDuration
+      quiz.currentQuestionIndex = 0
+      quiz.correctAnswers  = 0
+      quiz.shuffleQuestions()
+      showQuestion()
+      clearInterval(timer)
+      restartBtn()
+
+    }
+    
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
@@ -152,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
-  }  
+    
 
 
 
@@ -168,7 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
-  }
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    
   
-});
+  }
+})
