@@ -1,15 +1,55 @@
 class Quiz {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
+    constructor (questions, timeLimit, timeRemaining) {
+        this.questions = questions
+        this.timeLimit = timeLimit
+        this.timeRemaining = timeRemaining
+        this.correctAnswers = 0
+        this.currentQuestionIndex = 0
+    }
 
-    // 2. getQuestion()
+    getQuestion() {
+        return this.questions[this.currentQuestionIndex]
+    }
     
-    // 3. moveToNextQuestion()
+    moveToNextQuestion(){
 
-    // 4. shuffleQuestions()
+    this.currentQuestionIndex += 1
 
-    // 5. checkAnswer(answer)
+    }
 
-    // 6. hasEnded()
+
+    shuffleQuestions(){
+
+        for (let i = this.questions.length - 1; i > 0 ; i--){
+            const newQuestions = Math.floor(Math.random() * (i + 1));  //randomIndex re mane it
+            [this.questions[i]], this.questions[newQuestions] = [this.questions[newQuestions], this.questions[i]]
+            ///[1, 2, 3, 4, 5]    [2, 1, 4, 3, 5]
+    }}
+
+    checkAnswer(answer) {
+        // if(this.questions){  // how is this possible? I don't know :O
+        //     this.correctAnswers += 1
+        // }
+
+        if(answer){
+            if(this.questions[this.currentQuestionIndex].answer === answer){
+                this.correctAnswers++
+            } 
+        } else {
+            alert("Please provide an answer")
+        }
+    }
+
+
+
+   hasEnded(){
+    if (this.currentQuestionIndex < this.questions.length){
+        return false 
+    }
+    else{
+        return true 
+    }
+   }
+
+   
 }
