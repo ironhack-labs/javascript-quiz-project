@@ -28,7 +28,7 @@
       </div>
 
       <!-- End Quiz View -->
-      <!-- Note: this view is initially hidden using the style attribute 'display: none' -->      
+      <!-- Note: this view is initially hidden using the style attribute 'display: none' -->
       <div id="endView" class="view" style="display: none">
         <div id="result-progress">
           <div id="resultProgressBar"></div>
@@ -39,16 +39,16 @@
           <div id="result"></div>
         </div>
         <!-- The below 'Restart Quiz' button is commented out because it is not used initially -->
-        <!-- <button id="restartButton" class="button-secondary">Restart Quiz</button> -->
+        <button id="restartButton" class="button-secondary">
+          Restart Quiz
+        </button>
       </div>
     </div>
 
-    
     <!-- The scripts are placed at the end of the document so that all the HTML elements are loaded before we try to access them -->
     <!-- Important: Leave this as it is. Do not change the order of the scripts! -->
     <script src="src/question.js"></script>
     <script src="src/quiz.js"></script>
     <script src="src/index.js"></script>
-    
   </body>
 </html>
