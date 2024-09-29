@@ -8,47 +8,47 @@
   <body>
     <div class="container">
       <header>
-        <h1>JavaScript Quiz</h1>
+        <h1>JavaScript Quiz</h1> <!-- Título del cuestionario -->
       </header>
 
-      <!-- Quiz View -->
-      <!-- Note: this view is shown initially and for each question -->
+      <!-- Vista del Cuestionario -->
+      <!-- Nota: esta vista se muestra inicialmente y para cada pregunta -->
       <div id="quizView" class="view">
         <div id="progress">
-          <div id="progressBar"></div>
+          <div id="progressBar"></div> <!-- Barra de progreso que se actualizará a medida que se respondan las preguntas -->
         </div>
-        <div id="questionCount"></div>
+        <div id="questionCount"></div> <!-- Contador para mostrar el número de preguntas -->
 
         <div class="content">
-          <div id="question"></div>
-          <ul id="choices"></ul>
+          <div id="question"></div> <!-- Aquí se mostrará la pregunta actual -->
+          <ul id="choices"></ul> <!-- Aquí se mostrarán las opciones de respuesta -->
         </div>
-        <div id="timeRemaining">Remaining Time: <span>00:00</span></div>
-        <button id="nextButton" class="button-primary">Answer</button>
+
+        <div id="timeRemaining">Remaining Time: <span>00:00</span></div> <!-- Contenedor para mostrar el tiempo restante -->
+        <button id="nextButton" class="button-primary">Answer</button> <!-- Botón para avanzar a la siguiente pregunta -->
       </div>
 
-      <!-- End Quiz View -->
-      <!-- Note: this view is initially hidden using the style attribute 'display: none' -->      
-      <div id="endView" class="view" style="display: none">
+      <!-- Vista de Fin del Cuestionario -->
+      <!-- Nota: esta vista se oculta inicialmente usando el atributo de estilo 'display: none' -->      
+      <div id="endView" class="view" style="display: none"> <!-- Esta vista se mostrará al final del cuestionario -->
         <div id="result-progress">
-          <div id="resultProgressBar"></div>
+          <div id="resultProgressBar"></div> <!-- Barra de progreso para mostrar el resultado (si se desea implementar) -->
         </div>
 
-        <p class="emphasis">Results</p>
+        <p class="emphasis">Results</p> <!-- Título para mostrar los resultados -->
         <div class="content">
-          <div id="result"></div>
+          <div id="result"></div> <!-- Aquí se mostrarán los resultados finales del cuestionario -->
         </div>
-        <!-- The below 'Restart Quiz' button is commented out because it is not used initially -->
+
+        <!-- El siguiente botón 'Reiniciar Cuestionario' está comentado porque no se usa inicialmente -->
         <!-- <button id="restartButton" class="button-secondary">Restart Quiz</button> -->
       </div>
     </div>
 
-    
-    <!-- The scripts are placed at the end of the document so that all the HTML elements are loaded before we try to access them -->
-    <!-- Important: Leave this as it is. Do not change the order of the scripts! -->
-    <script src="src/question.js"></script>
-    <script src="src/quiz.js"></script>
-    <script src="src/index.js"></script>
-    
+    <!-- Los scripts se colocan al final del documento para que todos los elementos HTML se carguen antes de intentar acceder a ellos -->
+    <!-- Importante: Deja esto tal como está. ¡No cambies el orden de los scripts! -->
+    <script src="src/question.js"></script> <!-- Script para la clase Question -->
+    <script src="src/quiz.js"></script>    <!-- Script para la clase Quiz -->
+    <script src="src/index.js"></script>    <!-- Script principal que maneja la lógica del cuestionario -->
   </body>
 </html>
