@@ -105,7 +105,15 @@ input[type="radio"] {
 #choices {
     min-width: 25px;
     margin: 0 auto;
-    text-align: left;
+    text-align: left;    
+}
+
+.correct-answer {
+    color: green;
+}
+
+.incorrect-answer {
+    color: red;
 }
 
 #quizDescription, #question, #result {
