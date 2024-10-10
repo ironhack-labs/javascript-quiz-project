@@ -1,4 +1,4 @@
-describe("Quiz", () => {
+ describe("Quiz", () => {
   describe("class", () => {
     it("should be defined", () => {
       // Check if the Quiz class is defined
