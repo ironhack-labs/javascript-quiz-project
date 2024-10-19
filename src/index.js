@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questionContainer = document.querySelector("#question");
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
+  const restartButton = document.querySelector("#restartButton");
 
   // End view elements
   const resultContainer = document.querySelector("#result");
@@ -45,13 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  SHOW INITIAL CONTENT  ************/
 
-  // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
-  const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
-  const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  function updateTimerDisplay() {
 
-  // Display the time remaining in the time remaining container
-  const timeRemainingContainer = document.getElementById("timeRemaining");
-  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+
+    // Display the time remaining in the time remaining container
+    const timeRemainingContainer = document.getElementById("timeRemaining");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+  }
 
   // Show first question
   showQuestion();
@@ -59,21 +64,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  // let timer;
+  let intervalID;
 
+
+  function startTimer() {
+
+    intervalID = setInterval(() => {
+
+      quiz.timeRemaining--;  // Reducir el tiempo restante en el cuestionario
+      updateTimerDisplay();  // Actualizar la visualización del temporizador
+  
+      // Si el tiempo se agota, detener el temporizador y mostrar los resultados
+      if (quiz.timeRemaining <= 0) {
+        clearInterval(intervalID);  // Detener el temporizador
+        endView.style.display = 'flex';
+        showResults();         // Mostrar los resultados cuando el tiempo termine
+      }
+    }, 1000);
+  }
+  
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener("click", restartButtonHandler);
 
-
+  startTimer();
 
   /************  FUNCTIONS  ************/
 
   // showQuestion() - Displays the current question and its choices
   // nextButtonHandler() - Handles the click on the next button
   // showResults() - Displays the end view and the quiz results
-
+  // restartButtonHandler() - Reset the quiz and shuffles again all questions
 
 
   function showQuestion() {
@@ -98,19 +122,22 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+    questionContainer.innerText = question.text;
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-    
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+
+    const currentQuestionIndex = quiz.currentQuestionIndex; // Índice de la pregunta actual
+    const totalQuestions = quiz.questions.length; // Total de preguntas
+    const progress = (currentQuestionIndex / totalQuestions) * 100; // Calcula el porcentaje de progreso
+    progressBar.style.width = progress + "%";
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`; //  This value is hardcoded as a placeholder
 
 
     
@@ -128,32 +155,62 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
+
+      question.choices.forEach((choiceText) => {
+
+        const radioInput = document.createElement("input");
+        radioInput.type = "radio";
+        radioInput.name = "choice";
+        radioInput.value = choiceText;
+
+        const choiceLabel = document.createElement("label");
+        choiceLabel.innerText = choiceText;
+
+        const br = document.createElement("br");
+
+        choiceContainer.appendChild(radioInput);
+        choiceContainer.appendChild(choiceLabel);
+        choiceContainer.appendChild(br);
+      });
+
   }
 
 
   
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
-
-
+    let selectedAnswer = null; // A variable to store the selected answer value
 
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
+    const choices = document.querySelectorAll('#choices input[type="radio"]'); 
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
-
+    choices.forEach((choice) => {
+      if (choice.checked) {
+        selectedAnswer = choice.value;
+      }
+    });
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
+    if (quiz.checkAnswer(selectedAnswer)) {
+      quiz.moveToNextQuestion(); 
+      showQuestion(); 
+    } 
+    else if (!quiz.checkAnswer(selectedAnswer)) {
+      quiz.moveToNextQuestion(); 
+      showQuestion(); 
+    } 
+    else if (selectedAnswer = null) {
+      alert("Please select an answer!");
+    }
   }  
-
 
 
 
@@ -168,7 +225,35 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    const totalQuestions = quiz.questions.length;
+    const correctAnswers = quiz.correctAnswers;
+    resultContainer.innerText = `You scored ${correctAnswers} out of ${totalQuestions} correct answers!`;
+
+    // Stop the Timer when the Quiz Ends
+    clearInterval(intervalID);
+
+  }
+
+
+
+  function restartButtonHandler() {
+    // 1. Hide the end view (div#endView) 
+    endView.style.display = "none";
+    
+    // 2. Show the quiz view (div#quizView)
+    quizView.style.display = "block";
+
+    // 3. Reset the quiz
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+
+    quiz.shuffleQuestions();
+    showQuestion();
+
+    quiz.timeRemaining = quizDuration;  // Reset the timeRemaining
+    updateTimerDisplay();
+    startTimer();               // Update the timer display to show the initial time
+
   }
   
 });
