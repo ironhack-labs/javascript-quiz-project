@@ -36,7 +36,7 @@ describe("Quiz", () => {
       const quiz = new Quiz([], 60, testTime);
       // Check if the timeRemaining property is equal to the test time argument passed to the constructor
       expect(quiz.timeRemaining).toEqual(testTime);
-    });    
+    });
 
     it("should have a 'correctAnswers' property initially set to 0", () => {
       // Instantiate a new Quiz object
@@ -113,14 +113,14 @@ describe("Quiz", () => {
 
   describe("shuffleQuestions() method", () => {
     it("should be defined", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the shuffleQuestions() method is defined
       expect(quiz.shuffleQuestions).toBeDefined();
     });
 
     it("should be a function", () => {
-        // Instantiate a new Quiz object
+      // Instantiate a new Quiz object
       const quiz = new Quiz([], 60, 60);
       // Check if the .shuffleQuestions is a function
       expect(typeof quiz.shuffleQuestions).toBe("function");
@@ -273,7 +273,7 @@ describe("Quiz", () => {
 
     it("should receive 1 argument (difficulty)", () => {
       // Instantiate a new Quiz object
-      const quiz = new Quiz([], "test", 60);      
+      const quiz = new Quiz([], "test", 60);
       // Check if the filterQuestionsByDifficulty() method takes 1 argument
       expect(quiz.filterQuestionsByDifficulty.length).toEqual(1);
 
@@ -309,7 +309,7 @@ describe("Quiz", () => {
       ];
 
       // Instantiate a new Quiz object with the test questions
-      const quiz = new Quiz(questions, "test", 60);      
+      const quiz = new Quiz(questions, "test", 60);
 
       // Call the `filterQuestionsByDifficulty()` method with a number between 1 and 3 as a 1st argument.
       quiz.filterQuestionsByDifficulty(2);
@@ -419,7 +419,7 @@ describe("Quiz", () => {
       // Check that the averageDifficulty() method returns the correct average when called
       expect(quiz.averageDifficulty()).toEqual(1.8);
     });
-  }); 
+  });
 });
 
 
