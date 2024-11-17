@@ -66,6 +66,15 @@ button {
 .button-secondary:hover {
     background-color: #1e1e1e;
 }
+
+.button-disabled {
+    background-color: hsl(0, 0%, 79%);
+}
+
+.button-disabled:hover {
+    background-color: hsl(0, 0%, 79%);
+}
+
 .title {
     margin-top: 20px;
     margin-bottom: -12px;
