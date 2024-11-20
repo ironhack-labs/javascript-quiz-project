@@ -122,20 +122,25 @@ input[type="radio"] {
 }
 
 
-#progress {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 5px;
-}
+#progressContainer {
+    width: 100%;            /* Full width of the parent container */
+    max-width: 600px;       /* Optional: limit the maximum width */
+    height: 20px;           /* Set the height of the progress bar */
+    background-color: #e0e0e0; /* Light background color */
+    border-radius: 10px;    /* Rounded corners */
+    overflow: hidden;       /* Ensures the inner bar has rounded corners */
+    margin: 0 auto;         /* Center the container */
+  }
+  
+  #progressBar {
+    width: 0%;              /* Initial width at 0%, will be updated dynamically */
+    height: 100%;           /* Full height to fill the container */
+    background-color: #4caf50; /* Green color for progress */
+    transition: width 0.4s ease; /* Smooth transition effect */
+    border-radius: 10px;    /* Match border-radius to ensure smooth edges */
+  }
+  
 
-#progressBar {
-    height: 20px;
-    background-color: #4caf50;
-    width: 0%;
-    border-radius: 8px;
-}
 
 #result-progress {
     width: 100%;
