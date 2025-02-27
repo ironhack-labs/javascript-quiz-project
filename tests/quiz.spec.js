@@ -419,6 +419,8 @@ describe("Quiz", () => {
       // Check that the averageDifficulty() method returns the correct average when called
       expect(quiz.averageDifficulty()).toEqual(1.8);
     });
+
+
   }); 
 });
 
