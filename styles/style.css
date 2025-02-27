@@ -169,4 +169,6 @@ input[type="radio"] {
     margin: 0 auto;
     margin-top: -35px;
     margin-bottom: 12px;
+    display: flex;
+    justify-content: flex-end;
 }
