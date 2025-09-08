@@ -1,50 +1,70 @@
 class Quiz {
-    // YOUR CODE HERE:
-    
-    // 1. constructor (questions, timeLimit, timeRemaining)
-    
-constructor  (questions, timeLimit, timeRemaining) {
+  // YOUR CODE HERE:
+
+  // 1. constructor (questions, timeLimit, timeRemaining)
+
+  constructor(questions, timeLimit, timeRemaining) {
     this.questions = questions;
     this.timeLimit = timeLimit;
     this.timeRemaining = timeRemaining;
     this.correctAnswers = 0;
     this.currentQuestionIndex = 0;
+  }
+
+  // 2. getQuestion()
+  getQuestion() {
+    return this.questions[this.currentQuestionIndex];
+  }
+  // 3. moveToNextQuestion()
+  moveToNextQuestion() {
+    return this.currentQuestionIndex++;
+  }
+  // 4. shuffleQuestions()
+  shuffleQuestions() {
+    for (let i = this.questions.length - 1; i > 0; i--) {
+      let bridageElement = Math.floor(Math.random() * this.questions.length);
+      let tempElemnt = this.questions[i];
+      this.questions[i] = this.questions[bridageElement];
+      this.questions[bridageElement] = tempElemnt;
+    }
+  }
+
+  // 5. checkAnswer(answer)
+
+  checkAnswer(answer) {
+    let currentQuestion = this.questions[this.currentQuestionIndex];
+    if (currentQuestion.answer === answer) {
+      this.correctAnswers++;
+    }
+  }
+  // 6. hasEnded()
+  hasEnded() {
+    if (this.currentQuestionIndex < this.questions.length) {
+      return false;
+    } else if (this.currentQuestionIndex === this.questions.length) {
+      return true;
+    }
+  }
+
+  // filter Questions by difficulty
+
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty >= 1 && difficulty <= 3) {
+      this.questions = this.questions.filter((question) => {
+        return question.difficulty === difficulty;
+      });
+    }
+  }
+
+  // average difficulty
+
+  averageDifficulty() {
+    if (this.questions === 0) {
+      return 0;
+    }
+    let total = this.questions.reduce((sum, question) => {
+      return sum + question.difficulty;
+    }, 0);
+    return total / this.questions.length;
+  }
 }
-
-    // 2. getQuestion()
-    getQuestion() {
-        return this.questions[this.currentQuestionIndex];
-    }
-    // 3. moveToNextQuestion()
-    moveToNextQuestion(){
-        return this.currentQuestionIndex++
-    }
-    // 4. shuffleQuestions()
-shuffleQuestions() {
-        for(let i=this.questions.length-1;i>0;i--){
-            let bridageElement = Math.floor(Math.random()*this.questions.length);
-            let tempElemnt=this.questions[i];
-            this.questions[i]=this.questions[bridageElement];
-            this.questions[bridageElement]=tempElemnt;
-        }
-
-    }
-    
-    // 5. checkAnswer(answer)
-
-    checkAnswer(answer) {
-        let currentQuestion = this.questions[this.currentQuestionIndex];
-        if (currentQuestion.answer === answer) {
-            this.correctAnswers++;
-        }
-    }
- // 6. hasEnded()
-    hasEnded(){
-        if(this.currentQuestionIndex<this.questions.length){return false}
-        else if(this.currentQuestionIndex===this.questions.length){return true}
-    }
-}
-
-
-   
-    
