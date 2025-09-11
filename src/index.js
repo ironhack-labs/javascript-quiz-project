@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timer=null;
   function renderTime(){
-        const min = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const min = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
     const sec = (quiz.timeRemaining % 60).toString().padStart(2, "0");
     timeLabelSpan.textContent = `${min}:${sec}`;
   }
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function startTimer() {
     stopTimer();
     timer = setInterval(() => {
-      quiz.timeRemaining -= 1;
+      quiz.timeRemaining --;
       renderTime();
       if (quiz.timeRemaining <= 0) {
         stopTimer();
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
       showResults();
-      stopTimer;
+      stopTimer();
       return;
     }
 
@@ -233,10 +233,12 @@ restartButton.addEventListener('click', () => {
   quiz.correctAnswers = 0;
    quiz.currentQuestionIndex = 0;
    quiz.shuffleQuestions();
+   quiz.timeRemaining=quizDuration;
    progressBar.style.width = '0%';
    questionCount.textContent = `Question 1 of ${quiz.questions.length}`;
    endView.style.display = 'none';
    quizView.style.display = 'block';
+
 renderTime();
 showQuestion();
 startTimer();})
