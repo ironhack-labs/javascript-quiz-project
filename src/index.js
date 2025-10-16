@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // End view elements
   const resultContainer = document.querySelector("#result");
+  const restartButton = document.querySelector("#restartButton");
 
 
   /************  SET VISIBILITY OF VIEWS  ************/
@@ -31,6 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     // Add more questions here
+    new Question("What is the best movie in the world?", ["Avatar", "Shrek", "Cars", "None"], "Avatar", 1),
+    new Question("What is Paco's name?", ["Paco", "Nico", "PacO", "PACO"], "Paco", 1),
+    new Question("Who made this quiz?", ["nobody", "Peter", "you", "Anton and Mateo"], "Anton and Mateo", 1),
+    new Question("Who was the last MR Olympia in Classic Physique?", ["Ramon Dino", "Cbum", "Urs", "None"], "Ramon Dino", 2),
+    new Question("Who is the best football player?", ["CR7", "Messi", "Iniesta", "Neymar"], "Messi", 2),
+    new Question("Which one is a fruit?", ["orange", "orange2", "not orange 1", "none"], "orange", 1)
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
 
@@ -61,10 +68,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timer;
 
+  // START TIMER
+  timer = setInterval(() => {
+    // Decrease time remaining
+    quiz.timeRemaining--;
+    
+    // Update the time remaining container
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    
+    // If time runs out, show results
+    if (quiz.timeRemaining <= 0) {
+      clearInterval(timer);
+      showResults();
+    }
+  }, 1000);
 
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartButton.addEventListener("click", restartButtonHandler);
 
 
 
@@ -98,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
-
+    questionContainer.innerText = question.text;
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-    
+    const progressPercentage = ((quiz.currentQuestionIndex) / quiz.questions.length) * 100;
     progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
 
 
@@ -110,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
 
 
     
@@ -127,7 +151,23 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-
+    question.choices.forEach((choice, index) => {
+      const radioInput = document.createElement("input");
+      radioInput.type = "radio";
+      radioInput.name = "choice";
+      radioInput.value = choice;
+      radioInput.id = `choice-${choice}`;
+      
+      const label = document.createElement("label");
+      label.htmlFor = `choice-${choice}`;
+      label.innerText = choice;
+      
+      const br = document.createElement("br");
+      
+      choiceContainer.appendChild(radioInput);
+      choiceContainer.appendChild(label);
+      choiceContainer.appendChild(br);
+    });
   }
 
 
@@ -140,18 +180,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
+    const choiceElements = document.querySelectorAll('input[name="choice"]');
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
-
+    choiceElements.forEach(choice => {
+      if (choice.checked) {
+        selectedAnswer = choice.value;
+      }
+    });
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
+      if (selectedAnswer) {
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    }
   }  
 
 
@@ -168,7 +217,48 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
+
+    // CLEAR TIMER
+    clearInterval(timer);
   }
   
-});
+    function restartButtonHandler() {
+    // Hide the end view
+    endView.style.display = "none";
+
+    // Show the quiz view
+    quizView.style.display = "block";
+
+    // Reset the quiz:
+    // Reset the currentQuestionIndex to 0
+    // Reset the correctAnswers to 0
+    // Shuffle the questions
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    quiz.timeRemaining = quizDuration; // RESET TIME
+    quiz.shuffleQuestions();
+
+    // Update timer display
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    // Restart timer
+    timer = setInterval(() => {
+      quiz.timeRemaining--;
+      
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+      
+      if (quiz.timeRemaining <= 0) {
+        clearInterval(timer);
+        showResults();
+      }
+    }, 1000);
+
+    // Show the first question
+    showQuestion();
+  }
+}); 
