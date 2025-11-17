@@ -1,174 +1,309 @@
+// Esperamos a que toda la página HTML se cargue antes de ejecutar el código
+// DOMContentLoaded se dispara cuando el HTML está listo
 document.addEventListener("DOMContentLoaded", () => {
-  /************  HTML ELEMENTS  ************/
-  // View divs
-  const quizView = document.querySelector("#quizView");
-  const endView = document.querySelector("#endView");
-
-  // Quiz view elements
-  const progressBar = document.querySelector("#progressBar");
-  const questionCount = document.querySelector("#questionCount");
-  const questionContainer = document.querySelector("#question");
-  const choiceContainer = document.querySelector("#choices");
-  const nextButton = document.querySelector("#nextButton");
-
-  // End view elements
-  const resultContainer = document.querySelector("#result");
-
-
-  /************  SET VISIBILITY OF VIEWS  ************/
-
-  // Show the quiz view (div#quizView) and hide the end view (div#endView)
-  quizView.style.display = "block";
-  endView.style.display = "none";
-
-
-  /************  QUIZ DATA  ************/
   
-  // Array with the quiz questions
+  /************  ELEMENTOS HTML  ************/
+  // Aquí seleccionamos todos los elementos HTML que vamos a usar
+  
+  // Vistas principales (divs grandes que muestran diferentes pantallas)
+  const quizView = document.querySelector("#quizView"); // Pantalla del quiz
+  const endView = document.querySelector("#endView"); // Pantalla de resultados
+
+  // Elementos de la vista del quiz
+  const progressBar = document.querySelector("#progressBar"); // Barra verde de progreso
+  const questionCount = document.querySelector("#questionCount"); // Contador "Pregunta X de Y"
+  const questionContainer = document.querySelector("#question"); // Contenedor del texto de la pregunta
+  const choiceContainer = document.querySelector("#choices"); // Contenedor de las opciones de respuesta
+  const nextButton = document.querySelector("#nextButton"); // Botón "Answer"
+
+  // Elementos de la vista de resultados
+  const resultContainer = document.querySelector("#result"); // Contenedor del texto de resultados
+  const restartButton = document.querySelector("#restartButton"); // Botón "Restart Quiz"
+
+
+  /************  CONFIGURAR VISIBILIDAD DE VISTAS  ************/
+
+  // Al inicio, mostramos la vista del quiz y ocultamos la vista de resultados
+  quizView.style.display = "block"; // block = visible
+  endView.style.display = "none"; // none = oculto
+
+
+  /************  DATOS DEL QUIZ  ************/
+  
+  // Array con todas las preguntas del quiz
+  // Cada pregunta es un objeto de la clase Question
+  // Parámetros: (texto, [opciones], respuesta_correcta, dificultad)
   const questions = [
     new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    // Add more questions here
+    // Puedes agregar más preguntas aquí
   ];
-  const quizDuration = 120; // 120 seconds (2 minutes)
-
-
-  /************  QUIZ INSTANCE  ************/
   
-  // Create a new Quiz instance object
+  // Duración del quiz en segundos (120 segundos = 2 minutos)
+  const quizDuration = 120;
+
+
+  /************  CREAR INSTANCIA DEL QUIZ  ************/
+  
+  // Creamos un nuevo objeto Quiz con nuestras preguntas y tiempo
+  // Parámetros: (preguntas, tiempo_limite, tiempo_restante)
   const quiz = new Quiz(questions, quizDuration, quizDuration);
-  // Shuffle the quiz questions
+  
+  // Mezclamos las preguntas para que aparezcan en orden aleatorio
   quiz.shuffleQuestions();
 
 
-  /************  SHOW INITIAL CONTENT  ************/
+  /************  MOSTRAR CONTENIDO INICIAL  ************/
 
-  // Convert the time remaining in seconds to minutes and seconds, and pad the numbers with zeros if needed
+  // Convertimos el tiempo restante de segundos a formato "minutos:segundos"
+  // Math.floor() redondea hacia abajo (ej: 7.9 → 7)
+  // Dividimos entre 60 para obtener los minutos
   const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+  
+  // El operador % (módulo) nos da el resto de la división
+  // Ej: 125 % 60 = 5 (nos da los segundos sobrantes)
   const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+  // .padStart(2, "0") añade un 0 al inicio si el número es menor que 10
+  // Ej: "5" → "05"
 
-  // Display the time remaining in the time remaining container
+  // Mostramos el tiempo en el contenedor HTML
   const timeRemainingContainer = document.getElementById("timeRemaining");
-  timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+  timeRemainingContainer.innerText = `${minutes}:${seconds}`; // Template literal: ${} inserta variables
 
-  // Show first question
+  // Mostramos la primera pregunta
   showQuestion();
 
 
-  /************  TIMER  ************/
+  /************  TEMPORIZADOR  ************/
 
+  // Variable para guardar el intervalo del timer
   let timer;
 
+  // Función que inicia el temporizador
+  function startTimer() {
+    // setInterval() ejecuta código cada X milisegundos
+    // 1000 milisegundos = 1 segundo
+    timer = setInterval(() => {
+      // Restamos 1 segundo al tiempo restante
+      quiz.timeRemaining--;
 
-  /************  EVENT LISTENERS  ************/
+      // Convertimos el tiempo a formato "minutos:segundos"
+      const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      
+      // Actualizamos el texto en la pantalla
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`;
 
+      // Si el tiempo llegó a 0, paramos el timer y mostramos resultados
+      if (quiz.timeRemaining === 0) {
+        clearInterval(timer); // clearInterval() detiene el setInterval
+        showResults(); // Mostramos la pantalla de resultados
+      }
+    }, 1000); // 1000 = ejecutar cada 1 segundo
+  }
+
+  // Iniciamos el temporizador al cargar la página
+  startTimer();
+
+
+  /************  EVENT LISTENERS (ESCUCHADORES DE EVENTOS)  ************/
+
+  // addEventListener() espera a que ocurra un evento (como un click)
+  // Cuando el usuario hace click en el botón "Answer", ejecuta nextButtonHandler
   nextButton.addEventListener("click", nextButtonHandler);
+  
+  // Cuando el usuario hace click en el botón "Restart Quiz", ejecuta restartQuiz
+  restartButton.addEventListener("click", restartQuiz);
 
 
 
-  /************  FUNCTIONS  ************/
+  /************  FUNCIONES  ************/
 
-  // showQuestion() - Displays the current question and its choices
-  // nextButtonHandler() - Handles the click on the next button
-  // showResults() - Displays the end view and the quiz results
+  // showQuestion() - Muestra la pregunta actual y sus opciones
+  // nextButtonHandler() - Maneja el click en el botón "Answer"
+  // showResults() - Muestra la pantalla de resultados finales
 
 
 
+  // FUNCIÓN: Mostrar la pregunta actual
   function showQuestion() {
-    // If the quiz has ended, show the results
+    // Primero verificamos si el quiz ya terminó
     if (quiz.hasEnded()) {
-      showResults();
-      return;
+      showResults(); // Si terminó, mostramos resultados
+      return; // return sale de la función (no ejecuta el resto del código)
     }
 
-    // Clear the previous question text and question choices
+    // Limpiamos el texto de la pregunta anterior
     questionContainer.innerText = "";
+    
+    // Limpiamos las opciones de respuesta anteriores
+    // innerHTML borra todo el contenido HTML interno
     choiceContainer.innerHTML = "";
 
-    // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
+    // Obtenemos la pregunta actual del quiz
     const question = quiz.getQuestion();
-    // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
+    
+    // Mezclamos las opciones de respuesta para que aparezcan en orden aleatorio
     question.shuffleChoices();
     
     
-
-    // YOUR CODE HERE:
-    //
-    // 1. Show the question
-    // Update the inner text of the question container element and show the question text
+    // 1. MOSTRAR EL TEXTO DE LA PREGUNTA
+    // Ponemos el texto de la pregunta en el contenedor HTML
+    questionContainer.innerText = question.text;
 
     
-    // 2. Update the green progress bar
-    // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
+    // 2. ACTUALIZAR LA BARRA DE PROGRESO VERDE
+    // Calculamos el porcentaje de preguntas contestadas
+    // Ejemplo: si estamos en pregunta 2 de 4 → 2/4 = 0.5 → 0.5 * 100 = 50%
+    const percentage = (quiz.currentQuestionIndex / quiz.questions.length) * 100;
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
-
-
-    // 3. Update the question count text 
-    // Update the question count (div#questionCount) show the current question out of total questions
+    // Cambiamos el ancho de la barra verde con CSS
+    progressBar.style.width = `${percentage}%`;
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
 
+    // 3. ACTUALIZAR EL CONTADOR DE PREGUNTAS
+    // Mostramos "Pregunta X de Y"
+    // Sumamos +1 al índice porque los arrays empiezan en 0
+    // Ejemplo: índice 0 → pregunta 1
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of ${quiz.questions.length}`;
 
     
-    // 4. Create and display new radio input element with a label for each choice.
-    // Loop through the current question `choices`.
-      // For each choice create a new radio input with a label, and append it to the choice container.
-      // Each choice should be displayed as a radio input element with a label:
-      /* 
-          <input type="radio" name="choice" value="CHOICE TEXT HERE">
-          <label>CHOICE TEXT HERE</label>
-        <br>
-      */
-      // Hint 1: You can use the `document.createElement()` method to create a new element.
-      // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-      // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-      // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+    // 4. CREAR LOS BOTONES DE RADIO PARA CADA OPCIÓN DE RESPUESTA
+    // forEach() ejecuta código para cada elemento del array
+    question.choices.forEach((choice) => {
+      // Creamos un input de tipo radio (círculo seleccionable)
+      const input = document.createElement("input");
+      input.type = "radio"; // tipo radio = solo se puede seleccionar uno
+      input.name = "choice"; // name igual para que solo uno pueda estar seleccionado
+      input.value = choice; // value guarda el texto de la opción
 
+      // Creamos una etiqueta (label) con el texto de la opción
+      const label = document.createElement("label");
+      label.innerText = choice;
+
+      // Creamos un salto de línea <br> para separar las opciones
+      const br = document.createElement("br");
+
+      // Añadimos los elementos al contenedor de opciones
+      // appendChild() agrega un elemento HTML dentro de otro
+      choiceContainer.appendChild(input); // Añadimos el radio button
+      choiceContainer.appendChild(label); // Añadimos la etiqueta
+      choiceContainer.appendChild(br); // Añadimos el salto de línea
+    });
   }
 
 
   
+  // FUNCIÓN: Maneja el click en el botón "Answer"
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
+    // Variable para guardar la respuesta que el usuario seleccionó
+    let selectedAnswer;
 
 
+    // 1. OBTENER TODAS LAS OPCIONES DE RESPUESTA
+    // querySelectorAll() busca TODOS los elementos que coincidan con el selector
+    // 'input[name="choice"]' = todos los inputs con name="choice"
+    const choices = document.querySelectorAll('input[name="choice"]');
 
-    // YOUR CODE HERE:
-    //
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
-
-    // 2. Loop through all the choice elements and check which one is selected
-      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-      //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
-
+    
+    // 2. BUSCAR CUÁL OPCIÓN ESTÁ SELECCIONADA
+    // Recorremos todas las opciones con forEach
+    choices.forEach((choice) => {
+      // .checked es una propiedad que es true si el radio button está seleccionado
+      if (choice.checked) {
+        // Si está seleccionado, guardamos su valor en selectedAnswer
+        selectedAnswer = choice.value;
+      }
+    });
       
-    // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-      // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-      // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-      // Show the next question by calling the function `showQuestion()`.
+    
+    // 3. SI HAY UNA RESPUESTA SELECCIONADA, VERIFICARLA Y AVANZAR
+    // Solo ejecutamos este código si selectedAnswer tiene un valor
+    if (selectedAnswer) {
+      // Verificamos si la respuesta es correcta
+      // Si es correcta, checkAnswer() suma 1 a correctAnswers
+      quiz.checkAnswer(selectedAnswer);
+      
+      // Avanzamos a la siguiente pregunta (suma 1 al índice)
+      quiz.moveToNextQuestion();
+      
+      // Mostramos la siguiente pregunta en la pantalla
+      showQuestion();
+    }
   }  
 
 
 
 
+  // FUNCIÓN: Mostrar los resultados finales del quiz
   function showResults() {
+    // Paramos el temporizador cuando el quiz termina
+    // clearInterval() detiene el setInterval que creamos en startTimer()
+    clearInterval(timer);
 
-    // YOUR CODE HERE:
-    //
-    // 1. Hide the quiz view (div#quizView)
+    
+    // 1. OCULTAR LA VISTA DEL QUIZ
+    // Cambiamos el display a "none" = invisible
     quizView.style.display = "none";
 
-    // 2. Show the end view (div#endView)
+    
+    // 2. MOSTRAR LA VISTA DE RESULTADOS
+    // Cambiamos el display a "flex" = visible
     endView.style.display = "flex";
     
-    // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    
+    // 3. MOSTRAR EL PUNTAJE FINAL
+    // Usamos template literals ${} para insertar las variables en el texto
+    // Ejemplo: "You scored 3 out of 4 correct answers!"
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+  }
+
+  // FUNCIÓN: Reiniciar el quiz desde el principio
+  function restartQuiz() {
+    // Paramos el temporizador anterior
+    clearInterval(timer);
+    
+    
+    // REINICIAR LAS PROPIEDADES DEL QUIZ
+    // Volvemos al índice 0 (primera pregunta)
+    quiz.currentQuestionIndex = 0;
+    
+    // Reiniciamos el contador de respuestas correctas a 0
+    quiz.correctAnswers = 0;
+    
+    // Reiniciamos el tiempo al valor inicial
+    quiz.timeRemaining = quizDuration;
+    
+    
+    // Mezclamos las preguntas de nuevo para un orden diferente
+    quiz.shuffleQuestions();
+    
+    
+    // CAMBIAR LAS VISTAS
+    // Ocultamos la pantalla de resultados
+    endView.style.display = "none";
+    
+    // Mostramos la pantalla del quiz
+    quizView.style.display = "block";
+    
+    
+    // REINICIAR EL DISPLAY DEL TIEMPO
+    // Convertimos el tiempo a formato "minutos:segundos"
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    
+    // Actualizamos el texto del tiempo en la pantalla
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    
+    
+    // Iniciamos el temporizador de nuevo
+    startTimer();
+    
+    
+    // Mostramos la primera pregunta
+    showQuestion();
   }
   
-});
+}); 
