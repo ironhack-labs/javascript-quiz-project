@@ -1,172 +1,181 @@
-/* CSS Reset */
+/* CSS RESET 
+Needs some more polish (moving gradient progress bar and what not:
+location of timmer outside the main container for better visibility
+longer question overflow the cards outside main div box , neeeds fixing
+)*/
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* GLOBAL */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
-    padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #ffffff;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
 }
 
-header {
-    padding: 0 20px;
-}
-
+/* CONTAINER (GLASS CARD) */
 .container {
-    height: 540px;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  height: 560px;
+  max-width: 620px;
+  margin: auto;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
-#quizView, #endView {
-    overflow-y: auto;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+/* VIEWS */
+#quizView,
+#endView {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
-.view {
-    text-align: center;
-    margin-top: 20px;
+/* HEADERS / TEXT */
+header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
-button {
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 160px;
+#question {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 20px 0;
+  color: #ffffff;
+  text-align: center;
+
 }
 
-.button-primary {
-    background-color: #4caf50;
+/* TIMER */
+#timeRemaining {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.button-primary:hover {
-    background-color: #46a049;
-}
-
-.button-secondary {
-    background-color: #333;
-}
-
-.button-secondary:hover {
-    background-color: #1e1e1e;
-}
-.title {
-    margin-top: 20px;
-    margin-bottom: -12px;
-}
-
-
-button:hover {
-    background-color: #4cae4c;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
-}
-
-input[type="radio"] {
-    margin-right: 10px;
-}
-
-.emphasis, #startQuestionsCount, #questionCount, #resultQuestionsCount {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 auto;
-    margin-bottom: 10px;
-}
-
-.content {
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-}
-
-#choices {
-    min-width: 25px;
-    margin: 0 auto;
-    text-align: left;
-}
-
-#quizDescription, #question, #result {
-    font-size: 18px;
-    font-style: italic;
-    color: #333;
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: 12px;
-}
-
-#quizDescription {
-    margin-bottom: 20px;
-}
-
-
+/* PROGRESS BAR */
 #progress {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 5px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #progressBar {
-    height: 20px;
-    background-color: #4caf50;
-    width: 0%;
-    border-radius: 8px;
+  height: 14px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  width: 0%;
+  transition: width 0.4s ease;
+  border-radius: 12px;
 }
 
-#result-progress {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 5px;
+/* QUESTION COUNT */
+#questionCount {
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.divider {
-    width: 100%;
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 5px;
+/* CHOICES */
+#choices {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
 }
 
-#resultProgressBar {
-    width: 100%;
-    height: 20px;
-    background-color: #4caf50;
-    width: 100%;
-    border-radius: 8px;
+#choices input[type="radio"] {
+  display: none;
 }
 
-#timeRemaining {
-    font-size: 14px;
-    font-style: italic;
-    color: #333;
-    margin: 0 auto;
-    margin-top: -35px;
-    margin-bottom: 12px;
+#choices label {
+  display: block;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transition: all 0.25s ease;
+}
+
+#choices label:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+#choices input[type="radio"]:checked + label {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 20px rgba(0, 114, 255, 0.4);
+}
+
+/* BUTTONS */
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 14px 26px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 180px;
+  color: white;
+  background: rgba(65, 225, 236, 0.87);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgb(61, 217, 238);
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* PRIMARY / SECONDARY */
+.button-primary {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+}
+
+.button-primary:hover {
+  box-shadow: 0 10px 25px rgba(0, 114, 255, 0.45);
+}
+
+.button-secondary {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.button-secondary:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* RESULTS */
+#result {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 20px 0;
+  color: #ffffff;
 }

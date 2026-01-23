@@ -1,15 +1,58 @@
 class Quiz {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
+  constructor(questions, timeLimit, timeRemaining) {
+    this.questions = questions;
+    this.timeLimit = timeLimit;
+    this.timeRemaining = timeRemaining;
+    this.currentQuestionIndex = 0;
+    this.correctAnswers = 0;
 
-    // 2. getQuestion()
-    
-    // 3. moveToNextQuestion()
+  }
 
-    // 4. shuffleQuestions()
+  getQuestion() {
+    return this.questions[this.currentQuestionIndex];
+  }
 
-    // 5. checkAnswer(answer)
+  moveToNextQuestion() {
+    this.currentQuestionIndex++;
+  }
 
-    // 6. hasEnded()
+  shuffleQuestions() {
+    for (let i = this.questions.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      [this.questions[i], this.questions[randomIndex]] =
+        [this.questions[randomIndex], this.questions[i]];
+    }
+  }
+
+checkAnswer(answer) {
+  if (this.getQuestion().answer === answer) {
+    this.correctAnswers++;
+  }
+}
+
+  hasEnded() {
+    return this.currentQuestionIndex >= this.questions.length;
+  }
+
+  filterQuestionsByDifficulty(difficulty) {
+  if (difficulty < 1 || difficulty > 3 || typeof difficulty !== "number") {
+    return; // do nothing if invalid
+  }
+
+  this.questions = this.questions.filter(question => {
+    return question.difficulty === difficulty;
+  });
+}
+
+averageDifficulty() {
+  if (this.questions.length === 0) return 0;
+
+  const totalDifficulty = this.questions.reduce((sum, question) => {
+    return sum + question.difficulty;
+  }, 0);
+
+  return totalDifficulty / this.questions.length;
+}
+
+
 }
