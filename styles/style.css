@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #740001;
     color: #333;
     line-height: 1.6;
     padding: 20px;
@@ -23,6 +23,7 @@ header {
     margin: auto;
     padding: 20px;
     background: #fff;
+    border-radius: 16px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
@@ -52,11 +53,11 @@ button {
 }
 
 .button-primary {
-    background-color: #4caf50;
+    background-color: #eeba30;
 }
 
 .button-primary:hover {
-    background-color: #46a049;
+    background-color: #d3a625;
 }
 
 .button-secondary {
@@ -73,7 +74,7 @@ button {
 
 
 button:hover {
-    background-color: #4cae4c;
+    background-color: #d3a625;
 }
 
 ul {
@@ -132,7 +133,7 @@ input[type="radio"] {
 
 #progressBar {
     height: 20px;
-    background-color: #4caf50;
+    background-color: #eeba30;
     width: 0%;
     border-radius: 8px;
 }
@@ -157,7 +158,7 @@ input[type="radio"] {
 #resultProgressBar {
     width: 100%;
     height: 20px;
-    background-color: #4caf50;
+    background-color: #eeba30;
     width: 100%;
     border-radius: 8px;
 }
