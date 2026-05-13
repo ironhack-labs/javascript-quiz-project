@@ -26,16 +26,16 @@ class Quiz {
 
     // 5. checkAnswer(answer)
     checkAnswer(answer) {
-        this.correctAnswers++;
+        const currentQuestion = this.getQuestion();
+
+        if (answer === currentQuestion.answer) {
+            this.correctAnswers++;
+        }
     }
 
     // 6. hasEnded()
     hasEnded() {
-        if (this.currentQuestionIndex < this.questions.length) {
-            return false;
-        }
-        if (this.currentQuestionIndex === this.questions.length)
-            return true;
+        return this.currentQuestionIndex >= this.questions.length;
     }
 
     filterQuestionsByDifficulty(difficulty) {
