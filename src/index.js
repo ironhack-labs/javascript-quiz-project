@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  QUIZ DATA  ************/
 
   // Array with the quiz questions .
-   
+
   const questions = [
     new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
@@ -62,7 +62,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = quiz.timeRemaining;
+  const countTime = setInterval(() => {
+    timer--;
+    const minutes = Math.floor(timer / 60).toString().padStart(2, "0");
+    const seconds = (timer % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    if (timer <= 0) {
+      clearInterval(countTime);
+      showResults();
+    }
+  }, 1000);
+
+
+
+
+
 
 
   /************  EVENT LISTENERS  ************/
@@ -87,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Clear the previous question text and question choices
-    questionContainer.innerText= "";
+    questionContainer.innerText = "";
     choiceContainer.innerHTML = "";
 
     // Get the current question from the quiz by calling the Quiz class method `getQuestion()`
@@ -110,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentQuestion = quiz.currentQuestionIndex;
     const percentage = (currentQuestion / totalQuestions) * 100
 
-    progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questions.length)*100}%`; // This value is hardcoded as a placeholder
+    progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questions.length) * 100}%`; // This value is hardcoded as a placeholder
 
 
 
@@ -194,11 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
   function showResults() {
 
     // YOUR CODE HERE:
     //
+    // setTimeout(() => {
+    //   console.log('hello world');
+    // }, 120000);
+
+    clearInterval(countTime);
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
