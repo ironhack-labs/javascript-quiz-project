@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   /************  HTML ELEMENTS  ************/
+
+
   // View divs
   const quizView = document.querySelector("#quizView");
   const endView = document.querySelector("#endView");
@@ -23,8 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /************  QUIZ DATA  ************/
-  
-  // Array with the quiz questions
+
+  // Array with the quiz questions .
+
   const questions = [
     new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
@@ -36,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /************  QUIZ INSTANCE  ************/
-  
+
   // Create a new Quiz instance object
   const quiz = new Quiz(questions, quizDuration, quizDuration);
   // Shuffle the quiz questions
@@ -59,7 +62,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  let timer = quiz.timeRemaining;
+  const countTime = setInterval(() => {
+    timer--;
+    const minutes = Math.floor(timer / 60).toString().padStart(2, "0");
+    const seconds = (timer % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    if (timer <= 0) {
+      clearInterval(countTime);
+      showResults();
+    }
+  }, 1000);
+
+
+
+
+
 
 
   /************  EVENT LISTENERS  ************/
@@ -91,69 +110,103 @@ document.addEventListener("DOMContentLoaded", () => {
     const question = quiz.getQuestion();
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
-    
-    
+
+
 
     // YOUR CODE HERE:
     //
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    questionContainer.innerText = question.text;
 
-    
+
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-    
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
+    const totalQuestions = quiz.questions.length;
+    const currentQuestion = quiz.currentQuestionIndex;
+    const percentage = (currentQuestion / totalQuestions) * 100
+
+    progressBar.style.width = `${(quiz.currentQuestionIndex / quiz.questions.length) * 100}%`; // This value is hardcoded as a placeholder
 
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
-    
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+
+    questionCount.innerText = `Question ${currentQuestion + 1} of ${totalQuestions}`; //  This value is hardcoded as a placeholder
 
 
-    
+
     // 4. Create and display new radio input element with a label for each choice.
     // Loop through the current question `choices`.
-      // For each choice create a new radio input with a label, and append it to the choice container.
-      // Each choice should be displayed as a radio input element with a label:
-      /* 
-          <input type="radio" name="choice" value="CHOICE TEXT HERE">
-          <label>CHOICE TEXT HERE</label>
-        <br>
-      */
-      // Hint 1: You can use the `document.createElement()` method to create a new element.
-      // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-      // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-      // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+    // For each choice create a new radio input with a label, and append it to the choice container.
+    // Each choice should be displayed as a radio input element with a label:
+    /* 
+        <input type="radio" name="choice" value="CHOICE TEXT HERE">
+        <label>CHOICE TEXT HERE</label>
+      <br>
+    */
+    // Hint 1: You can use the `document.createElement()` method to create a new element.
+    // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
+    // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
+    // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+    question.choices.forEach((choiceText, idx) => {
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "choice";
+      input.value = choiceText;
+      input.id = `choice-${idx}`;
+
+      const label = document.createElement("label");
+      label.htmlFor = input.id;
+      label.innerText = choiceText;
+
+      choiceContainer.appendChild(input);
+      choiceContainer.appendChild(label);
+      choiceContainer.appendChild(document.createElement("br"));
+    });
+
+
+    // console.log(question.choices);
+
+    // - iterate through the array "question.choices" (which is an array of strings)
+    // - for each element on that array, do dom manipulation and create an input and a label that look like this:
+    //    <input type="radio" name="choice" value="CHOICE TEXT HERE">
+    //    <label>CHOICE TEXT HERE</label>
+    // ... and inject those elements in "choiceContainer" (choiceContainer.appendChild())
 
   }
 
 
-  
-  function nextButtonHandler () {
+
+  function nextButtonHandler() {
     let selectedAnswer; // A variable to store the selected answer value
-
-
 
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
+    const choiceElement = document.querySelector('input[name="choice"]:checked');
+    // const choiceElement = document.querySelectorAll('newInput');
 
     // 2. Loop through all the choice elements and check which one is selected
-      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-      //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
+    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
+    //  When a radio input gets selected the `.checked` property will be set to true.
+    //  You can use check which choice was selected by checking if the `.checked` property is true.
+    if (choiceElement) {
+      selectedAnswer = choiceElement.value;
+      quiz.checkAnswer(selectedAnswer);
+      quiz.moveToNextQuestion();
+      showQuestion();
+    } else {
+      return;
+    }
 
-      
+
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-      // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
-      // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-      // Show the next question by calling the function `showQuestion()`.
-  }  
-
+    // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
+    // Move to the next question by calling the quiz method `moveToNextQuestion()`.
+    // Show the next question by calling the function `showQuestion()`.
+  }
 
 
 
@@ -161,14 +214,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // YOUR CODE HERE:
     //
+    // setTimeout(() => {
+    //   console.log('hello world');
+    // }, 120000);
+
+    clearInterval(countTime);
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
-    
+
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    const total = quiz.questions.length;
+    const correct = quiz.correctAnswers;
+    resultContainer.innerText = `You scored ${correct} out of ${total} correct answers!`; // This value is hardcoded as a placeholder
   }
-  
+
 });
