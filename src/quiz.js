@@ -1,15 +1,39 @@
 class Quiz {
-    // YOUR CODE HERE:
-    //
-    // 1. constructor (questions, timeLimit, timeRemaining)
 
-    // 2. getQuestion()
-    
-    // 3. moveToNextQuestion()
+    constructor (questions, timeLimit, timeRemaining){
+        this.questions = questions;
+        this.timeLimit = timeLimit;
+        this.timeRemaining = timeRemaining;
+        this.correctAnswers = 0;
+        this.currentQuestionIndex = 0;
 
-    // 4. shuffleQuestions()
+    }
 
-    // 5. checkAnswer(answer)
+    getQuestion(){
 
-    // 6. hasEnded()
+    }
+
+    moveToNextQuestion(){
+
+    }
+
+    shuffleQuestions(){
+        //sort + math.random -> to get a random number
+    }
+
+    checkAnswer(answer){
+
+    }
+
+    hasEnded(){
+
+    }
+
+    filterQuestionsByDifficulty(difficulty){
+
+    }
+
+    averageDifficulty(){
+
+    }
 }
