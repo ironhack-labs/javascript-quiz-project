@@ -17,12 +17,14 @@ class Quiz {
 
   // 4. shuffleQuestions()
 
-  shuffleQuestions() {}
+  shuffleQuestions() {
+    this.questions.reverse();
+  }
 
   // 5. checkAnswer(answer)
 
   checkAnswer(answer) {
-    if (this.getQuestion().correctAnswers === answer) {
+    if (this.getQuestion().answer === answer) {
       this.correctAnswers += 1;
     }
   }
