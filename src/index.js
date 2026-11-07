@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.createElement("input");
         input.type = "radio";
         input.name = "choice";
-        input.value = "choice";
+        input.value = choice;
 
         const label = document.createElement("label");
         label.innerText = choice;
@@ -161,7 +161,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
+// Stap 1: Get all the choice elements
+const choices = choiceContainer.querySelectorAll("input");
+//
+// 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
 
+for (let i = 0; i < choices.length; i++) {
+  if (choices[i].checked){
+  // 2. Loop through all the choice elements and check which one is selected
+  // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
+  //  When a radio input gets selected the `.checked` property will be set to true.
+  //  You can use check which choice was selected by checking if the `.checked` property is true.  
+  selectedAnswer = choices[i].value
+  }
+
+  if (selectedAnswer){
+  quiz.checkAnswer(selectedAnswer) ;
+  quiz.moveToNextQuestion();
+  showQuestion();
+  }
+}
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
