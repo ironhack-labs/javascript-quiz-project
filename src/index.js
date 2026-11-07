@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Stap 1: Get all the choice elements
-    const choices = choiceContainer.querySelectorAll("#choices input");
+    const choices = choiceContainer.querySelectorAll("input");
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
 
@@ -146,12 +146,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
+      //  You can use check which choice was selected by checking if the `.checked` property is true.  
+      selectedAnswer = choices[i].value
       }
-    
+
+      if (selectedAnswer){
+      quiz.checkAnswer(selectedAnswer) ;
+      quiz.moveToNextQuestion();
+      showQuestion();
+      }
     }
 
-      
+  
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
