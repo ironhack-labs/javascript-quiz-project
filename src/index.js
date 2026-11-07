@@ -161,6 +161,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // YOUR CODE HERE:
     //
+
+    const resetQuizButton = document.getElementById("restartButton");
+    resetQuizButton.addEventListener ("click", resetQuizEventHandler);
+      
+    
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -168,7 +173,19 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+
+  }
+
+  function resetQuizEventHandler (){
+    endView.style.display = "none";
+    quizView.style.display = "flex"
+    quiz.currentQuestionsIndex = 0;
+    quiz.correctAnswers = 0; 
+
+    quiz.shuffleQuestions();
+    showQuestion();
+    
   }
   
 });
