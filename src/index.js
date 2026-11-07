@@ -61,6 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timer;
 
+  timer = setInterval (function (){
+    quiz.timeRemaining --;
+    timeRemaining.innerHTML = quiz.timeRemaining;
+    if(quiz.timeRemaining === 0){
+      clearInterval(timer);
+      showResults();
+    }
+  }, 1000);
+
 
   /************  EVENT LISTENERS  ************/
 
