@@ -96,11 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // showResults() - Displays the end view and the quiz results
 
   function showQuestion() {
+    
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
       showResults();
       return;
-    }
+    } 
 
     // Clear the previous question text and question choices
     questionContainer.innerText = "";
@@ -111,18 +112,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // Shuffle the choices of the current question by calling the method 'shuffleChoices()' on the question object
     question.shuffleChoices();
 
+    questionContainer.innerText = question.text
+    
+    
+
     // YOUR CODE HERE:
-    //
+    const currentQuestionNumber = quiz.currentQuestionIndex +1;
+    const totalQuestions = quiz.questions.length;
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
 
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
+    
+    const progressPercentage = (currentQuestionNumber / totalQuestions) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+
 
     progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
 
     // 3. Update the question count text
     // Update the question count (div#questionCount) show the current question out of total questions
+    
+    questionCount.innerText = `Question ${currentQuestionNumber} of ${totalQuestions}`;
 
     questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
 
@@ -135,10 +147,27 @@ document.addEventListener("DOMContentLoaded", () => {
           <label>CHOICE TEXT HERE</label>
         <br>
       */
-    // Hint 1: You can use the `document.createElement()` method to create a new element.
-    // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-    // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-    // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+      // Hint 1: You can use the `document.createElement()` method to create a new element.
+      // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
+      // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
+      // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
+
+      question.choices.forEach(( choice) => {
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "choice";
+        input.value = choice;
+
+        const label = document.createElement("label");
+        label.innerText = choice;
+        
+        const lineBreak = document.createElement("br");
+
+        choiceContainer.appendChild(input);
+        choiceContainer.appendChild(label);
+        choiceContainer.appendChild(lineBreak);
+      });
+
   }
  
 
