@@ -31,7 +31,25 @@ class Quiz
 
 	// now you continue Dixon!! :D (btw, again, no need to mimic my style, you do it however you want ^^)
 
-  // 5. checkAnswer(answer)
+	checkAnswer (answer){
+	const currentQuestion = this.getQuestion();
 
-  // 6. hasEnded()
+	if (currentQuestion.answer === answer) {
+		this.correctAnswers += 1;
+	}
+}
+
+  hasEnded() {
+	return this.currentQuestionIndex >= this.questions.length;
+  }
+
+  filterQuestionsByDifficulty(difficulty) {
+	if (typeof difficulty === "number" && difficulty >= 1 && difficulty <= 3) {
+		this.questions = this.questions.filter((question) => question.difficulty === difficulty)
+	}
+  }
+
+  averageDifficulty() {
+	return this.questions.reduce((sum, question) => sum + question.difficulty, 0) / this.questions.length;
+  }
 }
