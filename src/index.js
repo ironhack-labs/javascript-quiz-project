@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		new Question("Which of these is not a JavaScript runtime?", ["Node", "Jasmine", "Deno", "Bun"], "Jasmine", 2),
     // Add more questions here 
 		// (Dani here!! I think Dixon could add 2 more and Rahmat could also add 2 so we make 10 questions :D)
+    new Question("Who painted the Mona Lisa?", ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"], "Leonardo da Vinci", 2),
+    new Question("what is the biggest country in the world?", ["Canada", "Russia", "United States", "China"], "Russia", 2),
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
 
@@ -64,6 +66,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timer;
 
+    function updateTimerText() {
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0")
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0")
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      quiz.timeRemaining--;
+      updateTimerText()
+
+      if (quiz.timeRemaining <= 0) {
+        showResults()
+      }
+    }, 1000) 
+  }
+
+  startTimer()
+
+  function restartTimer() {
+    quiz.timerRemaining = quiz.timeLimit
+    updateTimerText()
+    startTimer();
+  }
 
   /************  EVENT LISTENERS  ************/
 
@@ -211,6 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // YOUR CODE HERE:
     //
+    
     // 1. Hide the quiz view (div#quizView)
     quizView.style.display = "none";
 
@@ -219,6 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`;
+
+    clearInterval(timer);
   }
   
 });
