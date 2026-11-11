@@ -147,27 +147,62 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  
+  // Rahmat writes nextButtonHandler()
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
+    let selectedAnswer;
 
-
-
-    // YOUR CODE HERE:
-    //
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
+    // 1. Get all the choices elements
+    
+    const choices = document.querySelectorAll('input[type="radio"]');
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
-
+    
+      choices.forEach((choice)=>{
+      if (choice.checked) {
+        selectedAnswer = choice.value;
+      }
+    });
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
+
+      if(selectedAnswer) {
+        quiz.checkAnswer(selectedAnswer);
+        quiz.moveToNextQuestion();
+        showQuestion();
+      }
   }  
+
+  // Rahmat writes resetButton code
+
+  const resetButton = document.querySelector("#restartButton");
+
+  resetButton.addEventListener("click", () => {
+  resetQuiz();
+});
+  const resetQuiz = () => {
+    endView.style.display = "none";
+    quizView.style.display = "block";
+
+    quiz.currentQuestionIndex = 0;
+    quiz.correctAnswers = 0;
+    
+    quiz.shuffleQuestions();
+
+    showQuestion(); 
+  }
+ 
+  // Rahmat adds 2 Questions
+
+  new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
+
+  new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
+
 
 
 
