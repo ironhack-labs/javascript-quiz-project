@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     // Add more questions here
+    new Question("Who painted the Mona Lisa?", ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"], "Leonardo da Vinci", 2),
+    new Question("what is the biggest country in the world?", ["Canada", "Russia", "United States", "China"], "Russia", 2),
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
 
@@ -61,6 +63,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let timer;
 
+  function updateTimerText() {
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0")
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0")
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      quiz.timeRemaining--;
+      updateTimerText()
+
+      if (quiz.timeRemaining <= 0) {
+        showResults()
+      }
+    }, 1000) 
+  }
+
+  startTimer()
+
+  function restartTimer() {
+    quiz.timeRemaining = quiz.timeLimit
+    updateTimerText()
+    startTimer();
+  }
 
   /************  EVENT LISTENERS  ************/
 
@@ -169,6 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
     resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+
+    clearInterval(timer);
   }
   
 });
