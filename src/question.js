@@ -1,7 +1,19 @@
 class Question {
     // YOUR CODE HERE:
-    //
-    // 1. constructor (text, choices, answer, difficulty)
+    
+     constructor (text, choices, answer, difficulty) {
+        this.text = text;
+        this.choices = choices
+        this.answer = answer
+        this.difficulty = difficulty
+     }
 
-    // 2. shuffleChoices()
+    shuffleChoices(){
+  this.choices.sort(() => Math.random() - 0.5);
+     }
+    
 }
+
+  new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
+
+  new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
