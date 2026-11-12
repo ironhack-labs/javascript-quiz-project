@@ -36,7 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		// (Dani here!! I think Dixon could add 2 more and Rahmat could also add 2 so we make 10 questions :D)
     new Question("Who painted the Mona Lisa?", ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"], "Leonardo da Vinci", 2),
     new Question("what is the biggest country in the world?", ["Canada", "Russia", "United States", "China"], "Russia", 2),
+    new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
+
+  new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
   ];
+
+
   const quizDuration = 120; // 120 seconds (2 minutes)
 
 
@@ -86,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startTimer()
 
   function restartTimer() {
-    quiz.timerRemaining = quiz.timeLimit
+    quiz.timeRemaining = quiz.timeLimit
     updateTimerText()
     startTimer();
   }
@@ -219,15 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.correctAnswers = 0;
     
     quiz.shuffleQuestions();
+    restartTimer()
 
     showQuestion(); 
   }
  
-  // Rahmat adds 2 Questions
-
-  new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
-
-  new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
+  
 
 
 
