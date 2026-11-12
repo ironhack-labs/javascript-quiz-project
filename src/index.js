@@ -31,7 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     // Add more questions here
-  ];
+    new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
+    new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
+];
+
   const quizDuration = 120; // 120 seconds (2 minutes)
 
 
@@ -184,9 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
  
   // Rahmat adds 2 Questions
 
-  new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
 
-  new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
 
 
 

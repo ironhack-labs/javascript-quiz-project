@@ -13,3 +13,7 @@ class Question {
      }
     
 }
+
+  new Question("What is the scientific name for modern humans?", ["Homo erectus", "Homo habilis", "Homo sapiens", "Australopithecus"], "Homo sapiens", 1),
+
+  new Question("Where did Homo sapiens originate?", ["Asia", "Africa", "Europe", "South America"], "Africa", 2),
