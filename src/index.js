@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startTimer()
 
   function restartTimer() {
-    quiz.timerRemaining = quiz.timeLimit
+    quiz.timeRemaining = quiz.timeLimit
     updateTimerText()
     startTimer();
   }
